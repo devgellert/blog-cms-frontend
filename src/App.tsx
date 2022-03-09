@@ -1,6 +1,7 @@
 import React from "react";
 import { FC, memo } from "react";
 import {Button} from "@mui/material";
+import Table from "./Table";
 
 type Props = {};
 
@@ -11,6 +12,7 @@ const App: FC<Props> = ({}) => {
   <Button variant="text">Text</Button>
   <Button variant="outlined">Outlined</Button>
 
+  <Table/>
 
  </div>;
 }
