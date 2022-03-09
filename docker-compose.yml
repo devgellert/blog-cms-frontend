@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  react:
+    build:
+      dockerfile: ./config/docker/Dockerfile
+      context: ./
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/usr/src/app/my-app
+    networks:
+      - blog-cms-network
+networks:
+  blog-cms-network:
+    external: true
