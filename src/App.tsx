@@ -1,20 +1,15 @@
 import React from "react";
 import { FC, memo } from "react";
-import {Button} from "@mui/material";
-import Table from "./Table";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 type Props = {};
 
 const App: FC<Props> = ({}) => {
- return <div>
-  <h1>{process.env.REACT_APP_API}</h1>
+ return <Provider store={store}>
+  <div>Hello world</div>
 
-  <Button variant="text">Text</Button>
-  <Button variant="outlined">Outlined</Button>
-
-  <Table/>
-
- </div>;
+ </Provider>
 }
 
 export default memo(App);
