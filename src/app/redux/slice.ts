@@ -1,15 +1,13 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {AppState} from "./types";
-
+import { createSlice } from "@reduxjs/toolkit";
+//
+import { AppState } from "./types";
 
 const appSlice = createSlice<AppState, any, any>({
     name: "appSlice",
-    reducers: {
-
-    },
+    reducers: {},
     initialState: {
         test: true
     }
-})
+});
 
 export default appSlice;

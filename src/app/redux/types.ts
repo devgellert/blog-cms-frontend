@@ -1,4 +1,3 @@
-
 export type AppState = {
-    test: true
-}
+    test: true;
+};
