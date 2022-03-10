@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { FC, memo } from "react";
+import { Button, Container, TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../redux/auth/slice";
+import AuthSelectors from "../../../redux/auth/selector";
 //
-// import css from "./style.module.scss";
+import css from "./LoginPage.module.scss";
 
 type Props = {};
 
 const LoginPage: FC<Props> = ({}) => {
-    return <div>Login</div>;
+    const dispatch = useDispatch();
+
+    const isLoginInProgress = useSelector(AuthSelectors.isLoginInProgress);
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    return (
+        <div className={css["LoginPage"]}>
+            <Container maxWidth="sm">
+                <TextField
+                    label="Username"
+                    variant="filled"
+                    className={css["field"]}
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <br />
+                <TextField
+                    label="Password"
+                    variant="filled"
+                    type="password"
+                    className={css["field"]}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+                <br />
+                <Button
+                    disabled={isLoginInProgress}
+                    onClick={() => dispatch(authActions.login({ username, password }))}
+                    className={css["field"]}
+                    type="button"
+                >
+                    Log in
+                </Button>
+            </Container>
+        </div>
+    );
 };
 
 export default memo(LoginPage);

@@ -1,17 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
 import { AuthState } from "./types";
 
-const authSlice = createSlice<AuthState, any, any>({
+const authSlice = createSlice({
     name: "authSlice",
-    reducers: {},
+    reducers: {
+        login: (state: AuthState, action: PayloadAction<{ username: string; password: string }>) => {
+            state.isLoginInProgress = true;
+        }
+    },
     initialState: getInitialState()
 });
 
 function getInitialState(): AuthState {
     return {
-        user: null
+        user: null,
+        isLoginInProgress: false
     };
 }
 
-export default authSlice;
+export const { actions: authActions, reducer: authReducer } = authSlice;
