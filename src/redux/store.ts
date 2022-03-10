@@ -12,11 +12,6 @@ const composeEnhancers =
 
 const store = createStore<StoreState, AnyAction, any, any>(
     rootReducer,
-    {
-        app: {
-            test: true
-        }
-    },
     composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 

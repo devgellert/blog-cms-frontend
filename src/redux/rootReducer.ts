@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 //
-import appSlice from "../app/redux/slice";
+import appSlice from "./app/slice";
+import authSlice from "./auth/slice";
 import { StoreState } from "./type";
 
 const rootReducer = combineReducers<StoreState>({
-    app: appSlice.reducer
+    app: appSlice.reducer,
+    auth: authSlice.reducer
 });
 
 export default rootReducer;
