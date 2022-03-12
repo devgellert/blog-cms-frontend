@@ -3,3 +3,11 @@
     height: calc(100vh - 64px - 52px);
   }
 }
+
+.loader-wrap {
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -14,6 +14,7 @@ import GridConfig from "./types/GridConfig";
 import { useDispatch, useSelector } from "react-redux";
 import GridSelectors from "../../../redux/grid/selector";
 import { gridActions } from "../../../redux/grid/slice";
+import { CircularProgress } from "@mui/material";
 
 type Props = {
     config: GridConfig<any, any>;
@@ -24,6 +25,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
 
     const rows = useSelector(GridSelectors.getRows);
     const pagination = useSelector(GridSelectors.getPagination);
+    const isLoading = useSelector(GridSelectors.isLoading);
 
     const [page, setPage] = React.useState(0);
     const [limit, setLimit] = React.useState(10);
@@ -40,6 +42,14 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
         setLimit(+event.target.value);
         setPage(0);
     };
+
+    if (isLoading) {
+        return (
+            <div className={css["loader-wrap"]}>
+                <CircularProgress color="success" />
+            </div>
+        );
+    }
 
     return (
         <Paper sx={{ width: "100%", overflow: "hidden" }} className={css["Grid"]}>
