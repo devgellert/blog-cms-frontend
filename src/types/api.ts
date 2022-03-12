@@ -1,6 +1,6 @@
 import { ApiResource } from "./common";
 
-export type ApiUser = {} & ApiResource;
+export type ApiUser = { username: string } & ApiResource;
 
 export type ApiLoginResponse = { token: string };
 

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
 import { AuthState, LoginState } from "./types";
+import { ApiUser } from "../../types/api";
 
 const authSlice = createSlice({
     name: "authSlice",
@@ -13,6 +14,9 @@ const authSlice = createSlice({
         },
         setLoginState: (state: AuthState, action: PayloadAction<LoginState>) => {
             state.loginState = action.payload;
+        },
+        setUser: (state: AuthState, action: PayloadAction<ApiUser>) => {
+            state.user = action.payload;
         }
     },
     initialState: getInitialState()

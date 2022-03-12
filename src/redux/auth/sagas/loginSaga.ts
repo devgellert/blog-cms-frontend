@@ -6,7 +6,8 @@ import api from "../../../api";
 import { ApiLoginResponse } from "../../../types/api";
 import { authActions } from "../slice";
 import { LoginState } from "../types";
-import { LocalStorageKeys } from "../../../types/localStorage";
+import fetchAndSetUserSaga from "./helpers/fetchAndSetUserSaga";
+import setTokenInStorageAndSetBearerHeader from "./helpers/setTokenInStorageAndSetBearerHeader";
 
 function* loginSaga({ payload: { username, password } }: PayloadAction<{ username: string; password: string }>) {
     try {
@@ -17,9 +18,9 @@ function* loginSaga({ payload: { username, password } }: PayloadAction<{ usernam
             password
         });
 
-        localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, token);
+        yield call(setTokenInStorageAndSetBearerHeader, token);
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        yield call(fetchAndSetUserSaga);
 
         yield put(authActions.setLoginState(LoginState.LOGGED_IN));
     } catch (e) {
