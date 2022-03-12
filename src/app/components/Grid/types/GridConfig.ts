@@ -1,8 +1,9 @@
 import { GridColumn } from "../../../pages/Categories/components/CategoryGrid/CategoryGrid";
 
-type GridConfig<T> = {
+type GridConfig<T, ApiResponseItem> = {
     columns: GridColumn[];
-    // rows: T[];
+    transformer: (object: ApiResponseItem) => T;
+    apiEndpoint: string;
 };
 
 export default GridConfig;

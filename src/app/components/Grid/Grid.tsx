@@ -11,19 +11,25 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import GridConfig from "./types/GridConfig";
+import { useDispatch, useSelector } from "react-redux";
+import GridSelectors from "../../../redux/grid/selector";
+import { gridActions } from "../../../redux/grid/slice";
 
 type Props = {
-    config: GridConfig<any>;
-    rows: any[];
+    config: GridConfig<any, any>;
     changeHandler: (page: number, limit: number) => void;
 };
 
-const Grid: FC<Props> = ({ config: { columns }, rows, changeHandler }) => {
-    const [page, setPage] = React.useState(0);
+const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, changeHandler }) => {
+    const rows = useSelector(GridSelectors.getRows);
+    const dispatch = useDispatch();
+
+    const [page, setPage] = React.useState(1);
     const [limit, setLimit] = React.useState(10);
 
     useEffect(() => {
         changeHandler(page, limit);
+        dispatch(gridActions.fetchRows({ page, limit, transformer, apiEndpoint }));
     }, [page, limit]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -32,7 +38,7 @@ const Grid: FC<Props> = ({ config: { columns }, rows, changeHandler }) => {
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLimit(+event.target.value);
-        setPage(0);
+        setPage(1);
     };
 
     return (
@@ -69,7 +75,7 @@ const Grid: FC<Props> = ({ config: { columns }, rows, changeHandler }) => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[10, 25]}
                 component="div"
                 count={1000}
                 rowsPerPage={limit}
