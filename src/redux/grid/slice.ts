@@ -21,9 +21,15 @@ const gridSlice = createSlice({
             state: GridState,
             action: PayloadAction<{
                 rows: object[];
+                pagination: {
+                    max: number;
+                };
             }>
         ) => {
             state.rows = action.payload.rows;
+            state.pagination = {
+                max: action.payload.pagination.max
+            };
             state.isLoading = false;
         }
     },
@@ -33,7 +39,8 @@ const gridSlice = createSlice({
 function getInitialState(): GridState {
     return {
         rows: [{ id: "1", name: "name", slug: "slg" }],
-        isLoading: true
+        isLoading: true,
+        pagination: null
     };
 }
 

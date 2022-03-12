@@ -21,15 +21,17 @@ type Props = {
 };
 
 const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, changeHandler }) => {
-    const rows = useSelector(GridSelectors.getRows);
     const dispatch = useDispatch();
 
-    const [page, setPage] = React.useState(1);
+    const rows = useSelector(GridSelectors.getRows);
+    const pagination = useSelector(GridSelectors.getPagination);
+
+    const [page, setPage] = React.useState(0);
     const [limit, setLimit] = React.useState(10);
 
     useEffect(() => {
         changeHandler(page, limit);
-        dispatch(gridActions.fetchRows({ page, limit, transformer, apiEndpoint }));
+        dispatch(gridActions.fetchRows({ page: page + 1, limit, transformer, apiEndpoint }));
     }, [page, limit]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -38,7 +40,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, change
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLimit(+event.target.value);
-        setPage(1);
+        setPage(0);
     };
 
     return (
@@ -77,7 +79,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, change
             <TablePagination
                 rowsPerPageOptions={[10, 25]}
                 component="div"
-                count={1000}
+                count={pagination?.max || 0}
                 rowsPerPage={limit}
                 page={page}
                 onPageChange={handleChangePage}

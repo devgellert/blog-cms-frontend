@@ -8,4 +8,10 @@ export type ApiRefreshResponse = { token: string };
 
 export type ApiCategory = { name: string; slug: string } & ApiResource;
 
-export type ApiGetCategoriesResponse = ApiCategory[];
+export type ApiResponsePaginationType = {
+    pagination: {
+        max: number;
+    };
+};
+
+export type ApiGetCategoriesResponse = { items: ApiCategory[] } & ApiResponsePaginationType;
