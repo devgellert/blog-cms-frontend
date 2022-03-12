@@ -21,7 +21,7 @@ const AuthGuard: FC<Props> = ({ element }) => {
         }
     }, [loginState]);
 
-    if (loginState) {
+    if ([LoginState.REFRESHING, LoginState.IN_PROGRESS].includes(loginState)) {
         return (
             <div>
                 <CircularProgress color="success" />
