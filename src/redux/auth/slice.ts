@@ -1,12 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
-import { AuthState } from "./types";
+import { AuthState, LoginState } from "./types";
 
 const authSlice = createSlice({
     name: "authSlice",
     reducers: {
         login: (state: AuthState, action: PayloadAction<{ username: string; password: string }>) => {
-            state.isLoginInProgress = true;
+            state.loginState = LoginState.IN_PROGRESS;
+        },
+        refreshJwt: (state: AuthState) => {
+            state.loginState = LoginState.REFRESHING;
+        },
+        setLoginState: (state: AuthState, action: PayloadAction<LoginState>) => {
+            state.loginState = action.payload;
         }
     },
     initialState: getInitialState()
@@ -15,7 +21,7 @@ const authSlice = createSlice({
 function getInitialState(): AuthState {
     return {
         user: null,
-        isLoginInProgress: false
+        loginState: LoginState.REFRESHING
     };
 }
 

@@ -1,8 +1,10 @@
 import React, { FC, memo, ReactElement, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 //
 import AuthSelectors from "../../../redux/auth/selector";
+import { LoginState } from "../../../redux/auth/types";
 
 type Props = {
     element: ReactElement;
@@ -11,17 +13,20 @@ type Props = {
 const AuthGuard: FC<Props> = ({ element }) => {
     const navigate = useNavigate();
 
-    const isLoginInProgress = useSelector(AuthSelectors.isLoginInProgress);
-    const user = useSelector(AuthSelectors.getUser);
+    const loginState = useSelector(AuthSelectors.getLoginState);
 
     useEffect(() => {
-        if (isLoginInProgress === false && !user) {
+        if (loginState === LoginState.LOGGED_OUT) {
             navigate("/login");
         }
-    }, [isLoginInProgress]);
+    }, [loginState]);
 
-    if (isLoginInProgress) {
-        return <div>Loading...</div>;
+    if (loginState) {
+        return (
+            <div>
+                <CircularProgress color="success" />
+            </div>
+        );
     }
 
     return element;

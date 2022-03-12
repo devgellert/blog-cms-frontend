@@ -3,7 +3,6 @@ import { FC, memo } from "react";
 import { Button, Container, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../redux/auth/slice";
-import AuthSelectors from "../../../redux/auth/selector";
 //
 import css from "./LoginPage.module.scss";
 
@@ -11,8 +10,6 @@ type Props = {};
 
 const LoginPage: FC<Props> = ({}) => {
     const dispatch = useDispatch();
-
-    const isLoginInProgress = useSelector(AuthSelectors.isLoginInProgress);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -38,7 +35,6 @@ const LoginPage: FC<Props> = ({}) => {
                 />
                 <br />
                 <Button
-                    disabled={isLoginInProgress}
                     onClick={() => dispatch(authActions.login({ username, password }))}
                     className={css["field"]}
                     type="button"
