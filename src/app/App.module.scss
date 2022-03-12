@@ -4,5 +4,6 @@ $nav_width: 240px;
   .main {
     width: calc(100% - #{$nav_width});
     margin-left: $nav_width;
+    min-height: 100vh;
   }
 }

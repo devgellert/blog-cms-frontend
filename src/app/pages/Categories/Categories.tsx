@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import PageWrap from "../../components/PageWrap/PageWrap";
+import CategoryGrid from "./components/CategoryGrid/CategoryGrid";
 //
 // import css from "./style.module.scss";
 
@@ -19,7 +20,7 @@ const Categories: FC<Props> = ({}) => {
                 }
             ]}
         >
-            <div></div>
+            <CategoryGrid />
         </PageWrap>
     );
 };
