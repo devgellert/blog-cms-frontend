@@ -13,6 +13,7 @@ import { authActions } from "../redux/auth/slice";
 import Menu from "./components/Menu/Menu";
 //
 import css from "./App.module.scss";
+import Posts from "./pages/Posts/Posts";
 
 type Props = {};
 
@@ -35,6 +36,9 @@ const App: FC<Props> = ({}) => {
                         <Route path="/categories">
                             <Route index element={<AuthGuard element={<Categories />} />} />
                             <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
+                        </Route>
+                        <Route path="/posts">
+                            <Route index element={<AuthGuard element={<Posts />} />} />
                         </Route>
                     </Routes>
                 </main>

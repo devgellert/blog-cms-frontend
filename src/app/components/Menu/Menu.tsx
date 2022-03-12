@@ -30,6 +30,10 @@ const menuConfig: {
         {
             text: "Categories",
             link: "/categories"
+        },
+        {
+            text: "Posts",
+            link: "/posts"
         }
     ]
 };

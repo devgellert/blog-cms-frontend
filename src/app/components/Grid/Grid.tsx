@@ -17,10 +17,9 @@ import { gridActions } from "../../../redux/grid/slice";
 
 type Props = {
     config: GridConfig<any, any>;
-    changeHandler: (page: number, limit: number) => void;
 };
 
-const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, changeHandler }) => {
+const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
     const dispatch = useDispatch();
 
     const rows = useSelector(GridSelectors.getRows);
@@ -30,7 +29,6 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint }, change
     const [limit, setLimit] = React.useState(10);
 
     useEffect(() => {
-        changeHandler(page, limit);
         dispatch(gridActions.fetchRows({ page: page + 1, limit, transformer, apiEndpoint }));
     }, [page, limit]);
 

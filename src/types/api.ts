@@ -15,3 +15,14 @@ export type ApiResponsePaginationType = {
 };
 
 export type ApiGetCategoriesResponse = { items: ApiCategory[] } & ApiResponsePaginationType;
+
+export type ApiPost = {
+    author: { id: number; username: string };
+    id: number;
+    category: { id: number; name: string };
+    slug: string;
+} & ApiResource;
+
+export type ApiGetPostsResponse = {
+    items: ApiPost[];
+} & ApiResponsePaginationType;

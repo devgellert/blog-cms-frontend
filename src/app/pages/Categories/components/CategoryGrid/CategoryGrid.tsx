@@ -40,12 +40,5 @@ const config: GridConfig<Data, ApiCategory> = {
 };
 
 export default function CategoryGrid() {
-    return (
-        <Grid
-            config={config}
-            changeHandler={(page, limit) => {
-                console.log(page, limit);
-            }}
-        />
-    );
+    return <Grid config={config} />;
 }
