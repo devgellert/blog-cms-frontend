@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Categories from "./pages/Categories/Categories";
 import Category from "./pages/Category/Category";
+import AuthGuard from "./components/AuthGuard/AuthGuard";
 
 type Props = {};
 
@@ -16,11 +17,11 @@ const App: FC<Props> = ({}) => {
         <Provider store={store}>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<AuthGuard element={<Dashboard />} />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/categories">
-                        <Route index element={<Categories />} />
-                        <Route path=":categoryId" element={<Category />} />
+                        <Route index element={<AuthGuard element={<Categories />} />} />
+                        <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
                     </Route>
                 </Routes>
             </Router>
