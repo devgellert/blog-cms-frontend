@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { FC, memo } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import { Button, Container, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+//
 import { authActions } from "../../../redux/auth/slice";
+import AuthSelectors from "../../../redux/auth/selector";
+import { LoginState } from "../../../redux/auth/types";
 //
 import css from "./LoginPage.module.scss";
 
@@ -10,9 +13,18 @@ type Props = {};
 
 const LoginPage: FC<Props> = ({}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const loginState = useSelector(AuthSelectors.getLoginState);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (loginState === LoginState.LOGGED_IN) {
+            navigate("/");
+        }
+    }, [loginState]);
 
     return (
         <div className={css["LoginPage"]}>
