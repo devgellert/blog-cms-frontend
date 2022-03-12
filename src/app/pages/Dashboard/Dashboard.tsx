@@ -1,15 +1,13 @@
 import { FC, memo } from "react";
-import Menu from "../../components/Menu/Menu";
-//
-// import css from "./style.module.scss";
+import PageWrap from "../../components/PageWrap/PageWrap";
 
 type Props = {};
 
 const DashBoard: FC<Props> = ({}) => {
     return (
-        <div>
-            <h1>Hi</h1>
-        </div>
+        <PageWrap title="Dashboard" buttons={[]}>
+            <div></div>
+        </PageWrap>
     );
 };
 
