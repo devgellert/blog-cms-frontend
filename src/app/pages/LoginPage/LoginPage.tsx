@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useState } from "react";
-import { Button, Container, TextField } from "@mui/material";
+import { Button, CircularProgress, Container, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //
@@ -26,9 +26,17 @@ const LoginPage: FC<Props> = ({}) => {
         }
     }, [loginState]);
 
+    if (loginState === LoginState.IN_PROGRESS) {
+        return (
+            <div className={css["LoginPage"]}>
+                <CircularProgress color="success" />
+            </div>
+        );
+    }
+
     return (
         <div className={css["LoginPage"]}>
-            <Container maxWidth="sm">
+            <div>
                 <TextField
                     label="Username"
                     variant="filled"
@@ -36,7 +44,9 @@ const LoginPage: FC<Props> = ({}) => {
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                 />
+
                 <br />
+
                 <TextField
                     label="Password"
                     variant="filled"
@@ -45,7 +55,9 @@ const LoginPage: FC<Props> = ({}) => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
+
                 <br />
+
                 <Button
                     onClick={() => dispatch(authActions.login({ username, password }))}
                     className={css["field"]}
@@ -53,7 +65,9 @@ const LoginPage: FC<Props> = ({}) => {
                 >
                     Log in
                 </Button>
-            </Container>
+
+                {loginState === LoginState.FAILED_TO_LOGIN && <Typography color="red">Failed to login.</Typography>}
+            </div>
         </div>
     );
 };

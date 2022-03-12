@@ -24,6 +24,7 @@ function* loginSaga({ payload: { username, password } }: PayloadAction<{ usernam
 
         yield put(authActions.setLoginState(LoginState.LOGGED_IN));
     } catch (e) {
+        yield put(authActions.setLoginState(LoginState.FAILED_TO_LOGIN));
         console.log(e);
     }
 }

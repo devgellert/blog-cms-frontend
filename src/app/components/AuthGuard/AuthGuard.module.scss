@@ -1,11 +1,7 @@
-.LoginPage {
-  min-height: 100vh;
+.AuthGuard {
+  height: 100vh;
   width: calc(100% - 240px);
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .field {
-    margin-top: 10px;
-  }
 }

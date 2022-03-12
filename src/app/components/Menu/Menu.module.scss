@@ -10,4 +10,11 @@
     margin: 5px auto 10px auto;
     width: 100px;
   }
+
+  .loader {
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

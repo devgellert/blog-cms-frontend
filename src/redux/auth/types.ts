@@ -4,7 +4,8 @@ export enum LoginState {
     IN_PROGRESS,
     REFRESHING,
     LOGGED_IN,
-    LOGGED_OUT
+    LOGGED_OUT,
+    FAILED_TO_LOGIN
 }
 
 export type AuthState = {

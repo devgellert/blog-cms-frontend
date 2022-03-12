@@ -14,7 +14,7 @@ function* refreshJwtSaga() {
         const oldToken = localStorage.getItem(LocalStorageKeys.AUTH_TOKEN);
 
         if (!oldToken) {
-            yield put(authActions.setLoginState(LoginState.LOGGED_OUT));
+            yield put(authActions.logout());
             return;
         }
 
@@ -31,6 +31,7 @@ function* refreshJwtSaga() {
         yield put(authActions.setLoginState(LoginState.LOGGED_IN));
     } catch (e) {
         console.log(e);
+        yield put(authActions.logout());
     }
 }
 

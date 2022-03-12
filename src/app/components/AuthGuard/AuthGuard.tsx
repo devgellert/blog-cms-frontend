@@ -5,6 +5,8 @@ import { CircularProgress } from "@mui/material";
 //
 import AuthSelectors from "../../../redux/auth/selector";
 import { LoginState } from "../../../redux/auth/types";
+//
+import css from "./AuthGuard.module.scss";
 
 type Props = {
     element: ReactElement;
@@ -23,7 +25,7 @@ const AuthGuard: FC<Props> = ({ element }) => {
 
     if ([LoginState.REFRESHING, LoginState.IN_PROGRESS].includes(loginState)) {
         return (
-            <div>
+            <div className={css["AuthGuard"]}>
                 <CircularProgress color="success" />
             </div>
         );
