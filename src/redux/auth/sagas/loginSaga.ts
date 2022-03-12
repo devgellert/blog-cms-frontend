@@ -6,6 +6,7 @@ import api from "../../../api";
 import { ApiLoginResponse } from "../../../types/api";
 import { authActions } from "../slice";
 import { LoginState } from "../types";
+import { LocalStorageKeys } from "../../../types/localStorage";
 
 function* loginSaga({ payload: { username, password } }: PayloadAction<{ username: string; password: string }>) {
     try {
@@ -16,7 +17,7 @@ function* loginSaga({ payload: { username, password } }: PayloadAction<{ usernam
             password
         });
 
-        localStorage.setItem("auth-token", token);
+        localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, token);
 
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
