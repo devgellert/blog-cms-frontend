@@ -10,6 +10,9 @@ import Categories from "./pages/Categories/Categories";
 import Category from "./pages/Category/Category";
 import AuthGuard from "./components/AuthGuard/AuthGuard";
 import { authActions } from "../redux/auth/slice";
+import Menu from "./components/Menu/Menu";
+//
+import css from "./App.module.scss";
 
 type Props = {};
 
@@ -21,16 +24,22 @@ const App: FC<Props> = ({}) => {
     }, []);
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<AuthGuard element={<Dashboard />} />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/categories">
-                    <Route index element={<AuthGuard element={<Categories />} />} />
-                    <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
-                </Route>
-            </Routes>
-        </Router>
+        <div className={css["App"]}>
+            <Router>
+                <Menu />
+
+                <main className={css["main"]}>
+                    <Routes>
+                        <Route path="/" element={<AuthGuard element={<Dashboard />} />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/categories">
+                            <Route index element={<AuthGuard element={<Categories />} />} />
+                            <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
+                        </Route>
+                    </Routes>
+                </main>
+            </Router>
+        </div>
     );
 };
 
