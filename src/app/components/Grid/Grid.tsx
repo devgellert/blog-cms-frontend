@@ -1,4 +1,5 @@
 import { FC, memo, useEffect } from "react";
+import { isFunction } from "lodash";
 //
 import css from "./Grid.module.scss";
 import Paper from "@mui/material/Paper";
@@ -15,12 +16,13 @@ import { useDispatch, useSelector } from "react-redux";
 import GridSelectors from "../../../redux/grid/selector";
 import { gridActions } from "../../../redux/grid/slice";
 import { CircularProgress } from "@mui/material";
+import ActionsMenu from "./components/ActionsMenu/ActionsMenu";
 
 type Props = {
     config: GridConfig<any, any>;
 };
 
-const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
+const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions } }) => {
     const dispatch = useDispatch();
 
     const rows = useSelector(GridSelectors.getRows);
@@ -62,6 +64,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
                                     {column.label}
                                 </TableCell>
                             ))}
+                            {actions && <TableCell key="actions" />}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -78,6 +81,30 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint } }) => {
                                             </TableCell>
                                         );
                                     })}
+
+                                    {actions && (
+                                        <TableCell>
+                                            <ActionsMenu
+                                                actions={actions.map(action => ({
+                                                    text: action.text,
+                                                    onClick: (() => {
+                                                        if (isFunction(action.onClick)) {
+                                                            // @ts-ignore
+                                                            return () => action.onClick(row);
+                                                        }
+                                                        return undefined;
+                                                    })(),
+                                                    link: (() => {
+                                                        if (isFunction(action.createLink)) {
+                                                            // @ts-ignore
+                                                            return action.createLink(row);
+                                                        }
+                                                        return undefined;
+                                                    })()
+                                                }))}
+                                            />
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             );
                         })}

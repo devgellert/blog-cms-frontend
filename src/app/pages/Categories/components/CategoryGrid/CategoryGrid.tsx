@@ -36,7 +36,21 @@ const config: GridConfig<Data, ApiCategory> = {
             name: object.name
         };
     },
-    apiEndpoint: "/categories"
+    apiEndpoint: "/categories",
+    actions: [
+        {
+            text: "Details",
+            createLink: row => {
+                return `/categories/${row.id}`;
+            }
+        },
+        {
+            text: "Edit",
+            createLink: row => {
+                return `/categories/${row.id}/edit`;
+            }
+        }
+    ]
 };
 
 export default function CategoryGrid() {

@@ -4,6 +4,11 @@ type GridConfig<T, ApiResponseItem> = {
     columns: GridColumn[];
     transformer: (object: ApiResponseItem) => T;
     apiEndpoint: string;
+    actions?: {
+        text: string;
+        onClick?: (row: T) => void;
+        createLink?: (row: T) => string;
+    }[];
 };
 
 export default GridConfig;
