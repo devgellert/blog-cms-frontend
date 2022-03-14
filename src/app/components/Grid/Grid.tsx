@@ -3,7 +3,6 @@ import { FC, memo, useEffect } from "react";
 import { isFunction } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
-//
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -12,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
+//
 import GridConfig from "./types/GridConfig";
 import GridSelectors from "../../../redux/grid/selector";
 import { gridActions } from "../../../redux/grid/slice";
@@ -31,9 +31,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
     const isLoading = useSelector(GridSelectors.isLoading);
 
     useEffect(() => {
-        dispatch(
-            gridActions.fetchRows({ page: pagination.page + 1, limit: pagination.limit, transformer, apiEndpoint })
-        );
+        dispatch(gridActions.fetchRows({ transformer, apiEndpoint }));
     }, [pagination.page, pagination.limit]);
 
     const handleChangePage = (event: unknown, newPage: number) => {

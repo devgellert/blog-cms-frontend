@@ -8,8 +8,6 @@ const gridSlice = createSlice({
         fetchRows: (
             state: GridState,
             action: PayloadAction<{
-                page: number;
-                limit: number;
                 transformer: (object: object) => object;
                 apiEndpoint: string;
             }>
