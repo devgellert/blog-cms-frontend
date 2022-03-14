@@ -1,12 +1,14 @@
 import { FC, memo } from "react";
+import { useNavigate } from "react-router-dom";
+//
 import PageWrap from "../../components/PageWrap/PageWrap";
 import CategoryGrid from "./components/CategoryGrid/CategoryGrid";
-//
-// import css from "./style.module.scss";
 
 type Props = {};
 
 const Categories: FC<Props> = ({}) => {
+    const navigate = useNavigate();
+
     return (
         <PageWrap
             title="Categories"
@@ -14,7 +16,7 @@ const Categories: FC<Props> = ({}) => {
                 {
                     text: "New Category",
                     onClick: () => {
-                        /*TODO: implement*/
+                        navigate("/categories/create");
                     },
                     color: "success"
                 }

@@ -1,6 +1,7 @@
 import { FC, memo, ReactElement } from "react";
+import { AppBar, Button, CircularProgress, Toolbar, Typography } from "@mui/material";
 //
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import css from "./PageWrap.module.scss";
 
 type Props = {
     title: string;
@@ -11,11 +12,12 @@ type Props = {
         color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
         variant?: "text" | "outlined" | "contained";
     }[];
+    isLoading?: boolean;
 };
 
-const PageWrap: FC<Props> = ({ children, title, buttons }) => {
+const PageWrap: FC<Props> = ({ children, title, buttons, isLoading = false }) => {
     return (
-        <div>
+        <div className={css["PageWrap"]}>
             <AppBar position="relative">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -32,7 +34,13 @@ const PageWrap: FC<Props> = ({ children, title, buttons }) => {
                 </Toolbar>
             </AppBar>
 
-            {children}
+            {!!isLoading && (
+                <div className={css["loader-wrap"]}>
+                    <CircularProgress color="success" />
+                </div>
+            )}
+
+            {!isLoading && children}
         </div>
     );
 };
