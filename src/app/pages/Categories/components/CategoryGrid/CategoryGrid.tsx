@@ -1,11 +1,11 @@
-import * as React from "react";
+import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+//
 import Grid from "../../../../components/Grid/Grid";
 import GridConfig from "../../../../components/Grid/types/GridConfig";
 import { ApiCategory } from "../../../../../types/api";
-import { useDispatch } from "react-redux";
-import { categoryActions } from "../../../../../redux/category/slice";
 import Popup from "../../../../components/Popup/Popup";
-import { useState } from "react";
 import api from "../../../../../api";
 import { gridActions } from "../../../../../redux/grid/slice";
 
