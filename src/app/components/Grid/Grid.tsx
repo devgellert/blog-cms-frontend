@@ -1,7 +1,9 @@
+import React from "react";
 import { FC, memo, useEffect } from "react";
 import { isFunction } from "lodash";
+import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 //
-import css from "./Grid.module.scss";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -10,13 +12,12 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
-import * as React from "react";
 import GridConfig from "./types/GridConfig";
-import { useDispatch, useSelector } from "react-redux";
 import GridSelectors from "../../../redux/grid/selector";
 import { gridActions } from "../../../redux/grid/slice";
-import { CircularProgress } from "@mui/material";
 import ActionsMenu from "./components/ActionsMenu/ActionsMenu";
+//
+import css from "./Grid.module.scss";
 
 type Props = {
     config: GridConfig<any, any>;
@@ -29,20 +30,19 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
     const pagination = useSelector(GridSelectors.getPagination);
     const isLoading = useSelector(GridSelectors.isLoading);
 
-    const [page, setPage] = React.useState(0);
-    const [limit, setLimit] = React.useState(10);
-
     useEffect(() => {
-        dispatch(gridActions.fetchRows({ page: page + 1, limit, transformer, apiEndpoint }));
-    }, [page, limit]);
+        dispatch(
+            gridActions.fetchRows({ page: pagination.page + 1, limit: pagination.limit, transformer, apiEndpoint })
+        );
+    }, [pagination.page, pagination.limit]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        dispatch(gridActions.setPaginationPage(newPage));
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLimit(+event.target.value);
-        setPage(0);
+        dispatch(gridActions.setPaginationLimit(+event.target.value));
+        dispatch(gridActions.setPaginationPage(0));
     };
 
     if (isLoading) {
@@ -115,8 +115,8 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
                 rowsPerPageOptions={[10, 25]}
                 component="div"
                 count={pagination?.max || 0}
-                rowsPerPage={limit}
-                page={page}
+                rowsPerPage={pagination.limit}
+                page={pagination.page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
