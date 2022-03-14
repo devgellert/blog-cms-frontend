@@ -2,6 +2,12 @@ import * as React from "react";
 import Grid from "../../../../components/Grid/Grid";
 import GridConfig from "../../../../components/Grid/types/GridConfig";
 import { ApiCategory } from "../../../../../types/api";
+import { useDispatch } from "react-redux";
+import { categoryActions } from "../../../../../redux/category/slice";
+import Popup from "../../../../components/Popup/Popup";
+import { useState } from "react";
+import api from "../../../../../api";
+import { gridActions } from "../../../../../redux/grid/slice";
 
 type Data = {
     id: number;
@@ -17,42 +23,73 @@ export type GridColumn = {
     format?: (value: number) => string;
 };
 
-const config: GridConfig<Data, ApiCategory> = {
-    columns: [
-        { id: "id", label: "Id", minWidth: 170 },
-        { id: "name", label: "Name", minWidth: 100 },
-        {
-            id: "slug",
-            label: "slug",
-            minWidth: 170,
-            align: "right",
-            format: (value: number) => value.toLocaleString("en-US")
-        }
-    ],
-    transformer: object => {
-        return {
-            id: object.id,
-            slug: object.slug,
-            name: object.name
-        };
-    },
-    apiEndpoint: "/categories",
-    actions: [
-        {
-            text: "Details",
-            createLink: row => {
-                return `/categories/${row.id}`;
-            }
-        },
-        {
-            text: "Edit",
-            createLink: row => {
-                return `/categories/${row.id}/edit`;
-            }
-        }
-    ]
-};
-
 export default function CategoryGrid() {
-    return <Grid config={config} />;
+    const dispatch = useDispatch();
+
+    const [removeId, setRemoveId] = useState<null | number>(null);
+
+    const config: GridConfig<Data, ApiCategory> = {
+        columns: [
+            { id: "id", label: "Id", minWidth: 170 },
+            { id: "name", label: "Name", minWidth: 100 },
+            {
+                id: "slug",
+                label: "slug",
+                minWidth: 170,
+                align: "right",
+                format: (value: number) => value.toLocaleString("en-US")
+            }
+        ],
+        transformer: object => {
+            return {
+                id: object.id,
+                slug: object.slug,
+                name: object.name
+            };
+        },
+        apiEndpoint: "/categories",
+        actions: [
+            {
+                text: "Details",
+                createLink: row => {
+                    return `/categories/${row.id}`;
+                }
+            },
+            {
+                text: "Edit",
+                createLink: row => {
+                    return `/categories/${row.id}/edit`;
+                }
+            },
+            {
+                text: "Delete",
+                onClick: row => {
+                    setRemoveId(row.id);
+                }
+            }
+        ]
+    };
+
+    const removeCategory = async () => {
+        try {
+            await api.delete(`/categories/${removeId}`);
+
+            //dispatch(gridActions.fetchRows({}));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    return (
+        <>
+            <Grid config={config} />
+
+            <Popup
+                title={`Do you want to remove category with id: #${removeId}`}
+                isOpen={removeId !== null}
+                onYesClick={removeCategory}
+                setIsOpen={() => setRemoveId(null)}
+            />
+        </>
+    );
 }
