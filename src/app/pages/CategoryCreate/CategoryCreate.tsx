@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { map, unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Container } from "@mui/material";
+import { Alert, Button, Card, CardContent, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 //
 import PageWrap from "../../components/PageWrap/PageWrap";
@@ -104,18 +104,30 @@ const CategoryCreate: FC<Props> = ({}) => {
                 )}
 
                 <div className={css["input-grid"]}>
-                    <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">General</Typography>
 
-                    <Input value={slug} setValue={setSlug} label="Slug" errorText={slugError} />
+                            <Input value={name} setValue={setName} label="Name" errorText={nameError} hasMarginBottom />
 
-                    <SelectField
-                        labelId="parent-label"
-                        label="Parent"
-                        errorText={parentError}
-                        value={parent}
-                        onChange={e => setParent(e.target.value)}
-                        choices={parentChoices}
-                    />
+                            <SelectField
+                                labelId="parent-label"
+                                label="Parent"
+                                errorText={parentError}
+                                value={parent}
+                                onChange={e => setParent(e.target.value)}
+                                choices={parentChoices}
+                            />
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">SEO</Typography>
+
+                            <Input value={slug} setValue={setSlug} label="Slug" errorText={slugError} />
+                        </CardContent>
+                    </Card>
                 </div>
 
                 <Button onClick={onSave} color="success" variant="contained" className={css["button"]}>
