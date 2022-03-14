@@ -6,7 +6,7 @@ export type ApiLoginResponse = { token: string };
 
 export type ApiRefreshResponse = { token: string };
 
-export type ApiCategory = { name: string; slug: string } & ApiResource;
+export type ApiCategory = { name: string; slug: string; parent?: number } & ApiResource;
 
 export type ApiResponsePaginationType = {
     pagination: {
@@ -26,3 +26,10 @@ export type ApiPost = {
 export type ApiGetPostsResponse = {
     items: ApiPost[];
 } & ApiResponsePaginationType;
+
+export type ApiCategoryTranslation = {
+    category: number;
+    id: number;
+    locale: string;
+    name: string;
+};

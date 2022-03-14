@@ -1,0 +1,16 @@
+.Category {
+  .create-locale-btn {
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+
+  .data-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+
+  .locale-card {
+    margin-top: 15px;
+  }
+}

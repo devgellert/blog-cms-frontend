@@ -4,4 +4,10 @@
     justify-content: center;
     align-items: center;
   }
+
+  .app-bar {
+    &.has-margin-bottom {
+      margin-bottom: 15px;
+    }
+  }
 }
