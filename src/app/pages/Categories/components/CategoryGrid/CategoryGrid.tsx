@@ -74,7 +74,9 @@ export default function CategoryGrid() {
         try {
             await api.delete(`/categories/${removeId}`);
 
-            //dispatch(gridActions.fetchRows({}));
+            dispatch(
+                gridActions.fetchRows({ transformer: config.transformer as any, apiEndpoint: config.apiEndpoint })
+            );
         } catch (e) {
             console.log(e);
         }
