@@ -10,8 +10,6 @@ function* removeCategoryTranslationSaga({
         yield call(api.delete, `/categories/${categoryId}/translations/${locale}`);
 
         yield put(categoryActions.initializeCategoryDetailsPage({ id: categoryId }));
-
-        yield put(categoryActions.removeCategoryTranslationSuccess());
     } catch (e) {
         console.log(e);
     }
