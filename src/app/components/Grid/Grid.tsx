@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FC, memo, useEffect } from "react";
 import { isFunction } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,8 +30,14 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
     const pagination = useSelector(GridSelectors.getPagination);
     const isLoading = useSelector(GridSelectors.isLoading);
 
+    const [isMounted, setIsMounted] = useState(false);
+
     useEffect(() => {
-        dispatch(gridActions.fetchRows({ transformer, apiEndpoint }));
+        dispatch(gridActions.fetchRows({ transformer, apiEndpoint, setPaginationToInitial: !isMounted }));
+
+        if (!isMounted) {
+            setIsMounted(true);
+        }
     }, [pagination.page, pagination.limit]);
 
     const handleChangePage = (event: unknown, newPage: number) => {

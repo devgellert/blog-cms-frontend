@@ -10,9 +10,14 @@ const gridSlice = createSlice({
             action: PayloadAction<{
                 transformer: (object: object) => object;
                 apiEndpoint: string;
+                setPaginationToInitial?: boolean;
             }>
         ) => {
             state.isLoading = true;
+
+            if (action.payload.setPaginationToInitial === true) {
+                state.pagination = getInitialState().pagination;
+            }
         },
 
         fetchRowsSuccess: (
