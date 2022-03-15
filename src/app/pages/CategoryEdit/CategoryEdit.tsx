@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEventHandler, useEffect } from "react";
 import { FC, memo } from "react";
 import { map, unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Card, CardContent, Container, Typography } from "@mui/material";
+import { Button, Card, CardContent, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import slugify from "slugify";
 //
 import PageWrap from "../../components/PageWrap/PageWrap";
 import Input from "../../components/Input/Input";
@@ -17,6 +18,7 @@ import api from "../../../api";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
 import isSlugError from "../../../lib/isSlugError";
+import SlugField from "../../components/inputs/SlugField/SlugField";
 import { uiActions } from "../../../redux/ui/slice";
 //
 import css from "./CategoryEdit.module.scss";
@@ -55,8 +57,10 @@ const CategoryEdit: FC<Props> = ({}) => {
         })();
     }, []);
 
-    const onSave = async () => {
+    const onSubmit: FormEventHandler = async event => {
         try {
+            event.preventDefault();
+
             dispatch(categoryActions.setIsCategoryCreatePageLoading(true));
 
             setNameError("");
@@ -67,7 +71,7 @@ const CategoryEdit: FC<Props> = ({}) => {
 
             const body = {
                 name: name,
-                slug: slug,
+                slug: slugify(slug),
                 parent: normalizedParent
             };
 
@@ -96,7 +100,6 @@ const CategoryEdit: FC<Props> = ({}) => {
         setParentError(parentError);
 
         const axiosError = getAxiosError(e);
-        console.log(e?.response);
         if (isSlugError(axiosError)) {
             setSlugError(axiosError);
         }
@@ -110,36 +113,44 @@ const CategoryEdit: FC<Props> = ({}) => {
     return (
         <PageWrap title="New Category" buttons={[]} isLoading={isCategoryCreatePageLoading}>
             <Container maxWidth="lg" className={css["CategoryEdit"]}>
-                <div className={css["input-grid"]}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">General</Typography>
+                <form onSubmit={onSubmit}>
+                    <div className={css["input-grid"]}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6">General</Typography>
 
-                            <Input value={name} setValue={setName} label="Name" errorText={nameError} hasMarginBottom />
+                                <Input
+                                    value={name}
+                                    setValue={setName}
+                                    label="Name"
+                                    errorText={nameError}
+                                    hasMarginBottom
+                                />
 
-                            <SelectField
-                                labelId="parent-label"
-                                label="Parent"
-                                errorText={parentError}
-                                value={parent}
-                                onChange={e => setParent(e.target.value)}
-                                choices={parentChoices}
-                            />
-                        </CardContent>
-                    </Card>
+                                <SelectField
+                                    labelId="parent-label"
+                                    label="Parent"
+                                    errorText={parentError}
+                                    value={parent}
+                                    onChange={e => setParent(e.target.value)}
+                                    choices={parentChoices}
+                                />
+                            </CardContent>
+                        </Card>
 
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">SEO</Typography>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6">SEO</Typography>
 
-                            <Input value={slug} setValue={setSlug} label="Slug" errorText={slugError} />
-                        </CardContent>
-                    </Card>
-                </div>
+                                <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                <Button onClick={onSave} color="success" variant="contained" className={css["button"]}>
-                    Save
-                </Button>
+                    <Button type="submit" color="success" variant="contained" className={css["button"]}>
+                        Save
+                    </Button>
+                </form>
             </Container>
         </PageWrap>
     );
