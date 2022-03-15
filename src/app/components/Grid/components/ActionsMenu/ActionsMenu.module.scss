@@ -1,0 +1,13 @@
+.ActionsMenu {
+  display: flex;
+  justify-content: flex-end;
+
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .menu {
+    min-width: 300px;
+  }
+}

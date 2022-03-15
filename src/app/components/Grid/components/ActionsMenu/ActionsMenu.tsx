@@ -1,17 +1,21 @@
-import React from "react";
+import React, { memo } from "react";
+import { FC } from "react";
 import { useState } from "react";
+import { isFunction } from "lodash";
+import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { FC } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { isFunction } from "lodash";
-import { useNavigate } from "react-router-dom";
-
-const ITEM_HEIGHT = 48;
+//
+import css from "./ActionsMenu.module.scss";
 
 type Props = {
-    actions: { text: string; onClick?: () => void; link?: string }[];
+    actions: {
+        text: string;
+        onClick?: () => void;
+        link?: string;
+    }[];
 };
 
 const ActionsMenu: FC<Props> = ({ actions }) => {
@@ -30,32 +34,12 @@ const ActionsMenu: FC<Props> = ({ actions }) => {
     };
 
     return (
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <IconButton
-                aria-label="more"
-                id="long-button"
-                aria-controls={isOpen ? "long-menu" : undefined}
-                aria-expanded={isOpen ? "true" : undefined}
-                aria-haspopup="true"
-                onClick={handleClick}
-            >
+        <div className={css["ActionsMenu"]}>
+            <IconButton onClick={handleClick} className={css["icon"]}>
                 <MoreVertIcon />
             </IconButton>
-            <Menu
-                id="long-menu"
-                MenuListProps={{
-                    "aria-labelledby": "long-button"
-                }}
-                anchorEl={anchorEl}
-                open={isOpen}
-                onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        maxHeight: ITEM_HEIGHT * 4.5,
-                        width: "20ch"
-                    }
-                }}
-            >
+
+            <Menu anchorEl={anchorEl} open={isOpen} onClose={handleClose}>
                 {actions.map(action => (
                     <MenuItem
                         key={action.text}
@@ -79,4 +63,4 @@ const ActionsMenu: FC<Props> = ({ actions }) => {
     );
 };
 
-export default ActionsMenu;
+export default memo(ActionsMenu);
