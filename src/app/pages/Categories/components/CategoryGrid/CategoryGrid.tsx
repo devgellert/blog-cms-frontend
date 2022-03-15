@@ -30,14 +30,12 @@ export default function CategoryGrid() {
 
     const config: GridConfig<Data, ApiCategory> = {
         columns: [
-            { id: "id", label: "Id", minWidth: 170 },
-            { id: "name", label: "Name", minWidth: 100 },
+            { id: "id", label: "", format: (value: number) => `#${value}` },
+            { id: "name", label: "Name", align: "right" },
             {
                 id: "slug",
                 label: "slug",
-                minWidth: 170,
-                align: "right",
-                format: (value: number) => value.toLocaleString("en-US")
+                align: "right"
             }
         ],
         transformer: object => {
