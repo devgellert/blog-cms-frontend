@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react";
+import React, { FC, memo, SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Box,
@@ -21,26 +21,22 @@ import CategorySelectors from "../../../redux/category/selector";
 //
 import css from "./Category.module.scss";
 
-type Props = {};
-
-const Category: FC<Props> = ({}) => {
+const Category: FC = () => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const isCategoryDetailsLoading = useSelector(CategorySelectors.isCategoryDetailsLoading);
     const translations = useSelector(CategorySelectors.getTranslations);
-
     const category = useSelector(CategorySelectors.getCategory);
 
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
     }, []);
 
-    const [tab, setTab] = React.useState(0);
+    const [tab, setTab] = useState(0);
 
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleTabChange = (event: SyntheticEvent, newValue: number) => {
         setTab(newValue);
     };
 
@@ -49,11 +45,11 @@ const Category: FC<Props> = ({}) => {
             title={`Category #${categoryId}`}
             buttons={[
                 {
-                    text: "Create Locale",
+                    text: "Create Translation",
                     color: "success",
                     variant: "contained",
                     onClick: () => {
-                        navigate(`/categories/${categoryId}/locales/create`);
+                        navigate(`/categories/${categoryId}/translations/create`);
                     }
                 },
                 {
@@ -101,19 +97,19 @@ const Category: FC<Props> = ({}) => {
                     </Card>
                 </div>
 
-                <Card className={css["locale-card"]}>
+                <Card className={css["translation-card"]}>
                     <CardContent>
                         <header className={css["card-header"]}>
-                            <Typography variant="h6">Locales</Typography>
+                            <Typography variant="h6">Translations</Typography>
 
                             <Button
                                 onClick={() => {
-                                    navigate(`/categories/${categoryId}/locales/create`);
+                                    navigate(`/categories/${categoryId}/translations/create`);
                                 }}
                                 variant="outlined"
                                 color="success"
                             >
-                                Create Locale
+                                Create Translation
                             </Button>
                         </header>
 
@@ -135,7 +131,7 @@ const Category: FC<Props> = ({}) => {
 
                                         <Button
                                             onClick={() => {
-                                                navigate(`/categories/${categoryId}/locales/${elem.locale}/edit`);
+                                                navigate(`/categories/${categoryId}/translations/${elem.locale}/edit`);
                                             }}
                                             variant="outlined"
                                         >

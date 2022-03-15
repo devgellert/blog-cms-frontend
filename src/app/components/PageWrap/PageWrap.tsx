@@ -28,7 +28,7 @@ const PageWrap: FC<Props> = ({ children, title, buttons, isLoading = false, hasT
 
                     {buttons.map(({ text, onClick, color = "inherit", variant = "contained" }) => {
                         return (
-                            <Button color={color} onClick={onClick} variant={variant}>
+                            <Button color={color} onClick={onClick} variant={variant} className={css["button"]}>
                                 {text}
                             </Button>
                         );

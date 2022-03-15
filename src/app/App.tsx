@@ -46,11 +46,11 @@ const App: FC<Props> = ({}) => {
                             <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
                             <Route path=":categoryId/edit" element={<AuthGuard element={<CategoryEdit />} />} />
                             <Route
-                                path=":categoryId/locales/create"
+                                path=":categoryId/translations/create"
                                 element={<AuthGuard element={<CategoryLocaleCreate />} />}
                             />
                             <Route
-                                path=":categoryId/locales/:locale/edit"
+                                path=":categoryId/translations/:locale/edit"
                                 element={<AuthGuard element={<CategoryLocaleEdit />} />}
                             />
                         </Route>
