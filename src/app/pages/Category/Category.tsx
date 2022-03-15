@@ -20,7 +20,6 @@ import { categoryActions } from "../../../redux/category/slice";
 import CategorySelectors from "../../../redux/category/selector";
 //
 import css from "./Category.module.scss";
-import api from "../../../api";
 
 type Props = {};
 
@@ -96,7 +95,19 @@ const Category: FC<Props> = ({}) => {
 
                 <Card className={css["locale-card"]}>
                     <CardContent>
-                        <Typography variant="h6">Locales</Typography>
+                        <header className={css["card-header"]}>
+                            <Typography variant="h6">Locales</Typography>
+
+                            <Button
+                                onClick={() => {
+                                    navigate(`/categories/${categoryId}/locales/create`);
+                                }}
+                                variant="outlined"
+                                color="success"
+                            >
+                                Create Locale
+                            </Button>
+                        </header>
 
                         {!!translations?.length && (
                             <>
@@ -120,10 +131,8 @@ const Category: FC<Props> = ({}) => {
                                             }}
                                             variant="outlined"
                                         >
-                                            Edit {elem.locale} Locale
+                                            Edit
                                         </Button>
-
-                                        <br />
 
                                         <Button
                                             onClick={() =>
@@ -136,26 +145,16 @@ const Category: FC<Props> = ({}) => {
                                             }
                                             variant="outlined"
                                             color={"error"}
+                                            className={css["btn-remove"]}
                                         >
-                                            Remove {elem.locale} Locale
+                                            Remove
                                         </Button>
                                     </TabPanel>
                                 ))}
                             </>
                         )}
 
-                        {!translations?.length && (
-                            <Button
-                                onClick={() => {
-                                    navigate(`/categories/${categoryId}/locales/create`);
-                                }}
-                                variant="outlined"
-                                color="success"
-                                className={css["create-locale-btn"]}
-                            >
-                                Create Locale
-                            </Button>
-                        )}
+                        {!translations?.length && <Typography variant="body1">-</Typography>}
                     </CardContent>
                 </Card>
             </Container>

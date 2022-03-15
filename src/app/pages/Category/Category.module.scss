@@ -1,9 +1,4 @@
 .Category {
-  .create-locale-btn {
-    margin-top: 15px;
-    margin-left: 10px;
-  }
-
   .data-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -12,5 +7,14 @@
 
   .locale-card {
     margin-top: 15px;
+  }
+
+  .btn-remove {
+    margin-left: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
   }
 }
