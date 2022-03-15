@@ -34,6 +34,10 @@ const Category: FC = () => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
     }, []);
 
+    useEffect(() => {
+        setTab(0);
+    }, [translations?.length]);
+
     const [tab, setTab] = useState(0);
 
     const handleTabChange = (event: SyntheticEvent, newValue: number) => {
