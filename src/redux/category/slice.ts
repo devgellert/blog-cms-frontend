@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
 import { CategoryState, CreateNewCategoryPayload } from "./types";
 import { ApiCategory, ApiCategoryTranslation } from "../../types/api";
+import removeCategoryTranslationSaga from "./sagas/removeCategoryTranslationSaga";
 
 const categorySlice = createSlice({
     name: "categorySlice",
@@ -29,6 +30,15 @@ const categorySlice = createSlice({
             state.isCategoryDetailsLoading = false;
             state.category = action.payload.category;
             state.translations = action.payload.translations;
+        },
+        removeCategoryTranslation: (
+            state: CategoryState,
+            action: PayloadAction<{ locale: string; categoryId: number }>
+        ) => {
+            state.isCategoryDetailsLoading = true;
+        },
+        removeCategoryTranslationSuccess: (state: CategoryState) => {
+            state.isCategoryDetailsLoading = false;
         }
     },
     initialState: {

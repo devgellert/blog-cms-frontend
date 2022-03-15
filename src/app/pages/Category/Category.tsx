@@ -20,6 +20,7 @@ import { categoryActions } from "../../../redux/category/slice";
 import CategorySelectors from "../../../redux/category/selector";
 //
 import css from "./Category.module.scss";
+import api from "../../../api";
 
 type Props = {};
 
@@ -120,6 +121,23 @@ const Category: FC<Props> = ({}) => {
                                             variant="outlined"
                                         >
                                             Edit {elem.locale} Locale
+                                        </Button>
+
+                                        <br />
+
+                                        <Button
+                                            onClick={() =>
+                                                dispatch(
+                                                    categoryActions.removeCategoryTranslation({
+                                                        categoryId: Number(categoryId),
+                                                        locale: elem.locale
+                                                    })
+                                                )
+                                            }
+                                            variant="outlined"
+                                            color={"error"}
+                                        >
+                                            Remove {elem.locale} Locale
                                         </Button>
                                     </TabPanel>
                                 ))}
