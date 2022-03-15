@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FC, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AxiosResponse } from "axios";
 import { Button, Card, CardContent, Container, Typography } from "@mui/material";
 //
@@ -17,6 +17,7 @@ type Props = {};
 
 const CategoryLocaleCreate: FC<Props> = ({}) => {
     const { categoryId } = useParams();
+    const navigate = useNavigate();
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
     const { value: locale, setValue: setLocale, errorText: localeError, setError: setLocaleError } = useInput({});
@@ -37,6 +38,7 @@ const CategoryLocaleCreate: FC<Props> = ({}) => {
                 }
             );
             setName(data.name);
+            navigate(`/categories/${categoryId}`);
         } catch (e) {
             const nameError = getAxiosFieldError(e, "name");
             setNameError(nameError);
