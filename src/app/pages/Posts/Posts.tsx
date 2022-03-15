@@ -1,4 +1,5 @@
 import { FC, memo } from "react";
+import { get } from "lodash";
 //
 import PageWrap from "../../components/PageWrap/PageWrap";
 import Grid from "../../components/Grid/Grid";
@@ -35,7 +36,7 @@ const gridConfig: GridConfig<Data, ApiPost> = {
         return {
             id: object.id,
             slug: object.slug,
-            category: object.category.name,
+            category: get(object, "category.name", "-"),
             userEmail: object.author.username
         };
     },

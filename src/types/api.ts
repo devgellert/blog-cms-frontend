@@ -19,7 +19,7 @@ export type ApiGetCategoriesResponse = { items: ApiCategory[] } & ApiResponsePag
 export type ApiPost = {
     author: { id: number; username: string };
     id: number;
-    category: { id: number; name: string };
+    category?: { id: number; name: string };
     slug: string;
 } & ApiResource;
 
