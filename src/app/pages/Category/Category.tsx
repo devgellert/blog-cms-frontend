@@ -55,6 +55,14 @@ const Category: FC<Props> = ({}) => {
                     onClick: () => {
                         navigate(`/categories/${categoryId}/locales/create`);
                     }
+                },
+                {
+                    text: "Edit Category",
+                    color: "primary",
+                    variant: "contained",
+                    onClick: () => {
+                        navigate(`/categories/${categoryId}/edit`);
+                    }
                 }
             ]}
             isLoading={isCategoryDetailsLoading}
