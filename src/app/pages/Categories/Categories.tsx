@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PageWrap from "../../components/PageWrap/PageWrap";
 import CategoryGrid from "./components/CategoryGrid/CategoryGrid";
 
-type Props = {};
-
-const Categories: FC<Props> = ({}) => {
+const Categories: FC = () => {
     const navigate = useNavigate();
 
     return (

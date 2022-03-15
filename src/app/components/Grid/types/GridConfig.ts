@@ -1,5 +1,3 @@
-import { GridColumn } from "../../../pages/Categories/components/CategoryGrid/CategoryGrid";
-
 type GridConfig<T, ApiResponseItem> = {
     columns: GridColumn[];
     transformer: (object: ApiResponseItem) => T;
@@ -9,6 +7,14 @@ type GridConfig<T, ApiResponseItem> = {
         onClick?: (row: T) => void;
         createLink?: (row: T) => string;
     }[];
+};
+
+export type GridColumn = {
+    id: string;
+    label: string;
+    minWidth?: number;
+    align?: "right";
+    format?: (value: number) => string;
 };
 
 export default GridConfig;

@@ -8,19 +8,12 @@ import { ApiCategory } from "../../../../../types/api";
 import Popup from "../../../../components/Popup/Popup";
 import api from "../../../../../api";
 import { gridActions } from "../../../../../redux/grid/slice";
+import { uiActions } from "../../../../../redux/ui/slice";
 
 type Data = {
     id: number;
     name: string;
     slug: string;
-};
-
-export type GridColumn = {
-    id: string;
-    label: string;
-    minWidth?: number;
-    align?: "right";
-    format?: (value: number) => string;
 };
 
 export default function CategoryGrid() {
@@ -75,8 +68,14 @@ export default function CategoryGrid() {
             dispatch(
                 gridActions.fetchRows({ transformer: config.transformer as any, apiEndpoint: config.apiEndpoint })
             );
+
+            dispatch(
+                uiActions.displaySnackbar({ type: "success", text: `Successfully removed category #${removeId}` })
+            );
         } catch (e) {
-            console.log(e);
+            dispatch(uiActions.displaySnackbar({ type: "error", text: `Failed to remove category #${removeId}` }));
+        } finally {
+            setRemoveId(null);
         }
     };
 
