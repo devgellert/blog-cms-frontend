@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
 import { Button, Card, CardContent, Container, Typography } from "@mui/material";
 //
@@ -10,13 +11,16 @@ import Input from "../../components/Input/Input";
 import { ApiCategoryTranslation } from "../../../types/api";
 import api from "../../../api";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
+import { uiActions } from "../../../redux/ui/slice";
 //
 import css from "./CategoryLocaleEdit.module.scss";
 
 type Props = {};
 
 const CategoryLocaleEdit: FC<Props> = ({}) => {
+    const dispatch = useDispatch();
     const { locale, categoryId } = useParams();
+    const navigate = useNavigate();
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
 
@@ -45,15 +49,16 @@ const CategoryLocaleEdit: FC<Props> = ({}) => {
             const { data }: AxiosResponse<ApiCategoryTranslation> = await api.put(
                 `/categories/${categoryId}/translations/${locale}`,
                 {
-                    // locale,
-                    // category: categoryId,
                     name
                 }
             );
             setName(data.name);
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully updated locale." }));
+            navigate(`/categories/${categoryId}`);
         } catch (e) {
             const nameError = getAxiosFieldError(e, "name");
             setNameError(nameError);
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to update locale." }));
         } finally {
             setIsLoading(false);
         }

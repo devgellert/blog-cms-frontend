@@ -12,12 +12,15 @@ import api from "../../../api";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 //
 import css from "./CategoryLocaleCreate.module.scss";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../redux/ui/slice";
 
 type Props = {};
 
 const CategoryLocaleCreate: FC<Props> = ({}) => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
     const { value: locale, setValue: setLocale, errorText: localeError, setError: setLocaleError } = useInput({});
@@ -37,7 +40,7 @@ const CategoryLocaleCreate: FC<Props> = ({}) => {
                     name
                 }
             );
-            setName(data.name);
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created locale." }));
             navigate(`/categories/${categoryId}`);
         } catch (e) {
             const nameError = getAxiosFieldError(e, "name");

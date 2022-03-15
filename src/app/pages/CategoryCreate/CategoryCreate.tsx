@@ -18,11 +18,14 @@ import getAxiosError from "../../../lib/getAxiosError";
 import isSlugError from "../../../lib/isSlugError";
 //
 import css from "./CategoryCreate.module.scss";
+import { uiActions } from "../../../redux/ui/slice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const CategoryCreate: FC<Props> = ({}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const parentCategories = useSelector(CategorySelectors.getParentCategories);
     const isCategoryCreatePageLoading = useSelector(CategorySelectors.isCategoryCreatePageLoading);
@@ -35,7 +38,6 @@ const CategoryCreate: FC<Props> = ({}) => {
         errorText: parentError,
         setError: setParentError
     } = useInput({ initialValue: "0" });
-    const [successId, setSuccessId] = useState<number | null>(null);
 
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryCreatePage());
@@ -63,12 +65,10 @@ const CategoryCreate: FC<Props> = ({}) => {
 
             const response: AxiosResponse<ApiCategory> = await api.post("/categories", body);
 
-            setSuccessId(response.data.id);
-            setSlug("");
-            setName("");
-            setParent("0");
-            dispatch(categoryActions.initializeCategoryCreatePage());
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created category." }));
+            navigate(`/categories/${response.data.id}`);
         } catch (e) {
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create category." }));
             setErrors(e);
         } finally {
             dispatch(categoryActions.setIsCategoryCreatePageLoading(false));
@@ -97,12 +97,6 @@ const CategoryCreate: FC<Props> = ({}) => {
     return (
         <PageWrap title="New Category" buttons={[]} isLoading={isCategoryCreatePageLoading}>
             <Container maxWidth="lg" className={css["CategoryCreate"]}>
-                {!!successId && (
-                    <Alert severity="success" className={css["alert"]}>
-                        Category successfully created with id #{successId}
-                    </Alert>
-                )}
-
                 <div className={css["input-grid"]}>
                     <Card>
                         <CardContent>

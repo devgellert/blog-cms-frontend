@@ -5,12 +5,14 @@ import { authReducer } from "./auth/slice";
 import { StoreState } from "./type";
 import { gridReducer } from "./grid/slice";
 import { categoryReducer } from "./category/slice";
+import { uiReducer } from "./ui/slice";
 
 const rootReducer = combineReducers<StoreState>({
     app: appSlice.reducer,
     auth: authReducer,
     grid: gridReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    ui: uiReducer
 });
 
 export default rootReducer;

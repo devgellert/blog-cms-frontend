@@ -17,6 +17,7 @@ import CategoryCreate from "./pages/CategoryCreate/CategoryCreate";
 import css from "./App.module.scss";
 import CategoryLocaleEdit from "./pages/CategoryLocaleEdit/CategoryLocaleEdit";
 import CategoryLocaleCreate from "./pages/CategoryLocaleCreate/CategoryLocaleCreate";
+import Snackbar from "./components/Snackbar/Snackbar";
 
 type Props = {};
 
@@ -31,6 +32,8 @@ const App: FC<Props> = ({}) => {
         <div className={css["App"]}>
             <Router>
                 <Menu />
+
+                <Snackbar />
 
                 <main className={css["main"]}>
                     <Routes>
