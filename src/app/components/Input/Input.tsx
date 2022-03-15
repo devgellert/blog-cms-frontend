@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler, KeyboardEventHandler } from "react";
 import { FC, memo } from "react";
 import cn from "classnames";
 //
@@ -14,11 +14,24 @@ type Props = {
     //
     className?: string;
     hasMarginBottom?: boolean;
+    onBlur?: FocusEventHandler;
+    onKeyPressCapture?: KeyboardEventHandler;
 };
 
-const Input: FC<Props> = ({ value, setValue, label, className, hasMarginBottom = false, errorText }) => {
+const Input: FC<Props> = ({
+    value,
+    setValue,
+    label,
+    className,
+    hasMarginBottom = false,
+    errorText,
+    onBlur,
+    onKeyPressCapture
+}) => {
     return (
         <TextField
+            onKeyPressCapture={onKeyPressCapture}
+            onBlur={onBlur}
             error={!!errorText}
             helperText={errorText}
             label={label}
