@@ -16,6 +16,7 @@ import CategoryCreate from "./pages/CategoryCreate/CategoryCreate";
 //
 import css from "./App.module.scss";
 import CategoryLocaleEdit from "./pages/CategoryLocaleEdit/CategoryLocaleEdit";
+import CategoryLocaleCreate from "./pages/CategoryLocaleCreate/CategoryLocaleCreate";
 
 type Props = {};
 
@@ -39,6 +40,10 @@ const App: FC<Props> = ({}) => {
                             <Route index element={<AuthGuard element={<Categories />} />} />
                             <Route path="create" element={<AuthGuard element={<CategoryCreate />} />} />
                             <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
+                            <Route
+                                path=":categoryId/locales/create"
+                                element={<AuthGuard element={<CategoryLocaleCreate />} />}
+                            />
                             <Route
                                 path=":categoryId/locales/:locale/edit"
                                 element={<AuthGuard element={<CategoryLocaleEdit />} />}

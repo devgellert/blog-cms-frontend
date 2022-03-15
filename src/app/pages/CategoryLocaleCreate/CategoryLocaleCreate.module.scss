@@ -1,0 +1,15 @@
+.CategoryLocaleCreate {
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .button {
+    margin-top: 15px;
+  }
+
+  .input-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+}
