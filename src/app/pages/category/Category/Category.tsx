@@ -1,7 +1,6 @@
 import React, { FC, memo, SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    Box,
     Button,
     Card,
     CardContent,
@@ -18,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
+import TabPanel from "../../../components/TabPanel/TabPanel";
 //
 import css from "./Category.module.scss";
 
@@ -169,31 +169,5 @@ const Category: FC = () => {
         </PageWrap>
     );
 };
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
 
 export default memo(Category);

@@ -33,3 +33,15 @@ export type ApiCategoryTranslation = {
     locale: string;
     name: string;
 };
+
+export type ApiPostTranslation = {
+    content: string;
+    enabled: boolean;
+    locale: string;
+    metaDescription: string;
+    metaTitle: string;
+    ogDescription: string;
+    ogTitle: string;
+    parent: number;
+    title: string;
+} & ApiResource;
