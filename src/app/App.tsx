@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import store from "../redux/store";
 import { authActions } from "../redux/auth/slice";
 import Menu from "./components/Menu/Menu";
-import Posts from "./pages/post/Posts/Posts";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AuthGuard from "./components/AuthGuard/AuthGuard";
@@ -17,6 +16,8 @@ import CategoryLocaleEdit from "./pages/category/CategoryTranslationEdit/Categor
 import CategoryLocaleCreate from "./pages/category/CategoryTranslationCreate/CategoryTranslationCreate";
 import CategoryEdit from "./pages/category/CategoryEdit/CategoryEdit";
 import Snackbar from "./components/Snackbar/Snackbar";
+import Posts from "./pages/post/Posts/Posts";
+import Post from "./pages/post/Post/Post";
 //
 import css from "./App.module.scss";
 
@@ -54,8 +55,10 @@ const App: FC<Props> = ({}) => {
                                 element={<AuthGuard element={<CategoryLocaleEdit />} />}
                             />
                         </Route>
+
                         <Route path="/posts">
                             <Route index element={<AuthGuard element={<Posts />} />} />
+                            <Route path=":postId" element={<AuthGuard element={<Post />} />} />
                         </Route>
                     </Routes>
                 </main>

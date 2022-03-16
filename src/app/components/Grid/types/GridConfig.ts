@@ -14,7 +14,7 @@ export type GridColumn = {
     label: string;
     minWidth?: number;
     align?: "right";
-    format?: (value: number) => string;
+    format?: (value: any) => string;
 };
 
 export default GridConfig;

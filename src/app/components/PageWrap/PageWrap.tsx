@@ -1,4 +1,4 @@
-import { FC, memo, ReactElement } from "react";
+import { FC, memo } from "react";
 import { AppBar, Button, CircularProgress, Toolbar, Typography } from "@mui/material";
 import cn from "classnames";
 //
@@ -6,7 +6,7 @@ import css from "./PageWrap.module.scss";
 
 type Props = {
     title: string;
-    children: ReactElement;
+    children: any;
     buttons: {
         text: string;
         onClick: () => void;
