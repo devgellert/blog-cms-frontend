@@ -1,7 +1,7 @@
 import React, { FormEventHandler, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardContent, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
@@ -11,6 +11,8 @@ import api from "../../../../api";
 import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
 import { uiActions } from "../../../../redux/ui/slice";
 import getAxiosError from "../../../../lib/getAxiosError";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
 import css from "./CategoryTranslationCreate.module.scss";
 
@@ -67,19 +69,17 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
         <PageWrap title={`#${categoryId} Category Locale Create`} buttons={[]} isLoading={isLoading} hasTopPadding>
             <Container maxWidth="lg" className={css["CategoryTranslationCreate"]}>
                 <form onSubmit={onSubmit}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6" className={css["title"]}>
-                                Locale
-                            </Typography>
+                    <SimpleCard>
+                        <Typography variant="h6" className={css["title"]}>
+                            Locale
+                        </Typography>
 
-                            <div className={css["input-wrap"]}>
-                                <Input value={locale} setValue={setLocale} label="Locale" errorText={localeError} />
+                        <TwoColumnGrid>
+                            <Input value={locale} setValue={setLocale} label="Locale" errorText={localeError} />
 
-                                <Input value={name} setValue={setName} label="Name" errorText={nameError} />
-                            </div>
-                        </CardContent>
-                    </Card>
+                            <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                        </TwoColumnGrid>
+                    </SimpleCard>
 
                     <Button
                         type="submit"
