@@ -89,12 +89,12 @@ const PostEdit: FC<Props> = ({}) => {
 
             const response: AxiosResponse<ApiCategory> = await api.put(`/posts/${postId}`, body);
 
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." }));
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully edited post." }));
 
             navigate(`/posts/${response.data.id}`);
         } catch (e) {
             setErrors(e);
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to edit post." }));
         } finally {
             setIsLoading(false);
         }

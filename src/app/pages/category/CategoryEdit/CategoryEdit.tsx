@@ -83,11 +83,11 @@ const CategoryEdit: FC<Props> = ({}) => {
 
             const response: AxiosResponse<ApiCategory> = await api.put(`/categories/${categoryId}`, body);
 
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created category." }));
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully edited category." }));
             navigate(`/categories/${response.data.id}`);
         } catch (e) {
             setErrors(e);
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create category." }));
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to edit category." }));
         } finally {
             dispatch(categoryActions.setIsCategoryCreatePageLoading(false));
         }
