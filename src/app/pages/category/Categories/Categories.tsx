@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
+import PageWrap from "../../../components/PageWrap/PageWrap";
 import CategoryGrid from "./components/CategoryGrid/CategoryGrid";
 
 const Categories: FC = () => {

@@ -5,13 +5,13 @@ import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
 import { Button, Card, CardContent, Container, Typography } from "@mui/material";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
-import useInput from "../../../lib/hooks/useInput";
-import Input from "../../components/Input/Input";
-import { ApiCategoryTranslation } from "../../../types/api";
-import api from "../../../api";
-import getAxiosFieldError from "../../../lib/getAxiosFieldError";
-import { uiActions } from "../../../redux/ui/slice";
+import PageWrap from "../../../components/PageWrap/PageWrap";
+import useInput from "../../../../lib/hooks/useInput";
+import Input from "../../../components/Input/Input";
+import { ApiCategoryTranslation } from "../../../../types/api";
+import api from "../../../../api";
+import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
+import { uiActions } from "../../../../redux/ui/slice";
 //
 import css from "./CategoryTranslationEdit.module.scss";
 

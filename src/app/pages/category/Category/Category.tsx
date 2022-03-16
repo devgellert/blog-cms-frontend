@@ -15,9 +15,9 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
-import { categoryActions } from "../../../redux/category/slice";
-import CategorySelectors from "../../../redux/category/selector";
+import PageWrap from "../../../components/PageWrap/PageWrap";
+import { categoryActions } from "../../../../redux/category/slice";
+import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./Category.module.scss";
 

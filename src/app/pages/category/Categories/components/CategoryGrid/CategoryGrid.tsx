@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 //
-import Grid from "../../../../components/Grid/Grid";
-import GridConfig from "../../../../components/Grid/types/GridConfig";
-import { ApiCategory } from "../../../../../types/api";
-import Popup from "../../../../components/Popup/Popup";
-import api from "../../../../../api";
-import { gridActions } from "../../../../../redux/grid/slice";
-import { uiActions } from "../../../../../redux/ui/slice";
+import Grid from "../../../../../components/Grid/Grid";
+import GridConfig from "../../../../../components/Grid/types/GridConfig";
+import { ApiCategory } from "../../../../../../types/api";
+import Popup from "../../../../../components/Popup/Popup";
+import api from "../../../../../../api";
+import { gridActions } from "../../../../../../redux/grid/slice";
+import { uiActions } from "../../../../../../redux/ui/slice";
 
 type Data = {
     id: number;

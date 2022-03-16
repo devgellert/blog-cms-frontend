@@ -4,19 +4,19 @@ import { Provider, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //
 import store from "../redux/store";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Categories from "./pages/Categories/Categories";
-import Category from "./pages/Category/Category";
-import AuthGuard from "./components/AuthGuard/AuthGuard";
 import { authActions } from "../redux/auth/slice";
 import Menu from "./components/Menu/Menu";
 import Posts from "./pages/Posts/Posts";
-import CategoryCreate from "./pages/CategoryCreate/CategoryCreate";
-import CategoryLocaleEdit from "./pages/CategoryTranslationEdit/CategoryTranslationEdit";
-import CategoryLocaleCreate from "./pages/CategoryTranslationCreate/CategoryTranslationCreate";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import AuthGuard from "./components/AuthGuard/AuthGuard";
+import Categories from "./pages/category/Categories/Categories";
+import Category from "./pages/category/Category/Category";
+import CategoryCreate from "./pages/category/CategoryCreate/CategoryCreate";
+import CategoryLocaleEdit from "./pages/category/CategoryTranslationEdit/CategoryTranslationEdit";
+import CategoryLocaleCreate from "./pages/category/CategoryTranslationCreate/CategoryTranslationCreate";
+import CategoryEdit from "./pages/category/CategoryEdit/CategoryEdit";
 import Snackbar from "./components/Snackbar/Snackbar";
-import CategoryEdit from "./pages/CategoryEdit/CategoryEdit";
 //
 import css from "./App.module.scss";
 

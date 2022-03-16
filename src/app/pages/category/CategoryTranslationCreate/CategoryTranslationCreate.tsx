@@ -4,13 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardContent, Container, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
-import useInput from "../../../lib/hooks/useInput";
-import Input from "../../components/Input/Input";
-import api from "../../../api";
-import getAxiosFieldError from "../../../lib/getAxiosFieldError";
-import { uiActions } from "../../../redux/ui/slice";
-import getAxiosError from "../../../lib/getAxiosError";
+import PageWrap from "../../../components/PageWrap/PageWrap";
+import useInput from "../../../../lib/hooks/useInput";
+import Input from "../../../components/Input/Input";
+import api from "../../../../api";
+import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
+import { uiActions } from "../../../../redux/ui/slice";
+import getAxiosError from "../../../../lib/getAxiosError";
 //
 import css from "./CategoryTranslationCreate.module.scss";
 

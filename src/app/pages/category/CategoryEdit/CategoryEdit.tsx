@@ -7,19 +7,19 @@ import { AxiosResponse } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
-import Input from "../../components/Input/Input";
-import { categoryActions } from "../../../redux/category/slice";
-import CategorySelectors from "../../../redux/category/selector";
-import SelectField from "../../components/inputs/SelectField/SelectField";
-import useInput from "../../../lib/hooks/useInput";
-import { ApiCategory } from "../../../types/api";
-import api from "../../../api";
-import getAxiosFieldError from "../../../lib/getAxiosFieldError";
-import getAxiosError from "../../../lib/getAxiosError";
-import isSlugError from "../../../lib/isSlugError";
-import SlugField from "../../components/inputs/SlugField/SlugField";
-import { uiActions } from "../../../redux/ui/slice";
+import PageWrap from "../../../components/PageWrap/PageWrap";
+import Input from "../../../components/Input/Input";
+import { categoryActions } from "../../../../redux/category/slice";
+import CategorySelectors from "../../../../redux/category/selector";
+import SelectField from "../../../components/inputs/SelectField/SelectField";
+import useInput from "../../../../lib/hooks/useInput";
+import { ApiCategory } from "../../../../types/api";
+import api from "../../../../api";
+import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
+import getAxiosError from "../../../../lib/getAxiosError";
+import isSlugError from "../../../../lib/isSlugError";
+import SlugField from "../../../components/inputs/SlugField/SlugField";
+import { uiActions } from "../../../../redux/ui/slice";
 //
 import css from "./CategoryEdit.module.scss";
 
