@@ -1,9 +1,9 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
-import { Button, Card, CardContent, Container, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Button, Container, List, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 //
@@ -29,6 +29,8 @@ const Post: FC<Props> = ({}) => {
     const [post, setPost] = useState<null | ApiPost>();
     const [translations, setTranslations] = useState<null | ApiPostTranslation[]>(null);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const { tabIndex, tabsElement } = useTranslationTabs(translations ? translations.map(elem => elem.locale) : []);
 
     useEffect(() => {
@@ -37,6 +39,8 @@ const Post: FC<Props> = ({}) => {
 
     const fetchAndSetData = async () => {
         try {
+            setIsLoading(true);
+
             const { data }: AxiosResponse<ApiPost> = await api.get(`/posts/${postId}`);
 
             const {
@@ -47,22 +51,28 @@ const Post: FC<Props> = ({}) => {
             setTranslations(translations);
         } catch (e) {
             console.log(e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const removePostTranslation = async (locale: string) => {
         try {
+            setIsLoading(true);
+
             await api.delete(`/posts/${postId}/translations/${locale}`);
 
             fetchAndSetData();
             dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
         } catch (e) {
             dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <PageWrap title="Post" isLoading={post === null} hasTopPadding={true} buttons={[]}>
+        <PageWrap title="Post" isLoading={isLoading} hasTopPadding={true} buttons={[]}>
             <Container maxWidth="lg" className={css["Post"]}>
                 <TwoColumnGrid>
                     <SimpleCard>

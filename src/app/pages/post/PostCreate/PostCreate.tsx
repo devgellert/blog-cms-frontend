@@ -2,14 +2,12 @@ import React, { FormEventHandler, useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { map, unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardContent, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
-import Input from "../../../components/Input/Input";
-import { categoryActions } from "../../../../redux/category/slice";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
 import useInput from "../../../../lib/hooks/useInput";
 import { ApiCategory } from "../../../../types/api";
@@ -20,9 +18,9 @@ import isSlugError from "../../../../lib/isSlugError";
 import { uiActions } from "../../../../redux/ui/slice";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
 import AuthSelectors from "../../../../redux/auth/selector";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 //
 import css from "./PostCreate.module.scss";
-import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 
 const PostCreate: FC = () => {
     const dispatch = useDispatch();
