@@ -9,11 +9,14 @@ import Popup from "../../../../../components/Popup/Popup";
 import api from "../../../../../../api";
 import { gridActions } from "../../../../../../redux/grid/slice";
 import { uiActions } from "../../../../../../redux/ui/slice";
+import formatDateString from "../../../../../../lib/formatDateString";
 
 type Data = {
     id: number;
     name: string;
     slug: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export default function CategoryGrid() {
@@ -24,18 +27,29 @@ export default function CategoryGrid() {
     const config: GridConfig<Data, ApiCategory> = {
         columns: [
             { id: "id", label: "", format: (value: number) => `#${value}` },
-            { id: "name", label: "Name", align: "right" },
+            { id: "name", label: "Name" },
             {
                 id: "slug",
-                label: "slug",
-                align: "right"
+                label: "Slug"
+            },
+            {
+                id: "createdAt",
+                label: "Created At",
+                format: formatDateString
+            },
+            {
+                id: "updatedAt",
+                label: "Last Updated At",
+                format: formatDateString
             }
         ],
         transformer: object => {
             return {
                 id: object.id,
                 slug: object.slug,
-                name: object.name
+                name: object.name,
+                createdAt: object.createdAt,
+                updatedAt: object.updatedAt
             };
         },
         apiEndpoint: "/categories",

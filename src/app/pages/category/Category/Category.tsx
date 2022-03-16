@@ -14,6 +14,7 @@ import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
 import createCategoryPageButtonConfig from "../../../../lib/category/createCategoryPageButtonConfig";
 //
 import css from "./Category.module.scss";
+import formatDateString from "../../../../lib/formatDateString";
 
 const Category: FC = () => {
     const { categoryId } = useParams();
@@ -53,11 +54,25 @@ const Category: FC = () => {
                     <SimpleCard>
                         <Typography variant="h6">General</Typography>
 
-                        <List>
-                            <SimpleListItem title="Name" text={category?.name ?? "n/a"} />
+                        <TwoColumnGrid>
+                            <List>
+                                <SimpleListItem title="Name" text={category?.name ?? "n/a"} />
 
-                            <SimpleListItem title="Parent" text={category?.parent ? `#${category?.parent}` : "-"} />
-                        </List>
+                                <SimpleListItem title="Parent" text={category?.parent ? `#${category?.parent}` : "-"} />
+                            </List>
+
+                            <List>
+                                <SimpleListItem
+                                    title="Created At"
+                                    text={category ? formatDateString(category.createdAt) : "n/a"}
+                                />
+
+                                <SimpleListItem
+                                    title="Last Updated At"
+                                    text={category ? formatDateString(category.updatedAt) : "n/a"}
+                                />
+                            </List>
+                        </TwoColumnGrid>
                     </SimpleCard>
 
                     <SimpleCard>
