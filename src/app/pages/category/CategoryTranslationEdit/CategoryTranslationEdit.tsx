@@ -3,7 +3,7 @@ import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
-import { Button, Card, CardContent, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import useInput from "../../../../lib/hooks/useInput";
@@ -12,6 +12,7 @@ import { ApiCategoryTranslation } from "../../../../types/api";
 import api from "../../../../api";
 import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
 import { uiActions } from "../../../../redux/ui/slice";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 //
 import css from "./CategoryTranslationEdit.module.scss";
 
@@ -75,17 +76,15 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
         >
             <Container maxWidth="lg" className={css["CategoryTranslationEdit"]}>
                 <form onSubmit={onSave}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6" className={css["title"]}>
-                                Locale - {locale}
-                            </Typography>
+                    <SimpleCard>
+                        <Typography variant="h6" className={css["title"]}>
+                            Locale - {locale}
+                        </Typography>
 
-                            <div className={css["input-wrap"]}>
-                                <Input value={name} setValue={setName} label="Name" errorText={nameError} />
-                            </div>
-                        </CardContent>
-                    </Card>
+                        <div className={css["input-wrap"]}>
+                            <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                        </div>
+                    </SimpleCard>
 
                     <Button type="submit" color="success" variant="contained" className={css["button"]}>
                         Save
