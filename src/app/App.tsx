@@ -20,6 +20,7 @@ import Posts from "./pages/post/Posts/Posts";
 import Post from "./pages/post/Post/Post";
 //
 import css from "./App.module.scss";
+import PostCreate from "./pages/post/PostCreate/PostCreate";
 
 type Props = {};
 
@@ -58,6 +59,7 @@ const App: FC<Props> = ({}) => {
 
                         <Route path="/posts">
                             <Route index element={<AuthGuard element={<Posts />} />} />
+                            <Route path="create" element={<AuthGuard element={<PostCreate />} />} />
                             <Route path=":postId" element={<AuthGuard element={<Post />} />} />
                         </Route>
                     </Routes>

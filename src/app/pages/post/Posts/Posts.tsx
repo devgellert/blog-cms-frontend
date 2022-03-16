@@ -1,5 +1,6 @@
 import React, { FC, memo, useState } from "react";
 import { get } from "lodash";
+import { useNavigate } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import Grid from "../../../components/Grid/Grid";
@@ -25,6 +26,7 @@ type Props = {};
 
 const Posts: FC<Props> = ({}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [removeId, setRemoveId] = useState<null | number>(null);
 
@@ -111,7 +113,7 @@ const Posts: FC<Props> = ({}) => {
                 {
                     text: "New Post",
                     onClick: () => {
-                        /*TODO: implement*/
+                        navigate(`/posts/create`);
                     },
                     color: "success"
                 }
