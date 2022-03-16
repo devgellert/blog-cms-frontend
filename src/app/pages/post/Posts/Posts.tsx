@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 import { get } from "lodash";
 //
-import PageWrap from "../../components/PageWrap/PageWrap";
-import Grid from "../../components/Grid/Grid";
-import GridConfig from "../../components/Grid/types/GridConfig";
-import { ApiPost } from "../../../types/api";
+import PageWrap from "../../../components/PageWrap/PageWrap";
+import Grid from "../../../components/Grid/Grid";
+import GridConfig from "../../../components/Grid/types/GridConfig";
+import { ApiPost } from "../../../../types/api";
 
 type Data = {
     id: number;

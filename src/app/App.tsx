@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import store from "../redux/store";
 import { authActions } from "../redux/auth/slice";
 import Menu from "./components/Menu/Menu";
-import Posts from "./pages/Posts/Posts";
+import Posts from "./pages/post/Posts/Posts";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AuthGuard from "./components/AuthGuard/AuthGuard";
