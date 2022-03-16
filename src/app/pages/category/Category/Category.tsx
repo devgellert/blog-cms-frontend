@@ -1,23 +1,17 @@
-import React, { FC, memo, SyntheticEvent, useEffect, useState } from "react";
+import React, { FC, memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    Button,
-    Card,
-    CardContent,
-    Container,
-    List,
-    ListItem,
-    ListItemText,
-    Tab,
-    Tabs,
-    Typography
-} from "@mui/material";
+import { Button, Container, List, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 import TabPanel from "../../../components/TabPanel/TabPanel";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import SimpleListItem from "../../../components/SimpleListItem/SimpleListItem";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
+import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
+import createCategoryPageButtonConfig from "../../../../lib/category/createCategoryPageButtonConfig";
 //
 import css from "./Category.module.scss";
 
@@ -26,145 +20,104 @@ const Category: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const isCategoryDetailsLoading = useSelector(CategorySelectors.isCategoryDetailsLoading);
     const translations = useSelector(CategorySelectors.getTranslations);
+
+    const { tabIndex, tabsElement } = useTranslationTabs(
+        translations ? translations.map(translations => translations.locale) : []
+    );
+
+    const isCategoryDetailsLoading = useSelector(CategorySelectors.isCategoryDetailsLoading);
     const category = useSelector(CategorySelectors.getCategory);
 
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
     }, []);
 
-    useEffect(() => {
-        setTab(0);
-    }, [translations?.length]);
-
-    const [tab, setTab] = useState(0);
-
-    const handleTabChange = (event: SyntheticEvent, newValue: number) => {
-        setTab(newValue);
-    };
+    const createRemoveTranslation = (locale: string) => () =>
+        dispatch(
+            categoryActions.removeCategoryTranslation({
+                categoryId: Number(categoryId),
+                locale: locale
+            })
+        );
 
     return (
         <PageWrap
             title={`Category #${categoryId}`}
-            buttons={[
-                {
-                    text: "Create Translation",
-                    color: "success",
-                    variant: "contained",
-                    onClick: () => {
-                        navigate(`/categories/${categoryId}/translations/create`);
-                    }
-                },
-                {
-                    text: "Edit Category",
-                    color: "primary",
-                    variant: "contained",
-                    onClick: () => {
-                        navigate(`/categories/${categoryId}/edit`);
-                    }
-                }
-            ]}
+            buttons={createCategoryPageButtonConfig(navigate, Number(categoryId))}
             isLoading={isCategoryDetailsLoading}
             hasTopPadding
         >
             <Container maxWidth="lg" className={css["Category"]}>
-                <div className={css["data-wrap"]}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">General</Typography>
+                <TwoColumnGrid>
+                    <SimpleCard>
+                        <Typography variant="h6">General</Typography>
 
-                            <List dense={false}>
-                                <ListItem>
-                                    <ListItemText primary={"Name"} secondary={category?.name} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText
-                                        primary={"Parent"}
-                                        secondary={category?.parent ? `#${category?.parent}` : "-"}
-                                    />
-                                </ListItem>
-                            </List>
-                        </CardContent>
-                    </Card>
+                        <List>
+                            <SimpleListItem title="Name" text={category?.name ?? "n/a"} />
 
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">SEO</Typography>
+                            <SimpleListItem title="Parent" text={category?.parent ? `#${category?.parent}` : "-"} />
+                        </List>
+                    </SimpleCard>
 
-                            <List dense={false}>
-                                <ListItem>
-                                    <ListItemText primary={"Slug"} secondary={category?.slug} />
-                                </ListItem>
-                            </List>
-                        </CardContent>
-                    </Card>
-                </div>
+                    <SimpleCard>
+                        <Typography variant="h6">SEO</Typography>
 
-                <Card className={css["translation-card"]}>
-                    <CardContent>
-                        <header className={css["card-header"]}>
-                            <Typography variant="h6">Translations</Typography>
+                        <List>
+                            <SimpleListItem title="Slug" text={category?.slug ?? "n/a"} />
+                        </List>
+                    </SimpleCard>
+                </TwoColumnGrid>
 
-                            <Button
-                                onClick={() => {
-                                    navigate(`/categories/${categoryId}/translations/create`);
-                                }}
-                                variant="outlined"
-                                color="success"
-                            >
-                                Create Translation
-                            </Button>
-                        </header>
+                <SimpleCard className={css["translation-card"]}>
+                    <header className={css["card-header"]}>
+                        <Typography variant="h6">Translations</Typography>
 
-                        {!!translations?.length && (
-                            <>
-                                <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
-                                    {translations?.map(elem => (
-                                        <Tab label={elem.locale} />
-                                    ))}
-                                </Tabs>
+                        <Button
+                            onClick={() => {
+                                navigate(`/categories/${categoryId}/translations/create`);
+                            }}
+                            variant="outlined"
+                            color="success"
+                        >
+                            Create Translation
+                        </Button>
+                    </header>
 
-                                {translations?.map((elem, index) => (
-                                    <TabPanel value={tab} index={index} key={index}>
-                                        <List dense={false}>
-                                            <ListItem>
-                                                <ListItemText primary={"Name"} secondary={elem.name} />
-                                            </ListItem>
-                                        </List>
+                    {!!translations?.length && (
+                        <>
+                            {tabsElement}
 
-                                        <Button
-                                            onClick={() => {
-                                                navigate(`/categories/${categoryId}/translations/${elem.locale}/edit`);
-                                            }}
-                                            variant="outlined"
-                                        >
-                                            Edit
-                                        </Button>
+                            {translations?.map((elem, index) => (
+                                <TabPanel value={tabIndex} index={index} key={index}>
+                                    <List>
+                                        <SimpleListItem title="Name" text={elem.name} />
+                                    </List>
 
-                                        <Button
-                                            onClick={() =>
-                                                dispatch(
-                                                    categoryActions.removeCategoryTranslation({
-                                                        categoryId: Number(categoryId),
-                                                        locale: elem.locale
-                                                    })
-                                                )
-                                            }
-                                            variant="outlined"
-                                            color={"error"}
-                                            className={css["btn-remove"]}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </TabPanel>
-                                ))}
-                            </>
-                        )}
+                                    <Button
+                                        onClick={() => {
+                                            navigate(`/categories/${categoryId}/translations/${elem.locale}/edit`);
+                                        }}
+                                        variant="outlined"
+                                    >
+                                        Edit
+                                    </Button>
 
-                        {!translations?.length && <Typography variant="body1">-</Typography>}
-                    </CardContent>
-                </Card>
+                                    <Button
+                                        onClick={createRemoveTranslation(elem.locale)}
+                                        variant="outlined"
+                                        color={"error"}
+                                        className={css["btn-remove"]}
+                                    >
+                                        Remove
+                                    </Button>
+                                </TabPanel>
+                            ))}
+                        </>
+                    )}
+
+                    {!translations?.length && <Typography variant="body1">-</Typography>}
+                </SimpleCard>
             </Container>
         </PageWrap>
     );

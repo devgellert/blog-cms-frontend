@@ -4,15 +4,17 @@ import cn from "classnames";
 //
 import css from "./PageWrap.module.scss";
 
+export type PageButton = {
+    text: string;
+    onClick: () => void;
+    color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+    variant?: "text" | "outlined" | "contained";
+};
+
 type Props = {
     title: string;
     children: any;
-    buttons: {
-        text: string;
-        onClick: () => void;
-        color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
-        variant?: "text" | "outlined" | "contained";
-    }[];
+    buttons: PageButton[];
     isLoading?: boolean;
     hasTopPadding?: boolean;
 };
