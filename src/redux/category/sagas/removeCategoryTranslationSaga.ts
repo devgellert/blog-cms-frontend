@@ -12,10 +12,10 @@ function* removeCategoryTranslationSaga({
 
         yield put(categoryActions.initializeCategoryDetailsPage({ id: categoryId }));
 
-        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully removed locale." }));
+        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
     } catch (e) {
         console.log(e);
-        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to remove locale." }));
+        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
     }
 }
 

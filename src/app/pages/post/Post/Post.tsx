@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { FC, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import {
@@ -15,12 +15,14 @@ import {
     Tabs,
     Typography
 } from "@mui/material";
-import { ApiPost, ApiPostTranslation } from "../../../../types/api";
-//
 import { AxiosResponse } from "axios";
+import { useDispatch } from "react-redux";
+//
+import { ApiPost, ApiPostTranslation } from "../../../../types/api";
 import api from "../../../../api";
 import formatDateString from "../../../../lib/formatDateString";
 import TabPanel from "../../../components/TabPanel/TabPanel";
+import { uiActions } from "../../../../redux/ui/slice";
 //
 import css from "./Post.module.scss";
 
@@ -28,27 +30,31 @@ type Props = {};
 
 const Post: FC<Props> = ({}) => {
     const { postId } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [post, setPost] = useState<null | ApiPost>();
     const [translations, setTranslations] = useState<null | ApiPostTranslation[]>(null);
     const [tab, setTab] = useState(0);
 
     useEffect(() => {
-        (async () => {
-            try {
-                const { data }: AxiosResponse<ApiPost> = await api.get(`/posts/${postId}`);
-
-                const {
-                    data: { items: translations }
-                }: AxiosResponse<{ items: ApiPostTranslation[] }> = await api.get(`/posts/${postId}/translations`);
-
-                setPost(data);
-                setTranslations(translations);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        fetchAndSetData();
     }, []);
+
+    const fetchAndSetData = async () => {
+        try {
+            const { data }: AxiosResponse<ApiPost> = await api.get(`/posts/${postId}`);
+
+            const {
+                data: { items: translations }
+            }: AxiosResponse<{ items: ApiPostTranslation[] }> = await api.get(`/posts/${postId}/translations`);
+
+            setPost(data);
+            setTranslations(translations);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     useEffect(() => {
         setTab(0);
@@ -56,6 +62,17 @@ const Post: FC<Props> = ({}) => {
 
     const handleTabChange = (event: SyntheticEvent, newValue: number) => {
         setTab(newValue);
+    };
+
+    const removePostTranslation = async (locale: string) => {
+        try {
+            await api.delete(`/posts/${postId}/translations/${locale}`);
+
+            fetchAndSetData();
+            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
+        } catch (e) {
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
+        }
     };
 
     return (
@@ -118,7 +135,7 @@ const Post: FC<Props> = ({}) => {
 
                             <Button
                                 onClick={() => {
-                                    // navigate(`/categories/${categoryId}/translations/create`);
+                                    navigate(`/posts/${postId}/translations/create`);
                                 }}
                                 variant="outlined"
                                 color="success"
@@ -178,7 +195,7 @@ const Post: FC<Props> = ({}) => {
 
                                         <Button
                                             onClick={() => {
-                                                // navigate(`/categories/${categoryId}/translations/${elem.locale}/edit`);
+                                                navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
                                             }}
                                             variant="outlined"
                                         >
@@ -186,15 +203,7 @@ const Post: FC<Props> = ({}) => {
                                         </Button>
 
                                         <Button
-                                            onClick={
-                                                () => {}
-                                                // dispatch(
-                                                //     categoryActions.removeCategoryTranslation({
-                                                //         categoryId: Number(categoryId),
-                                                //         locale: elem.locale
-                                                //     })
-                                                // )
-                                            }
+                                            onClick={() => removePostTranslation(elem.locale)}
                                             variant="outlined"
                                             color={"error"}
                                             className={css["btn-remove"]}
