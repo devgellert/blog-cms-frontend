@@ -97,9 +97,7 @@ const Post: FC<Props> = ({}) => {
                         <Typography variant="h6">SEO</Typography>
 
                         <SimpleListItem title="Slug" text={post?.slug || "n/a"} />
-                    </SimpleCard>
 
-                    <SimpleCard>
                         <Typography variant="h6">Author</Typography>
 
                         <List>
