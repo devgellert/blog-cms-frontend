@@ -4,32 +4,37 @@ import { map, unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
 import useInput from "../../../../lib/hooks/useInput";
-import { ApiCategory } from "../../../../types/api";
+import { ApiCategory, ApiPost } from "../../../../types/api";
 import api from "../../../../api";
 import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../../lib/getAxiosError";
 import isSlugError from "../../../../lib/isSlugError";
-import { uiActions } from "../../../../redux/ui/slice";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
-import AuthSelectors from "../../../../redux/auth/selector";
+import { uiActions } from "../../../../redux/ui/slice";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
-import css from "./PostCreate.module.scss";
+import css from "./PostEdit.module.scss";
 
-const PostCreate: FC = () => {
+type Props = {};
+
+const PostEdit: FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { postId } = useParams();
 
-    const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+    const [categories, setCategories] = useState<ApiCategory[]>([]);
+
     const [isLoading, setIsLoading] = useState(true);
 
     const { value: slug, setValue: setSlug, errorText: slugError, setError: setSlugError } = useInput({});
+    const { value: author, setValue: setAuthor } = useInput({});
     const {
         value: category,
         setValue: setCategory,
@@ -37,29 +42,35 @@ const PostCreate: FC = () => {
         setError: setCategoryError
     } = useInput({ initialValue: "0" });
 
-    const user = useSelector(AuthSelectors.getUser);
-
     useEffect(() => {
         (async () => {
             try {
+                setIsLoading(true);
+
+                const { data: post }: AxiosResponse<ApiPost> = await api.get(`/posts/${postId}`);
+
+                setSlug(post.slug);
+                setCategory(post.category?.id ?? "0");
+                setAuthor(post.author.id);
+
                 const {
-                    data: { items }
-                }: AxiosResponse<{ items: ApiCategory[] }> = await api.get(`/categories?page=1&limit=1000`);
+                    data: { items: categories }
+                }: AxiosResponse<{ items: ApiCategory[] }> = await api.get("/categories?page=1&limit=1000");
 
-                setCategories(items.map(elem => ({ id: elem.id, name: elem.name })));
-
-                setIsLoading(false);
+                setCategories(categories);
             } catch (e) {
                 console.log(e);
+            } finally {
+                setIsLoading(false);
             }
         })();
     }, []);
 
     const onSubmit: FormEventHandler = async event => {
         try {
-            setIsLoading(true);
-
             event.preventDefault();
+
+            setIsLoading(true);
 
             setCategoryError("");
             setSlugError("");
@@ -69,21 +80,21 @@ const PostCreate: FC = () => {
             const body = {
                 slug: slugify(slug),
                 category: normalizedCategory,
-                author: user?.id
+                author: author
             };
 
             if (body.category === null) {
                 unset(body, "category");
             }
 
-            const response: AxiosResponse<ApiCategory> = await api.post("/posts", body);
+            const response: AxiosResponse<ApiCategory> = await api.put(`/posts/${postId}`, body);
 
             dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." }));
 
             navigate(`/posts/${response.data.id}`);
         } catch (e) {
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
             setErrors(e);
+            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
         } finally {
             setIsLoading(false);
         }
@@ -107,16 +118,16 @@ const PostCreate: FC = () => {
     }));
 
     return (
-        <PageWrap title="New Post" buttons={[]} isLoading={isLoading}>
-            <Container maxWidth="lg" className={css["PostCreate"]}>
+        <PageWrap title="Edit Post" buttons={[]} isLoading={isLoading}>
+            <Container maxWidth="lg" className={css["PostEdit"]}>
                 <form onSubmit={onSubmit}>
-                    <div className={css["input-grid"]}>
+                    <TwoColumnGrid>
                         <SimpleCard>
                             <Typography variant="h6">General</Typography>
 
                             <SelectField
-                                labelId="category-label"
-                                label="Category"
+                                labelId="parent-label"
+                                label="Parent"
                                 errorText={categoryError}
                                 value={category}
                                 onChange={e => setCategory(e.target.value)}
@@ -129,7 +140,7 @@ const PostCreate: FC = () => {
 
                             <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
                         </SimpleCard>
-                    </div>
+                    </TwoColumnGrid>
 
                     <Button type="submit" color="success" variant="contained" className={css["button"]}>
                         Save
@@ -140,4 +151,4 @@ const PostCreate: FC = () => {
     );
 };
 
-export default memo(PostCreate);
+export default memo(PostEdit);

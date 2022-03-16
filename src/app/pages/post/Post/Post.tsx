@@ -14,10 +14,11 @@ import TabPanel from "../../../components/TabPanel/TabPanel";
 import { uiActions } from "../../../../redux/ui/slice";
 import SimpleListItem from "../../../components/SimpleListItem/SimpleListItem";
 import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
-//
-import css from "./Post.module.scss";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
+import createPostPageButtonConfig from "../../../../lib/post/createPostPageButtonConfig";
+//
+import css from "./Post.module.scss";
 
 type Props = {};
 
@@ -72,14 +73,19 @@ const Post: FC<Props> = ({}) => {
     };
 
     return (
-        <PageWrap title="Post" isLoading={isLoading} hasTopPadding={true} buttons={[]}>
+        <PageWrap
+            title="Post"
+            isLoading={isLoading}
+            hasTopPadding={true}
+            buttons={createPostPageButtonConfig(navigate, Number(postId))}
+        >
             <Container maxWidth="lg" className={css["Post"]}>
                 <TwoColumnGrid>
                     <SimpleCard>
                         <Typography variant="h6">General</Typography>
 
                         <List dense={false}>
-                            <SimpleListItem title="Category" text={post?.category?.name || "n/a"} />
+                            <SimpleListItem title="Category" text={post?.category?.name || "Uncategorized"} />
 
                             <SimpleListItem
                                 title="Created At"

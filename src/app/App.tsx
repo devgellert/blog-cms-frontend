@@ -21,6 +21,7 @@ import Post from "./pages/post/Post/Post";
 //
 import css from "./App.module.scss";
 import PostCreate from "./pages/post/PostCreate/PostCreate";
+import PostEdit from "./pages/post/PostEdit/PostEdit";
 
 type Props = {};
 
@@ -61,6 +62,7 @@ const App: FC<Props> = ({}) => {
                             <Route index element={<AuthGuard element={<Posts />} />} />
                             <Route path="create" element={<AuthGuard element={<PostCreate />} />} />
                             <Route path=":postId" element={<AuthGuard element={<Post />} />} />
+                            <Route path=":postId/edit" element={<AuthGuard element={<PostEdit />} />} />
                         </Route>
                     </Routes>
                 </main>
