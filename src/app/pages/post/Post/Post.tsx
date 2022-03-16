@@ -134,6 +134,7 @@ const Post: FC<Props> = ({}) => {
                             <Typography variant="h6">Translations</Typography>
 
                             <Button
+                                disabled
                                 onClick={() => {
                                     navigate(`/posts/${postId}/translations/create`);
                                 }}
@@ -194,6 +195,7 @@ const Post: FC<Props> = ({}) => {
                                         </div>
 
                                         <Button
+                                            disabled
                                             onClick={() => {
                                                 navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
                                             }}
@@ -203,6 +205,7 @@ const Post: FC<Props> = ({}) => {
                                         </Button>
 
                                         <Button
+                                            disabled
                                             onClick={() => removePostTranslation(elem.locale)}
                                             variant="outlined"
                                             color={"error"}
