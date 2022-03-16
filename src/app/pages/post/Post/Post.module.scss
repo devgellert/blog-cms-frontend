@@ -1,10 +1,4 @@
 .Post {
-  .data-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 15px;
-  }
-
   .translation-card {
     margin-top: 15px;
   }
@@ -16,11 +10,5 @@
   .card-header {
     display: flex;
     justify-content: space-between;
-  }
-
-  .translation-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 15px;
   }
 }

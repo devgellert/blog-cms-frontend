@@ -3,18 +3,7 @@ import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
-import {
-    Button,
-    Card,
-    CardContent,
-    Container,
-    List,
-    ListItem,
-    ListItemText,
-    Tab,
-    Tabs,
-    Typography
-} from "@mui/material";
+import { Button, Card, CardContent, Container, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 //
@@ -23,8 +12,12 @@ import api from "../../../../api";
 import formatDateString from "../../../../lib/formatDateString";
 import TabPanel from "../../../components/TabPanel/TabPanel";
 import { uiActions } from "../../../../redux/ui/slice";
+import SimpleListItem from "../../../components/SimpleListItem/SimpleListItem";
+import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
 //
 import css from "./Post.module.scss";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 
 type Props = {};
 
@@ -35,7 +28,8 @@ const Post: FC<Props> = ({}) => {
 
     const [post, setPost] = useState<null | ApiPost>();
     const [translations, setTranslations] = useState<null | ApiPostTranslation[]>(null);
-    const [tab, setTab] = useState(0);
+
+    const { tabIndex, tabsElement } = useTranslationTabs(translations ? translations.map(elem => elem.locale) : []);
 
     useEffect(() => {
         fetchAndSetData();
@@ -56,14 +50,6 @@ const Post: FC<Props> = ({}) => {
         }
     };
 
-    useEffect(() => {
-        setTab(0);
-    }, [translations?.length]);
-
-    const handleTabChange = (event: SyntheticEvent, newValue: number) => {
-        setTab(newValue);
-    };
-
     const removePostTranslation = async (locale: string) => {
         try {
             await api.delete(`/posts/${postId}/translations/${locale}`);
@@ -78,149 +64,113 @@ const Post: FC<Props> = ({}) => {
     return (
         <PageWrap title="Post" isLoading={post === null} hasTopPadding={true} buttons={[]}>
             <Container maxWidth="lg" className={css["Post"]}>
-                <div className={css["data-wrap"]}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">General</Typography>
+                <TwoColumnGrid>
+                    <SimpleCard>
+                        <Typography variant="h6">General</Typography>
 
-                            <List dense={false}>
-                                <ListItem>
-                                    <ListItemText primary={"Category"} secondary={post?.category?.name} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText
-                                        primary={"Created At"}
-                                        secondary={post ? formatDateString(post?.createdAt) : "n/a"}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText
-                                        primary={"Last Updated At"}
-                                        secondary={post ? formatDateString(post?.updatedAt) : "n/a"}
-                                    />
-                                </ListItem>
-                            </List>
-                        </CardContent>
-                    </Card>
+                        <List dense={false}>
+                            <SimpleListItem title="Category" text={post?.category?.name || "n/a"} />
 
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">SEO</Typography>
+                            <SimpleListItem
+                                title="Created At"
+                                text={post ? formatDateString(post?.createdAt) : "n/a"}
+                            />
 
-                            <List dense={false}>
-                                <ListItem>
-                                    <ListItemText primary={"Slug"} secondary={post?.slug} />
-                                </ListItem>
-                            </List>
-                        </CardContent>
-                    </Card>
+                            <SimpleListItem
+                                title="Last Updated At"
+                                text={post ? formatDateString(post?.updatedAt) : "n/a"}
+                            />
+                        </List>
+                    </SimpleCard>
 
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">Author</Typography>
+                    <SimpleCard>
+                        <Typography variant="h6">SEO</Typography>
 
-                            <List dense={false}>
-                                <ListItem>
-                                    <ListItemText primary={"Username"} secondary={post?.author.username} />
-                                </ListItem>
-                            </List>
-                        </CardContent>
-                    </Card>
-                </div>
+                        <SimpleListItem title="Slug" text={post?.slug || "n/a"} />
+                    </SimpleCard>
 
-                <Card className={css["translation-card"]}>
-                    <CardContent>
-                        <header className={css["card-header"]}>
-                            <Typography variant="h6">Translations</Typography>
+                    <SimpleCard>
+                        <Typography variant="h6">Author</Typography>
 
-                            <Button
-                                disabled
-                                onClick={() => {
-                                    navigate(`/posts/${postId}/translations/create`);
-                                }}
-                                variant="outlined"
-                                color="success"
-                            >
-                                Create Translation
-                            </Button>
-                        </header>
+                        <List>
+                            <SimpleListItem title="Username" text={post?.author.username || "n/a"} />
+                        </List>
+                    </SimpleCard>
+                </TwoColumnGrid>
 
-                        {!!translations?.length && (
-                            <>
-                                <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
-                                    {translations?.map(elem => (
-                                        <Tab label={elem.locale} />
-                                    ))}
-                                </Tabs>
+                <SimpleCard className={css["translation-card"]}>
+                    <header className={css["card-header"]}>
+                        <Typography variant="h6">Translations</Typography>
 
-                                {translations?.map((elem, index) => (
-                                    <TabPanel value={tab} index={index} key={index}>
-                                        <div className={css["translation-grid"]}>
-                                            <List dense={false}>
-                                                <Typography variant="h6">General</Typography>
+                        <Button
+                            disabled
+                            onClick={() => {
+                                navigate(`/posts/${postId}/translations/create`);
+                            }}
+                            variant="outlined"
+                            color="success"
+                        >
+                            Create Translation
+                        </Button>
+                    </header>
 
-                                                <ListItem>
-                                                    <ListItemText primary={"Title"} secondary={elem.title} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText
-                                                        primary={"Enabled"}
-                                                        secondary={elem.enabled ? "Enabled" : "Disabled"}
-                                                    />
-                                                </ListItem>
-                                            </List>
+                    {!!translations?.length && (
+                        <>
+                            {tabsElement}
 
-                                            <List dense={false}>
-                                                <Typography variant="h6">SEO</Typography>
+                            {translations?.map((elem, index) => (
+                                <TabPanel value={tabIndex} index={index} key={index}>
+                                    <TwoColumnGrid>
+                                        <List dense={false}>
+                                            <Typography variant="h6">General</Typography>
 
-                                                <ListItem>
-                                                    <ListItemText primary={"Meta Title"} secondary={elem.metaTitle} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText
-                                                        primary={"Meta Description"}
-                                                        secondary={elem.metaDescription}
-                                                    />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText primary={"OG Title"} secondary={elem.ogTitle} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText
-                                                        primary={"OG Description"}
-                                                        secondary={elem.ogDescription}
-                                                    />
-                                                </ListItem>
-                                            </List>
-                                        </div>
+                                            <SimpleListItem title="Title" text={elem.title} />
 
-                                        <Button
-                                            disabled
-                                            onClick={() => {
-                                                navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
-                                            }}
-                                            variant="outlined"
-                                        >
-                                            Edit
-                                        </Button>
+                                            <SimpleListItem
+                                                title="Enabled"
+                                                text={elem.enabled ? "Enabled" : "Disabled"}
+                                            />
+                                        </List>
 
-                                        <Button
-                                            disabled
-                                            onClick={() => removePostTranslation(elem.locale)}
-                                            variant="outlined"
-                                            color={"error"}
-                                            className={css["btn-remove"]}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </TabPanel>
-                                ))}
-                            </>
-                        )}
+                                        <List dense={false}>
+                                            <Typography variant="h6">SEO</Typography>
 
-                        {!translations?.length && <Typography variant="body1">-</Typography>}
-                    </CardContent>
-                </Card>
+                                            <SimpleListItem title="Meta Title" text={elem.metaTitle} />
+
+                                            <SimpleListItem title="Meta Description" text={elem.metaDescription} />
+
+                                            <SimpleListItem title="OG Title" text={elem.ogTitle} />
+
+                                            <SimpleListItem title="OG Description" text={elem.ogDescription} />
+                                        </List>
+                                    </TwoColumnGrid>
+
+                                    <Button
+                                        disabled
+                                        onClick={() => {
+                                            navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
+                                        }}
+                                        variant="outlined"
+                                    >
+                                        Edit
+                                    </Button>
+
+                                    <Button
+                                        disabled
+                                        onClick={() => removePostTranslation(elem.locale)}
+                                        variant="outlined"
+                                        color="error"
+                                        className={css["btn-remove"]}
+                                    >
+                                        Remove
+                                    </Button>
+                                </TabPanel>
+                            ))}
+                        </>
+                    )}
+
+                    {!translations?.length && <Typography variant="body1">-</Typography>}
+                </SimpleCard>
             </Container>
         </PageWrap>
     );
