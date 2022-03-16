@@ -20,6 +20,8 @@ import getAxiosError from "../../../../lib/getAxiosError";
 import isSlugError from "../../../../lib/isSlugError";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
 import { uiActions } from "../../../../redux/ui/slice";
+import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
 import css from "./CategoryEdit.module.scss";
 
@@ -114,38 +116,28 @@ const CategoryEdit: FC<Props> = ({}) => {
         <PageWrap title="New Category" buttons={[]} isLoading={isCategoryCreatePageLoading}>
             <Container maxWidth="lg" className={css["CategoryEdit"]}>
                 <form onSubmit={onSubmit}>
-                    <div className={css["input-grid"]}>
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h6">General</Typography>
+                    <TwoColumnGrid>
+                        <SimpleCard>
+                            <Typography variant="h6">General</Typography>
 
-                                <Input
-                                    value={name}
-                                    setValue={setName}
-                                    label="Name"
-                                    errorText={nameError}
-                                    hasMarginBottom
-                                />
+                            <Input value={name} setValue={setName} label="Name" errorText={nameError} hasMarginBottom />
 
-                                <SelectField
-                                    labelId="parent-label"
-                                    label="Parent"
-                                    errorText={parentError}
-                                    value={parent}
-                                    onChange={e => setParent(e.target.value)}
-                                    choices={parentChoices}
-                                />
-                            </CardContent>
-                        </Card>
+                            <SelectField
+                                labelId="parent-label"
+                                label="Parent"
+                                errorText={parentError}
+                                value={parent}
+                                onChange={e => setParent(e.target.value)}
+                                choices={parentChoices}
+                            />
+                        </SimpleCard>
 
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h6">SEO</Typography>
+                        <SimpleCard>
+                            <Typography variant="h6">SEO</Typography>
 
-                                <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
-                            </CardContent>
-                        </Card>
-                    </div>
+                            <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
+                        </SimpleCard>
+                    </TwoColumnGrid>
 
                     <Button type="submit" color="success" variant="contained" className={css["button"]}>
                         Save
