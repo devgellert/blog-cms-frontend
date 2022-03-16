@@ -13,11 +13,11 @@ import api from "../../../api";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import { uiActions } from "../../../redux/ui/slice";
 //
-import css from "./CategoryLocaleEdit.module.scss";
+import css from "./CategoryTranslationEdit.module.scss";
 
 type Props = {};
 
-const CategoryLocaleEdit: FC<Props> = ({}) => {
+const CategoryTranslationEdit: FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const { locale, categoryId } = useParams();
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ const CategoryLocaleEdit: FC<Props> = ({}) => {
             isLoading={isLoading}
             hasTopPadding
         >
-            <Container maxWidth="lg" className={css["CategoryLocaleEdit"]}>
+            <Container maxWidth="lg" className={css["CategoryTranslationEdit"]}>
                 <form onSubmit={onSave}>
                     <Card>
                         <CardContent>
@@ -96,4 +96,4 @@ const CategoryLocaleEdit: FC<Props> = ({}) => {
     );
 };
 
-export default memo(CategoryLocaleEdit);
+export default memo(CategoryTranslationEdit);

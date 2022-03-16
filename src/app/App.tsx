@@ -13,7 +13,7 @@ import { authActions } from "../redux/auth/slice";
 import Menu from "./components/Menu/Menu";
 import Posts from "./pages/Posts/Posts";
 import CategoryCreate from "./pages/CategoryCreate/CategoryCreate";
-import CategoryLocaleEdit from "./pages/CategoryLocaleEdit/CategoryLocaleEdit";
+import CategoryLocaleEdit from "./pages/CategoryTranslationEdit/CategoryTranslationEdit";
 import CategoryLocaleCreate from "./pages/CategoryTranslationCreate/CategoryTranslationCreate";
 import Snackbar from "./components/Snackbar/Snackbar";
 import CategoryEdit from "./pages/CategoryEdit/CategoryEdit";
