@@ -1,4 +1,6 @@
 import { useState } from "react";
+//
+import transformFieldError from "../transformFieldError";
 
 const useInput = ({ initialValue = "" }: { initialValue?: any }) => {
     const [value, setValue] = useState(initialValue);
@@ -9,7 +11,7 @@ const useInput = ({ initialValue = "" }: { initialValue?: any }) => {
         errorText: error,
         hasError: !!error,
         setValue,
-        setError
+        setError: (error: string) => setError(transformFieldError(error))
     };
 };
 

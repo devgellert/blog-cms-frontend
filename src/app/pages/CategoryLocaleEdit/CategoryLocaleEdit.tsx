@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEventHandler, useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -41,8 +41,10 @@ const CategoryLocaleEdit: FC<Props> = ({}) => {
         })();
     }, []);
 
-    const onSave = async () => {
+    const onSave: FormEventHandler = async e => {
         try {
+            e.preventDefault();
+
             setIsLoading(true);
             setNameError("");
 
@@ -72,21 +74,23 @@ const CategoryLocaleEdit: FC<Props> = ({}) => {
             hasTopPadding
         >
             <Container maxWidth="lg" className={css["CategoryLocaleEdit"]}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6" className={css["title"]}>
-                            Locale - {locale}
-                        </Typography>
+                <form onSubmit={onSave}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" className={css["title"]}>
+                                Locale - {locale}
+                            </Typography>
 
-                        <div className={css["input-wrap"]}>
-                            <Input value={name} setValue={setName} label="Name" errorText={nameError} />
-                        </div>
-                    </CardContent>
-                </Card>
+                            <div className={css["input-wrap"]}>
+                                <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                            </div>
+                        </CardContent>
+                    </Card>
 
-                <Button onClick={onSave} color="success" variant="contained" className={css["button"]}>
-                    Save
-                </Button>
+                    <Button type="submit" color="success" variant="contained" className={css["button"]}>
+                        Save
+                    </Button>
+                </form>
             </Container>
         </PageWrap>
     );
