@@ -131,6 +131,28 @@ const categorySlice = createSlice({
             state.isCategoryCreatePageLoading = false;
         },
         //
+        createTranslationRequest: (
+            state: CategoryState,
+            action: PayloadAction<{
+                categoryId: number;
+                locale: string;
+                name: string;
+                cb: {
+                    setNameError: Setter;
+                    setLocaleError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isCategoryTranslationCreatePageLoading = true;
+        },
+        createTranslationSuccess: (state: CategoryState) => {
+            state.isCategoryTranslationCreatePageLoading = false;
+        },
+        createTranslationError: (state: CategoryState) => {
+            state.isCategoryTranslationCreatePageLoading = false;
+        },
+        //
         unmountCategoryDetailsPage: (state: CategoryState) => {
             state.isCategoryDetailsLoading = true;
             state.category = null;
@@ -166,7 +188,9 @@ const categorySlice = createSlice({
         //
         isCategoryCreatePageLoading: true,
         isCategoryDetailsLoading: true,
-        isCategoryEditPageLoading: true
+        isCategoryEditPageLoading: true,
+        //
+        isCategoryTranslationCreatePageLoading: false // Do not have to load anything on mount..
     }
 });
 

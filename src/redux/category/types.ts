@@ -8,6 +8,8 @@ export type CategoryState = {
     isCategoryDetailsLoading: boolean;
     isCategoryCreatePageLoading: boolean;
     isCategoryEditPageLoading: boolean;
+    //
+    isCategoryTranslationCreatePageLoading: boolean;
 };
 
 export type CategoryOption = { value: number; text: string };

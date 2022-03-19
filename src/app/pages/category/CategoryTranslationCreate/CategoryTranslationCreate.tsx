@@ -1,18 +1,16 @@
-import React, { FormEventHandler, useState } from "react";
+import React from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import useInput from "../../../../lib/hooks/useInput";
 import Input from "../../../components/Input/Input";
-import api from "../../../../api";
-import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
-import { uiActions } from "../../../../redux/ui/slice";
-import getAxiosError from "../../../../lib/getAxiosError";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
+import { categoryActions } from "../../../../redux/category/slice";
+import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./CategoryTranslationCreate.module.scss";
 
@@ -26,49 +24,33 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
     const { value: locale, setValue: setLocale, errorText: localeError, setError: setLocaleError } = useInput({});
 
-    const [isLoading, setIsLoading] = useState(false);
+    const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationCreatePageLoading);
 
-    const onSubmit: FormEventHandler = async e => {
-        try {
-            e.preventDefault();
-
-            setIsLoading(true);
-            setNameError("");
-            setLocaleError("");
-
-            await api.post(`/categories/${categoryId}/translations`, {
+    const createTranslation = () => {
+        dispatch(
+            categoryActions.createTranslationRequest({
+                categoryId: Number(categoryId),
                 locale,
-                name
-            });
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created translation." }));
-            navigate(`/categories/${categoryId}`);
-        } catch (e) {
-            const nameError = getAxiosFieldError(e, "name");
-            setNameError(nameError);
-
-            const localeError = getAxiosFieldError(e, "locale");
-            setLocaleError(localeError);
-
-            const error = getAxiosError(e);
-            if (error.includes("already exists")) {
-                setLocaleError(`Locale already exists for this category.`);
-            }
-
-            dispatch(
-                uiActions.displaySnackbar({
-                    type: "error",
-                    text: "Failed to create translation."
-                })
-            );
-        } finally {
-            setIsLoading(false);
-        }
+                name,
+                cb: {
+                    navigate,
+                    setNameError,
+                    setLocaleError
+                }
+            })
+        );
     };
 
     return (
-        <PageWrap title={`#${categoryId} Category Locale Create`} buttons={[]} isLoading={isLoading} hasTopPadding>
+        <PageWrap title={`#${categoryId} Category Locale Create`} buttons={[]} isLoading={isPageLoading} hasTopPadding>
             <Container maxWidth="lg" className={css["CategoryTranslationCreate"]}>
-                <form onSubmit={onSubmit}>
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+
+                        createTranslation();
+                    }}
+                >
                     <SimpleCard>
                         <Typography variant="h6" className={css["title"]}>
                             Locale
@@ -95,7 +77,7 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
 
                     <Button
                         type="submit"
-                        onClick={onSubmit}
+                        onClick={createTranslation}
                         color="success"
                         variant="contained"
                         className={css["button"]}
