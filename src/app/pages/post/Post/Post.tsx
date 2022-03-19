@@ -182,7 +182,6 @@ const Post: FC<Props> = ({}) => {
                                     {editorElement}
 
                                     <Button
-                                        disabled
                                         onClick={() => {
                                             navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
                                         }}

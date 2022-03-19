@@ -23,6 +23,7 @@ import css from "./App.module.scss";
 import PostCreate from "./pages/post/PostCreate/PostCreate";
 import PostEdit from "./pages/post/PostEdit/PostEdit";
 import PostTranslationCreate from "./pages/post/PostTranslationCreate/PostTranslationCreate";
+import PostTranslationEdit from "./pages/post/PostTranslationEdit/PostTranslationEdit";
 
 type Props = {};
 
@@ -67,6 +68,10 @@ const App: FC<Props> = ({}) => {
                             <Route
                                 path=":postId/translations/create"
                                 element={<AuthGuard element={<PostTranslationCreate />} />}
+                            />
+                            <Route
+                                path=":postId/translations/:locale/edit"
+                                element={<AuthGuard element={<PostTranslationEdit />} />}
                             />
                         </Route>
                     </Routes>
