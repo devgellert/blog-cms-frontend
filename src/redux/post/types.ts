@@ -8,5 +8,5 @@ export type PostState = {
     isPostCreatePageLoading: boolean;
     isPostEditPageLoading: boolean;
     //
-    isPostTranslationEditPageLoading: boolean;
+    isPostTranslationCreatePageLoading: boolean;
 };

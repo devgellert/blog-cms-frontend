@@ -112,13 +112,13 @@ const postSlice = createSlice({
                 };
             }>
         ) => {
-            state.isPostTranslationEditPageLoading = true;
+            state.isPostTranslationCreatePageLoading = true;
         },
         createTranslationSuccess: (state: PostState) => {
-            state.isPostTranslationEditPageLoading = false;
+            state.isPostTranslationCreatePageLoading = false;
         },
         createTranslationError: (state: PostState) => {
-            state.isPostTranslationEditPageLoading = false;
+            state.isPostTranslationCreatePageLoading = false;
         },
         //
         initPostEditPageRequest: (
@@ -176,7 +176,7 @@ function getInitialState(): PostState {
         isPostCreatePageLoading: true,
         isPostEditPageLoading: true,
         //
-        isPostTranslationEditPageLoading: false
+        isPostTranslationCreatePageLoading: false
     };
 }
 

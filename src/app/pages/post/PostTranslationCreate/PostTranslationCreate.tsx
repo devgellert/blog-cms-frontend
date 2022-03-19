@@ -25,7 +25,7 @@ const PostTranslationCreate: FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const { postId } = useParams();
 
-    const isPageLoading = useSelector(PostSelectors.isPostTranslationEditPageLoading);
+    const isPageLoading = useSelector(PostSelectors.isPostTranslationCreatePageLoading);
 
     const { value: content, setValue: setContent, errorText: contentError, setError: setContentError } = useInput({});
 
