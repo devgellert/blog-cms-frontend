@@ -36,6 +36,10 @@ const PostCreate: FC = () => {
 
     useEffect(() => {
         dispatch(categoryActions.initCategoryOptionsRequest({ flow: "post-create-page" }));
+
+        return () => {
+            dispatch(postActions.unmountPostCreatePage());
+        };
     }, []);
 
     const onSubmit: FormEventHandler = async e => {

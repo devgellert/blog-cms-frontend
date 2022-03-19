@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
 import { CategoryOption, CategoryState } from "./types";
 import { ApiCategory, ApiCategoryTranslation } from "../../types/api";
+import { postActions } from "../post/slice";
 
 export type InitCategoryOptionsFlow = "category-create-page" | "post-create-page" | "category-edit-page";
 
@@ -70,6 +71,11 @@ const categorySlice = createSlice({
             state.isCategoryEditPageLoading = true;
             state.categoryOptions = [];
         }
+    },
+    extraReducers: builder => {
+        builder.addCase(postActions.unmountPostCreatePage, state => {
+            state.categoryOptions = [];
+        });
     },
     initialState: {
         categoryOptions: [] as CategoryOption[],

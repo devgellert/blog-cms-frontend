@@ -33,6 +33,10 @@ const Post: FC = ({}) => {
 
     useEffect(() => {
         dispatch(postActions.fetchAndSetPostAndTranslations({ postId: Number(postId) }));
+
+        return () => {
+            dispatch(postActions.unmountPostDetailsPage());
+        };
     }, []);
 
     const editorRef = useRef<EditorJS>();

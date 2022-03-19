@@ -63,6 +63,15 @@ const postSlice = createSlice({
         },
         createPostError: (state: PostState) => {
             state.isPostCreatePageLoading = false;
+        },
+        //
+        unmountPostDetailsPage: (state: PostState) => {
+            state.post = null;
+            state.postTranslations = null;
+            state.isPostDetailsPageLoading = true;
+        },
+        unmountPostCreatePage: (state: PostState) => {
+            state.isPostCreatePageLoading = true;
         }
     },
     initialState: getInitialState(),
