@@ -176,6 +176,27 @@ const categorySlice = createSlice({
             state.isCategoryTranslationCreatePageLoading = false;
         },
         //
+        editTranslationRequest: (
+            state: CategoryState,
+            action: PayloadAction<{
+                categoryId: number;
+                locale: string;
+                name: string;
+                cb: {
+                    setNameError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isCategoryTranslationEditPageLoading = true;
+        },
+        editTranslationSuccess: (state: CategoryState) => {
+            state.isCategoryTranslationEditPageLoading = false;
+        },
+        editTranslationError: (state: CategoryState) => {
+            state.isCategoryTranslationEditPageLoading = false;
+        },
+        //
         unmountCategoryDetailsPage: (state: CategoryState) => {
             state.isCategoryDetailsLoading = true;
             state.category = null;

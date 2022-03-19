@@ -9,6 +9,7 @@ import editCategorySaga from "./editCategorySaga";
 import createCategorySaga from "./createCategorySaga";
 import createTranslationSaga from "./createTranslationSaga";
 import initTranslationEditPageSaga from "./initTranslationEditPageSaga";
+import editCategoryTranslationSaga from "./editCategoryTranslationSaga";
 
 function* categorySaga() {
     yield takeLeading(categoryActions.initCategoryOptionsRequest, initCategoryOptionsSaga);
@@ -20,6 +21,7 @@ function* categorySaga() {
     yield takeLeading(categoryActions.createTranslationRequest, createTranslationSaga);
     //
     yield takeLeading(categoryActions.initTranslationEditPageRequest, initTranslationEditPageSaga);
+    yield takeLeading(categoryActions.editTranslationRequest, editCategoryTranslationSaga);
 }
 
 export default categorySaga;
