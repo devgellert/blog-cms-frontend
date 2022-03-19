@@ -84,6 +84,29 @@ const categorySlice = createSlice({
             state.isCategoryEditPageLoading = false;
         },
         //
+        initTranslationEditPageRequest: (
+            state: CategoryState,
+            actions: PayloadAction<{
+                categoryId: number;
+                locale: string;
+                cb: {
+                    setName: Setter;
+                };
+            }>
+        ) => {
+            state.isCategoryTranslationEditPageLoading = true;
+        },
+        initTranslationEditPageSuccess: (
+            state: CategoryState,
+            action: PayloadAction<{ translation: ApiCategoryTranslation }>
+        ) => {
+            state.categoryTranslation = action.payload.translation;
+            state.isCategoryTranslationEditPageLoading = false;
+        },
+        initTranslationEditPageError: (state: CategoryState) => {
+            state.isCategoryTranslationEditPageLoading = false;
+        },
+        //
         editCategoryRequest: (
             state: CategoryState,
             action: PayloadAction<{
@@ -166,6 +189,10 @@ const categorySlice = createSlice({
             state.isCategoryEditPageLoading = true;
             state.category = null;
             state.categoryOptions = [];
+        },
+        unmountTranslationEditPage: (state: CategoryState) => {
+            state.categoryTranslation = null;
+            state.isCategoryTranslationEditPageLoading = true;
         }
     },
     extraReducers: builder => {
@@ -184,13 +211,15 @@ const categorySlice = createSlice({
     initialState: {
         categoryOptions: [] as CategoryOption[],
         category: null as null | ApiCategory,
+        categoryTranslation: null as null | ApiCategoryTranslation,
         translations: null as null | ApiCategoryTranslation[],
         //
         isCategoryCreatePageLoading: true,
         isCategoryDetailsLoading: true,
         isCategoryEditPageLoading: true,
         //
-        isCategoryTranslationCreatePageLoading: false // Do not have to load anything on mount..
+        isCategoryTranslationCreatePageLoading: false, // Do not have to load anything on mount..
+        isCategoryTranslationEditPageLoading: true
     }
 });
 

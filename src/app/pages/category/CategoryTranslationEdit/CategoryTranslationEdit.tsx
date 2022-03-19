@@ -1,7 +1,7 @@
 import React, { FormEventHandler, useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from "axios";
 import { Button, Container, Typography } from "@mui/material";
 //
@@ -13,6 +13,8 @@ import api from "../../../../api";
 import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
 import { uiActions } from "../../../../redux/ui/slice";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import { categoryActions } from "../../../../redux/category/slice";
+import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./CategoryTranslationEdit.module.scss";
 
@@ -25,28 +27,28 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
 
-    const [isLoading, setIsLoading] = useState(true);
+    const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationEditPageLoading);
 
     useEffect(() => {
-        (async () => {
-            try {
-                const { data }: AxiosResponse<ApiCategoryTranslation> = await api.get(
-                    `/categories/${categoryId}/translations/${locale}`
-                );
-                setName(data.name);
-            } catch (e) {
-                console.log(e);
-            } finally {
-                setIsLoading(false);
-            }
-        })();
+        dispatch(
+            categoryActions.initTranslationEditPageRequest({
+                categoryId: Number(categoryId),
+                locale: locale as string,
+                cb: {
+                    setName
+                }
+            })
+        );
+
+        return () => {
+            dispatch(categoryActions.unmountTranslationEditPage());
+        };
     }, []);
 
     const onSave: FormEventHandler = async e => {
         try {
             e.preventDefault();
 
-            setIsLoading(true);
             setNameError("");
 
             const { data }: AxiosResponse<ApiCategoryTranslation> = await api.put(
@@ -62,8 +64,6 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
             const nameError = getAxiosFieldError(e, "name");
             setNameError(nameError);
             dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to update locale." }));
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -71,7 +71,7 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
         <PageWrap
             title={`#${categoryId} Category Locale (${locale}) Edit`}
             buttons={[]}
-            isLoading={isLoading}
+            isLoading={isPageLoading}
             hasTopPadding
         >
             <Container maxWidth="lg" className={css["CategoryTranslationEdit"]}>

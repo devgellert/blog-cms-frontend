@@ -21,6 +21,9 @@ abstract class CategorySelectors {
 
     static isCategoryTranslationCreatePageLoading = (state: StoreState) =>
         CategorySelectors.getState(state).isCategoryTranslationCreatePageLoading;
+
+    static isCategoryTranslationEditPageLoading = (state: StoreState) =>
+        CategorySelectors.getState(state).isCategoryTranslationEditPageLoading;
 }
 
 export default CategorySelectors;
