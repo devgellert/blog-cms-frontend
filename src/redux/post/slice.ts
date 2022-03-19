@@ -90,6 +90,37 @@ const postSlice = createSlice({
             state.isPostEditPageLoading = false;
         },
         //
+        createTranslationRequest: (
+            state: PostState,
+            action: PayloadAction<{
+                postId: number;
+                locale: string;
+                title: string;
+                metaTitle: string;
+                metaDescription: string;
+                ogTitle: string;
+                ogDescription: string;
+                content: string;
+                cb: {
+                    setTitleError: Setter;
+                    setLocaleError: Setter;
+                    setMTitleError: Setter;
+                    setMDescError: Setter;
+                    setOgTitleError: Setter;
+                    setOgDescError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isPostTranslationEditPageLoading = true;
+        },
+        createTranslationSuccess: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = false;
+        },
+        createTranslationError: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = false;
+        },
+        //
         initPostEditPageRequest: (
             state: PostState,
             action: PayloadAction<{
@@ -140,9 +171,12 @@ function getInitialState(): PostState {
     return {
         post: null,
         postTranslations: null,
+        //
         isPostDetailsPageLoading: true,
         isPostCreatePageLoading: true,
-        isPostEditPageLoading: true
+        isPostEditPageLoading: true,
+        //
+        isPostTranslationEditPageLoading: false
     };
 }
 

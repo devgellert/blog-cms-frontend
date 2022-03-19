@@ -7,6 +7,8 @@ abstract class PostSelectors {
 
     public static getPostTranslations = (state: StoreState) => PostSelectors.getState(state).postTranslations;
 
+    //
+
     public static isPostDetailsPageLoading = (state: StoreState) =>
         PostSelectors.getState(state).isPostDetailsPageLoading;
 
@@ -14,6 +16,11 @@ abstract class PostSelectors {
         PostSelectors.getState(state).isPostCreatePageLoading;
 
     public static isPostEditPageLoading = (state: StoreState) => PostSelectors.getState(state).isPostEditPageLoading;
+
+    //
+
+    public static isPostTranslationEditPageLoading = (state: StoreState) =>
+        PostSelectors.getState(state).isPostTranslationEditPageLoading;
 }
 
 export default PostSelectors;
