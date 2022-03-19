@@ -42,6 +42,10 @@ const CategoryCreate: FC = () => {
 
     useEffect(() => {
         dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-create-page" }));
+
+        return () => {
+            dispatch(categoryActions.unmountCategoryCreatePage());
+        };
     }, []);
 
     const onSubmit: FormEventHandler = async event => {

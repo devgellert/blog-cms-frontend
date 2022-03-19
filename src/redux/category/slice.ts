@@ -55,6 +55,20 @@ const categorySlice = createSlice({
             action: PayloadAction<{ locale: string; categoryId: number }>
         ) => {
             state.isCategoryDetailsLoading = true;
+        },
+        //
+        unmountCategoryDetailsPage: (state: CategoryState) => {
+            state.isCategoryDetailsLoading = true;
+            state.category = null;
+            state.translations = null;
+        },
+        unmountCategoryCreatePage: (state: CategoryState) => {
+            state.isCategoryCreatePageLoading = true;
+            state.categoryOptions = [];
+        },
+        unmountCategoryEditPage: (state: CategoryState) => {
+            state.isCategoryEditPageLoading = true;
+            state.categoryOptions = [];
         }
     },
     initialState: {

@@ -32,6 +32,10 @@ const Category: FC = () => {
 
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
+
+        return () => {
+            dispatch(categoryActions.unmountCategoryDetailsPage());
+        };
     }, []);
 
     const createRemoveTranslation = (locale: string) => () =>

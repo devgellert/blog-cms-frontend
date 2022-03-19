@@ -57,6 +57,10 @@ const CategoryEdit: FC<Props> = ({}) => {
                 console.log(e);
             }
         })();
+
+        return () => {
+            dispatch(categoryActions.unmountCategoryEditPage());
+        };
     }, []);
 
     const onSubmit: FormEventHandler = async event => {
