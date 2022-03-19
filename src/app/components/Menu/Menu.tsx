@@ -91,7 +91,7 @@ const Menu: FC<Props> = ({}) => {
 
                         <List>
                             {menuConfig.items.map(({ text, link }) => (
-                                <Link to={link}>
+                                <Link to={link} key={text}>
                                     <ListItem button key={text}>
                                         <ListItemText primary={text} />
                                     </ListItem>

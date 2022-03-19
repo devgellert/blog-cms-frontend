@@ -107,7 +107,7 @@ const Category: FC = () => {
                             {tabsElement}
 
                             {translations?.map((elem, index) => (
-                                <TabPanel value={tabIndex} index={index} key={index}>
+                                <TabPanel key={elem.id} value={tabIndex} index={index}>
                                     <List>
                                         <SimpleListItem title="Name" text={elem.name} />
                                     </List>

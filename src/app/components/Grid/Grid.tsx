@@ -74,7 +74,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
                     <TableBody>
                         {rows.map(row => {
                             return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                <TableRow key={row.id} hover role="checkbox" tabIndex={-1}>
                                     {columns.map(column => {
                                         const value = row[column.id];
                                         return (
