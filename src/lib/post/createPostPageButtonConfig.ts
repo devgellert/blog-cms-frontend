@@ -11,7 +11,7 @@ const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId:
             }
         },
         {
-            text: "Edit Product",
+            text: "Edit Post",
             color: "primary",
             variant: "contained",
             onClick: () => {
