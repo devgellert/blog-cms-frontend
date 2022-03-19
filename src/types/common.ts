@@ -3,3 +3,5 @@ export type ApiResource = {
     createdAt: string;
     updatedAt: string;
 };
+
+export type Setter<T = string> = (value: T) => void;

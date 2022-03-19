@@ -1,6 +1,6 @@
 import React, { FormEventHandler, useEffect, useState } from "react";
 import { FC, memo } from "react";
-import { map, unset } from "lodash";
+import { map } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
@@ -12,13 +12,10 @@ import SelectField from "../../../components/inputs/SelectField/SelectField";
 import useInput from "../../../../lib/hooks/useInput";
 import { ApiCategory } from "../../../../types/api";
 import api from "../../../../api";
-import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
-import getAxiosError from "../../../../lib/getAxiosError";
-import isSlugError from "../../../../lib/isSlugError";
-import { uiActions } from "../../../../redux/ui/slice";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
 import AuthSelectors from "../../../../redux/auth/selector";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import { postActions } from "../../../../redux/post/slice";
 //
 import css from "./PostCreate.module.scss";
 
@@ -55,50 +52,21 @@ const PostCreate: FC = () => {
         })();
     }, []);
 
-    const onSubmit: FormEventHandler = async event => {
-        try {
-            setIsLoading(true);
+    const onSubmit: FormEventHandler = async e => {
+        e.preventDefault();
 
-            event.preventDefault();
-
-            setCategoryError("");
-            setSlugError("");
-
-            const normalizedCategory = category == "0" ? null : Number(category);
-
-            const body = {
+        dispatch(
+            postActions.createPostRequest({
                 slug: slugify(slug),
-                category: normalizedCategory,
-                author: user?.id
-            };
-
-            if (body.category === null) {
-                unset(body, "category");
-            }
-
-            const response: AxiosResponse<ApiCategory> = await api.post("/posts", body);
-
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." }));
-
-            navigate(`/posts/${response.data.id}`);
-        } catch (e) {
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
-            setErrors(e);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const setErrors = (e: any) => {
-        const slugError = getAxiosFieldError(e, "slug");
-        setSlugError(slugError);
-        const categoryError = getAxiosFieldError(e, "category");
-        setCategoryError(categoryError);
-
-        const axiosError = getAxiosError(e);
-        if (isSlugError(axiosError)) {
-            setSlugError(axiosError);
-        }
+                category: category == "0" ? null : Number(category),
+                author: user?.id as number,
+                cb: {
+                    setCategoryError,
+                    setSlugError,
+                    navigate
+                }
+            })
+        );
     };
 
     const categoryChoices = map([{ id: 0, name: "-" }, ...(categories || [])], elem => ({
