@@ -1,8 +1,9 @@
-import React, { FormEventHandler, useState } from "react";
+import React, { FormEventHandler, useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
+import EditorJS from "@editorjs/editorjs";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import useInput from "../../../../lib/hooks/useInput";
@@ -15,13 +16,33 @@ import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
 import css from "./PostTranslationCreate.module.scss";
+import Paper from "@mui/material/Paper";
 
 type Props = {};
+
+const EDITOR_ID = "editor";
 
 const PostTranslationCreate: FC<Props> = ({}) => {
     const { postId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const { value: content, setValue: setContent, errorText: contentError, setError: setContentError } = useInput({});
+
+    const editorRef = useRef<EditorJS>();
+
+    useEffect(() => {
+        // @ts-ignore
+        editorRef.current = new EditorJS({
+            /**
+             * Id of Element that should contain Editor instance
+             */
+            holder: EDITOR_ID,
+            data: content ? JSON.parse(content) : {},
+            placeholder: "Let`s write an awesome post!"
+        });
+    }, [isLoading]);
 
     const { value: title, setValue: setTitle, errorText: titleError, setError: setTitleError } = useInput({});
     const { value: locale, setValue: setLocale, errorText: localeError, setError: setLocaleError } = useInput({});
@@ -29,8 +50,6 @@ const PostTranslationCreate: FC<Props> = ({}) => {
     const { value: mDesc, setValue: setMDesc, errorText: mDescError, setError: setMDescError } = useInput({});
     const { value: ogTitle, setValue: setOgTitle, errorText: ogTitleError, setError: setOgTitleError } = useInput({});
     const { value: ogDesc, setValue: setOgDesc, errorText: ogDescError, setError: setOgDescError } = useInput({});
-
-    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit: FormEventHandler = async e => {
         try {
@@ -45,6 +64,11 @@ const PostTranslationCreate: FC<Props> = ({}) => {
             setOgTitleError("");
             setOgDescError("");
 
+            const content = await editorRef.current?.save();
+            const jsonContent = JSON.stringify(content);
+
+            setContent(jsonContent);
+
             await api.post(`/posts/${postId}/translations`, {
                 locale,
                 title,
@@ -52,7 +76,7 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                 metaDescription: mDesc,
                 ogTitle,
                 ogDescription: ogDesc,
-                content: "[]" // TODO: content
+                content: jsonContent
             });
 
             dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully created translation." }));
@@ -153,6 +177,8 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                         <Typography variant="h6" className={css["title"]}>
                             Content
                         </Typography>
+
+                        <Paper id={EDITOR_ID} className={css["editor-paper"]} />
                     </SimpleCard>
 
                     <Button
