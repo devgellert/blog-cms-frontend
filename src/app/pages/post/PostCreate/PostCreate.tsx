@@ -1,30 +1,30 @@
-import React, { FormEventHandler, useEffect, useState } from "react";
+import React, { FormEventHandler, useEffect } from "react";
 import { FC, memo } from "react";
-import { map } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
-import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
 import useInput from "../../../../lib/hooks/useInput";
-import { ApiCategory } from "../../../../types/api";
-import api from "../../../../api";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
 import AuthSelectors from "../../../../redux/auth/selector";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import { postActions } from "../../../../redux/post/slice";
+import { categoryActions } from "../../../../redux/category/slice";
+import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./PostCreate.module.scss";
+import PostSelectors from "../../../../redux/post/selector";
 
 const PostCreate: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const categoryChoices = useSelector(CategorySelectors.getCategoryOptions);
+    const user = useSelector(AuthSelectors.getUser);
+    const isPageLoading = useSelector(PostSelectors.isPostCreatePageLoading);
 
     const { value: slug, setValue: setSlug, errorText: slugError, setError: setSlugError } = useInput({});
     const {
@@ -34,22 +34,8 @@ const PostCreate: FC = () => {
         setError: setCategoryError
     } = useInput({ initialValue: "0" });
 
-    const user = useSelector(AuthSelectors.getUser);
-
     useEffect(() => {
-        (async () => {
-            try {
-                const {
-                    data: { items }
-                }: AxiosResponse<{ items: ApiCategory[] }> = await api.get(`/categories?page=1&limit=1000`);
-
-                setCategories(items.map(elem => ({ id: elem.id, name: elem.name })));
-
-                setIsLoading(false);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        dispatch(categoryActions.initCategoryOptionsRequest({ flow: "post-create-page" }));
     }, []);
 
     const onSubmit: FormEventHandler = async e => {
@@ -69,13 +55,8 @@ const PostCreate: FC = () => {
         );
     };
 
-    const categoryChoices = map([{ id: 0, name: "-" }, ...(categories || [])], elem => ({
-        value: elem.id,
-        text: elem.name
-    }));
-
     return (
-        <PageWrap title="New Post" buttons={[]} isLoading={isLoading}>
+        <PageWrap title="New Post" buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["PostCreate"]}>
                 <form onSubmit={onSubmit}>
                     <div className={css["input-grid"]}>

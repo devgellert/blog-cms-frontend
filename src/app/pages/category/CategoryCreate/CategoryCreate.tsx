@@ -1,6 +1,6 @@
 import React, { FormEventHandler, useEffect } from "react";
 import { FC, memo } from "react";
-import { map, unset } from "lodash";
+import { unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
@@ -28,7 +28,7 @@ const CategoryCreate: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const parentCategories = useSelector(CategorySelectors.getParentCategories);
+    const parentCategoryChoices = useSelector(CategorySelectors.getCategoryOptions);
     const isCategoryCreatePageLoading = useSelector(CategorySelectors.isCategoryCreatePageLoading);
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
@@ -41,7 +41,7 @@ const CategoryCreate: FC = () => {
     } = useInput({ initialValue: "0" });
 
     useEffect(() => {
-        dispatch(categoryActions.initializeCategoryCreatePage());
+        dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-create-page" }));
     }, []);
 
     const onSubmit: FormEventHandler = async event => {
@@ -92,11 +92,6 @@ const CategoryCreate: FC = () => {
         }
     };
 
-    const parentChoices = map([{ id: 0, name: "-" }, ...(parentCategories || [])], elem => ({
-        value: elem.id,
-        text: elem.name
-    }));
-
     return (
         <PageWrap title="New Category" buttons={[]} isLoading={isCategoryCreatePageLoading}>
             <Container maxWidth="lg" className={css["CategoryCreate"]}>
@@ -121,7 +116,7 @@ const CategoryCreate: FC = () => {
                                 errorText={parentError}
                                 value={parent}
                                 onChange={e => setParent(e.target.value)}
-                                choices={parentChoices}
+                                choices={parentCategoryChoices}
                             />
                         </SimpleCard>
 

@@ -1,21 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
-import { CategoryState, CreateNewCategoryPayload } from "./types";
+import { CategoryOption, CategoryState } from "./types";
 import { ApiCategory, ApiCategoryTranslation } from "../../types/api";
-import removeCategoryTranslationSaga from "./sagas/removeCategoryTranslationSaga";
+
+export type InitCategoryOptionsFlow = "category-create-page" | "post-create-page" | "category-edit-page";
 
 const categorySlice = createSlice({
     name: "categorySlice",
     reducers: {
-        initializeCategoryCreatePage: (state: CategoryState) => {
-            state.isCategoryCreatePageLoading = true;
-        },
-        initializeCategoryCreatePageSuccess: (
+        initCategoryOptionsRequest: (
             state: CategoryState,
-            action: PayloadAction<{ categories: ApiCategory[] }>
+            { payload: { flow } }: PayloadAction<{ flow: InitCategoryOptionsFlow }>
         ) => {
-            state.isCategoryCreatePageLoading = false;
-            state.parentCategories = action.payload.categories;
+            if (flow === "category-create-page") {
+                state.isCategoryCreatePageLoading = true;
+            }
+            if (flow === "category-edit-page") {
+                state.isCategoryEditPageLoading = true;
+            }
+        },
+        initCategoryOptionsSuccess: (
+            state: CategoryState,
+            { payload: { flow, options } }: PayloadAction<{ options: CategoryOption[]; flow: InitCategoryOptionsFlow }>
+        ) => {
+            state.categoryOptions = options;
+
+            if (flow === "category-create-page") {
+                state.isCategoryCreatePageLoading = false;
+            }
+
+            if (flow === "category-edit-page") {
+                state.isCategoryEditPageLoading = false;
+            }
         },
         setIsCategoryCreatePageLoading: (state: CategoryState, action: PayloadAction<boolean>) => {
             state.isCategoryCreatePageLoading = action.payload;
@@ -42,11 +58,13 @@ const categorySlice = createSlice({
         }
     },
     initialState: {
-        isCategoryCreatePageLoading: true,
-        parentCategories: null as null | ApiCategory[],
+        categoryOptions: [] as CategoryOption[],
         category: null as null | ApiCategory,
+        translations: null as null | ApiCategoryTranslation[],
+        //
+        isCategoryCreatePageLoading: true,
         isCategoryDetailsLoading: true,
-        translations: null as null | ApiCategoryTranslation[]
+        isCategoryEditPageLoading: true
     }
 });
 

@@ -1,8 +1,8 @@
 import React, { FormEventHandler, useEffect } from "react";
 import { FC, memo } from "react";
-import { map, unset } from "lodash";
+import { unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardContent, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
@@ -32,8 +32,8 @@ const CategoryEdit: FC<Props> = ({}) => {
     const navigate = useNavigate();
     const { categoryId } = useParams();
 
-    const parentCategories = useSelector(CategorySelectors.getParentCategories);
-    const isCategoryCreatePageLoading = useSelector(CategorySelectors.isCategoryCreatePageLoading);
+    const parentCategoryOptions = useSelector(CategorySelectors.getCategoryOptions);
+    const isPageLoading = useSelector(CategorySelectors.isCategoryEditPageLoading);
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
     const { value: slug, setValue: setSlug, errorText: slugError, setError: setSlugError } = useInput({});
@@ -45,7 +45,7 @@ const CategoryEdit: FC<Props> = ({}) => {
     } = useInput({ initialValue: "0" });
 
     useEffect(() => {
-        dispatch(categoryActions.initializeCategoryCreatePage());
+        dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-edit-page" }));
 
         (async () => {
             try {
@@ -107,13 +107,8 @@ const CategoryEdit: FC<Props> = ({}) => {
         }
     };
 
-    const parentChoices = map([{ id: 0, name: "-" }, ...(parentCategories || [])], elem => ({
-        value: elem.id,
-        text: elem.name
-    }));
-
     return (
-        <PageWrap title="New Category" buttons={[]} isLoading={isCategoryCreatePageLoading}>
+        <PageWrap title="New Category" buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["CategoryEdit"]}>
                 <form onSubmit={onSubmit}>
                     <TwoColumnGrid>
@@ -136,7 +131,7 @@ const CategoryEdit: FC<Props> = ({}) => {
                                 errorText={parentError}
                                 value={parent}
                                 onChange={e => setParent(e.target.value)}
-                                choices={parentChoices}
+                                choices={parentCategoryOptions}
                             />
                         </SimpleCard>
 

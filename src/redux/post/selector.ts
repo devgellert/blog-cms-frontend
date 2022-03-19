@@ -9,6 +9,9 @@ abstract class PostSelectors {
 
     public static isPostDetailsPageLoading = (state: StoreState) =>
         PostSelectors.getState(state).isPostDetailsPageLoading;
+
+    public static isPostCreatePageLoading = (state: StoreState) =>
+        PostSelectors.getState(state).isPostCreatePageLoading;
 }
 
 export default PostSelectors;

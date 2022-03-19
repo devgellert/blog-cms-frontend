@@ -3,6 +3,8 @@ import { PostState } from "./types";
 import fetchAndSetPostAndTranslationsSaga from "./sagas/fetchAndSetPostAndTranslationsSaga";
 import { ApiPost, ApiPostTranslation } from "../../types/api";
 import { Setter } from "../../types/common";
+import { categoryActions, InitCategoryOptionsFlow } from "../category/slice";
+import { CategoryOption } from "../category/types";
 
 export type RemovePostTranslationFlow = "post-details-page";
 
@@ -63,7 +65,20 @@ const postSlice = createSlice({
             state.isPostCreatePageLoading = false;
         }
     },
-    initialState: getInitialState()
+    initialState: getInitialState(),
+    extraReducers: builder => {
+        builder.addCase(categoryActions.initCategoryOptionsRequest, (state, action) => {
+            if (action.payload.flow === "post-create-page") {
+                state.isPostCreatePageLoading = true;
+            }
+        });
+
+        builder.addCase(categoryActions.initCategoryOptionsSuccess, (state, action) => {
+            if (action.payload.flow === "post-create-page") {
+                state.isPostCreatePageLoading = false;
+            }
+        });
+    }
 });
 
 function getInitialState(): PostState {
@@ -71,7 +86,7 @@ function getInitialState(): PostState {
         post: null,
         postTranslations: null,
         isPostDetailsPageLoading: true,
-        isPostCreatePageLoading: false
+        isPostCreatePageLoading: true
     };
 }
 
