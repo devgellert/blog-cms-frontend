@@ -12,9 +12,9 @@ import SimpleListItem from "../../../components/SimpleListItem/SimpleListItem";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
 import createCategoryPageButtonConfig from "../../../../lib/category/createCategoryPageButtonConfig";
+import formatDateString from "../../../../lib/formatDateString";
 //
 import css from "./Category.module.scss";
-import formatDateString from "../../../../lib/formatDateString";
 
 const Category: FC = () => {
     const { categoryId } = useParams();

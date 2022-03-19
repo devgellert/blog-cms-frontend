@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditorJS from "@editorjs/editorjs";
-//
-import PageWrap from "../../../components/PageWrap/PageWrap";
 import { Button, Container, List, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 //
+import PageWrap from "../../../components/PageWrap/PageWrap";
 import { ApiPost, ApiPostTranslation } from "../../../../types/api";
 import api from "../../../../api";
 import formatDateString from "../../../../lib/formatDateString";
@@ -21,11 +20,9 @@ import createPostPageButtonConfig from "../../../../lib/post/createPostPageButto
 //
 import css from "./Post.module.scss";
 
-type Props = {};
-
 const editorElement = <div id="editor" />;
 
-const Post: FC<Props> = ({}) => {
+const Post: FC = ({}) => {
     const { postId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -83,6 +80,7 @@ const Post: FC<Props> = ({}) => {
             await api.delete(`/posts/${postId}/translations/${locale}`);
 
             fetchAndSetData();
+
             dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
         } catch (e) {
             dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
