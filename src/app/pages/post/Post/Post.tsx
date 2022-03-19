@@ -3,20 +3,18 @@ import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditorJS from "@editorjs/editorjs";
 import { Button, Container, List, Typography } from "@mui/material";
-import { AxiosResponse } from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
-import { ApiPost, ApiPostTranslation } from "../../../../types/api";
-import api from "../../../../api";
 import formatDateString from "../../../../lib/formatDateString";
 import TabPanel from "../../../components/TabPanel/TabPanel";
-import { uiActions } from "../../../../redux/ui/slice";
 import SimpleListItem from "../../../components/SimpleListItem/SimpleListItem";
 import useTranslationTabs from "../../../../lib/hooks/useTranslationTabs";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import createPostPageButtonConfig from "../../../../lib/post/createPostPageButtonConfig";
+import { postActions } from "../../../../redux/post/slice";
+import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./Post.module.scss";
 
@@ -27,15 +25,14 @@ const Post: FC = ({}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [post, setPost] = useState<null | ApiPost>();
-    const [translations, setTranslations] = useState<null | ApiPostTranslation[]>(null);
-
-    const [isLoading, setIsLoading] = useState(true);
+    const translations = useSelector(PostSelectors.getPostTranslations);
+    const post = useSelector(PostSelectors.getPost);
+    const isLoading = useSelector(PostSelectors.isPostDetailsPageLoading);
 
     const { tabIndex, tabsElement } = useTranslationTabs((translations || []).map(elem => elem.locale));
 
     useEffect(() => {
-        fetchAndSetData();
+        dispatch(postActions.fetchAndSetPostAndTranslations({ postId: Number(postId) }));
     }, []);
 
     const editorRef = useRef<EditorJS>();
@@ -54,39 +51,10 @@ const Post: FC = ({}) => {
         }
     }, [translations, tabIndex]);
 
-    const fetchAndSetData = async () => {
-        try {
-            setIsLoading(true);
-
-            const { data }: AxiosResponse<ApiPost> = await api.get(`/posts/${postId}`);
-
-            const {
-                data: { items: translations }
-            }: AxiosResponse<{ items: ApiPostTranslation[] }> = await api.get(`/posts/${postId}/translations`);
-
-            setPost(data);
-            setTranslations(translations);
-        } catch (e) {
-            console.log(e);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     const removePostTranslation = async (locale: string) => {
-        try {
-            setIsLoading(true);
-
-            await api.delete(`/posts/${postId}/translations/${locale}`);
-
-            fetchAndSetData();
-
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
-        } catch (e) {
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
-        } finally {
-            setIsLoading(false);
-        }
+        dispatch(
+            postActions.removePostTranslationRequest({ postId: Number(postId), locale, flow: "post-details-page" })
+        );
     };
 
     return (
