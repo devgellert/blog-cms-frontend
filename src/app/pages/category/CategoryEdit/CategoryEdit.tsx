@@ -45,18 +45,12 @@ const CategoryEdit: FC<Props> = ({}) => {
     } = useInput({ initialValue: "0" });
 
     useEffect(() => {
-        dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-edit-page" }));
-
-        (async () => {
-            try {
-                const { data }: AxiosResponse<ApiCategory> = await api.get(`/categories/${categoryId}`);
-                setName(data.name);
-                setSlug(data.slug);
-                setParent(data.parent);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        dispatch(
+            categoryActions.initCategoryEditPageRequest({
+                categoryId: Number(categoryId),
+                cb: { setName, setSlug, setParent }
+            })
+        );
 
         return () => {
             dispatch(categoryActions.unmountCategoryEditPage());

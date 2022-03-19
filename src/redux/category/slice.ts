@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CategoryOption, CategoryState } from "./types";
 import { ApiCategory, ApiCategoryTranslation } from "../../types/api";
 import { postActions } from "../post/slice";
+import { Setter } from "../../types/common";
 
 export type InitCategoryOptionsFlow = "category-create-page" | "post-create-page" | "category-edit-page";
 
@@ -58,6 +59,31 @@ const categorySlice = createSlice({
             state.isCategoryDetailsLoading = true;
         },
         //
+        initCategoryEditPageRequest: (
+            state: CategoryState,
+            actions: PayloadAction<{
+                categoryId: number;
+                cb: {
+                    setName: Setter;
+                    setSlug: Setter;
+                    setParent: Setter<number | null>;
+                };
+            }>
+        ) => {
+            state.isCategoryEditPageLoading = true;
+        },
+        initCategoryEditPageSuccess: (
+            state: CategoryState,
+            action: PayloadAction<{ categoryOptions: CategoryOption[]; category: ApiCategory }>
+        ) => {
+            state.categoryOptions = action.payload.categoryOptions;
+            state.category = action.payload.category;
+            state.isCategoryEditPageLoading = false;
+        },
+        initCategoryEditPageError: (state: CategoryState) => {
+            state.isCategoryEditPageLoading = false;
+        },
+        //
         unmountCategoryDetailsPage: (state: CategoryState) => {
             state.isCategoryDetailsLoading = true;
             state.category = null;
@@ -69,6 +95,7 @@ const categorySlice = createSlice({
         },
         unmountCategoryEditPage: (state: CategoryState) => {
             state.isCategoryEditPageLoading = true;
+            state.category = null;
             state.categoryOptions = [];
         }
     },
