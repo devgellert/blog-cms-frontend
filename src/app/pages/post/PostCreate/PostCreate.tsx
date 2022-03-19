@@ -63,6 +63,7 @@ const PostCreate: FC = () => {
                 <form
                     onSubmit={e => {
                         e.preventDefault();
+
                         createPost();
                     }}
                 >

@@ -27,7 +27,7 @@ const Post: FC = ({}) => {
 
     const translations = useSelector(PostSelectors.getPostTranslations);
     const post = useSelector(PostSelectors.getPost);
-    const isLoading = useSelector(PostSelectors.isPostDetailsPageLoading);
+    const isPageLoading = useSelector(PostSelectors.isPostDetailsPageLoading);
 
     const { tabIndex, tabsElement } = useTranslationTabs((translations || []).map(elem => elem.locale));
 
@@ -45,9 +45,6 @@ const Post: FC = ({}) => {
         if (translations && translations.length && translations[tabIndex] && translations[tabIndex].content) {
             // @ts-ignore
             editorRef.current = new EditorJS({
-                /**
-                 * Id of Element that should contain Editor instance
-                 */
                 holder: "editor",
                 data: JSON.parse(translations[tabIndex].content),
                 readOnly: true
@@ -64,7 +61,7 @@ const Post: FC = ({}) => {
     return (
         <PageWrap
             title="Post"
-            isLoading={isLoading}
+            isLoading={isPageLoading}
             hasTopPadding={true}
             buttons={createPostPageButtonConfig(navigate, Number(postId))}
         >

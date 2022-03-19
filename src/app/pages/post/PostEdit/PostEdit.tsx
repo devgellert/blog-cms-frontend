@@ -68,6 +68,7 @@ const PostEdit: FC<Props> = ({}) => {
                 <form
                     onSubmit={e => {
                         e.preventDefault();
+
                         editPost();
                     }}
                 >

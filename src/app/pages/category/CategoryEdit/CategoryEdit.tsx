@@ -72,6 +72,7 @@ const CategoryEdit: FC<Props> = ({}) => {
                 <form
                     onSubmit={e => {
                         e.preventDefault();
+
                         editCategory();
                     }}
                 >
