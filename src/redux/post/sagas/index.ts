@@ -7,6 +7,7 @@ import createPostSaga from "./createPostSaga";
 import initPostEditPageSaga from "./initPostEditPageSaga";
 import editPostSaga from "./editPostSaga";
 import createPostTranslationSaga from "./createPostTranslationSaga";
+import initPostTranslationEditPageSaga from "./initPostTranslationEditPageSaga";
 
 function* postSaga() {
     yield takeLeading(postActions.fetchAndSetPostAndTranslations, fetchAndSetPostAndTranslationsSaga);
@@ -16,6 +17,7 @@ function* postSaga() {
     yield takeLeading(postActions.editPostRequest, editPostSaga);
     //
     yield takeLeading(postActions.createTranslationRequest, createPostTranslationSaga);
+    yield takeLeading(postActions.initTranslationEditPageRequest, initPostTranslationEditPageSaga);
 }
 
 export default postSaga;

@@ -2,8 +2,9 @@ import React, { FormEventHandler, useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EditorJS from "@editorjs/editorjs";
+import Paper from "@mui/material/Paper";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import useInput from "../../../../lib/hooks/useInput";
@@ -11,14 +12,12 @@ import Input from "../../../components/Input/Input";
 import api from "../../../../api";
 import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
 import { uiActions } from "../../../../redux/ui/slice";
-import getAxiosError from "../../../../lib/getAxiosError";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
-import Paper from "@mui/material/Paper";
+import { postActions } from "../../../../redux/post/slice";
 //
 import css from "./PostTranslationEdit.module.scss";
-import { AxiosResponse } from "axios";
-import { ApiCategoryTranslation, ApiPostTranslation } from "../../../../types/api";
+import PostSelectors from "../../../../redux/post/selector";
 
 type Props = {};
 
@@ -29,24 +28,22 @@ const PostTranslationEdit: FC<Props> = ({}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const isPageLoading = useSelector(PostSelectors.isPostTranslationEditPageLoading);
+
     const { value: content, setValue: setContent, errorText: contentError, setError: setContentError } = useInput({});
 
     const editorRef = useRef<EditorJS>();
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isPageLoading) {
             // @ts-ignore
             editorRef.current = new EditorJS({
-                /**
-                 * Id of Element that should contain Editor instance
-                 */
                 holder: EDITOR_ID,
                 data: content ? JSON.parse(content) : {},
                 placeholder: "Let`s write an awesome post!"
             });
         }
-    }, [isLoading]);
+    }, [isPageLoading]);
 
     const { value: title, setValue: setTitle, errorText: titleError, setError: setTitleError } = useInput({});
     const { value: mTitle, setValue: setMTitle, errorText: mTitleError, setError: setMTitleError } = useInput({});
@@ -55,30 +52,29 @@ const PostTranslationEdit: FC<Props> = ({}) => {
     const { value: ogDesc, setValue: setOgDesc, errorText: ogDescError, setError: setOgDescError } = useInput({});
 
     useEffect(() => {
-        (async () => {
-            try {
-                const { data }: AxiosResponse<ApiPostTranslation> = await api.get(
-                    `/posts/${postId}/translations/${locale}`
-                );
-                setTitle(data.title);
-                setMTitle(data.metaTitle);
-                setMDesc(data.metaDescription);
-                setOgTitle(data.ogTitle);
-                setOgDesc(data.ogDescription);
-                setContent(data.content);
-            } catch (e) {
-                console.log(e);
-            } finally {
-                setIsLoading(false);
-            }
-        })();
+        dispatch(
+            postActions.initTranslationEditPageRequest({
+                postId: Number(postId),
+                locale: locale as string,
+                cb: {
+                    setTitle,
+                    setOgTitle,
+                    setMTitle,
+                    setOgDesc,
+                    setMDesc,
+                    setContent
+                }
+            })
+        );
+
+        return () => {
+            dispatch(postActions.unmountTranslationEditPage());
+        };
     }, []);
 
     const onSubmit: FormEventHandler = async e => {
         try {
             e.preventDefault();
-
-            setIsLoading(true);
 
             setTitleError("");
             setMTitleError("");
@@ -116,13 +112,11 @@ const PostTranslationEdit: FC<Props> = ({}) => {
                     text: "Failed to edit translation."
                 })
             );
-        } finally {
-            setIsLoading(false);
         }
     };
 
     return (
-        <PageWrap title={`#${postId} Post Locale Create`} buttons={[]} isLoading={isLoading} hasTopPadding>
+        <PageWrap title={`#${postId} Post Locale Create`} buttons={[]} isLoading={isPageLoading} hasTopPadding>
             <Container maxWidth="lg" className={css["PostTranslationEdit"]}>
                 <form onSubmit={onSubmit}>
                     <TwoColumnGrid>

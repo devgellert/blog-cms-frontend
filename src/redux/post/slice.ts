@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostState } from "./types";
 import fetchAndSetPostAndTranslationsSaga from "./sagas/fetchAndSetPostAndTranslationsSaga";
-import { ApiPost, ApiPostTranslation } from "../../types/api";
+import { ApiCategoryTranslation, ApiPost, ApiPostTranslation } from "../../types/api";
 import { Setter } from "../../types/common";
 import { categoryActions, InitCategoryOptionsFlow } from "../category/slice";
-import { CategoryOption } from "../category/types";
+import { CategoryOption, CategoryState } from "../category/types";
 import initPostEditPageSaga from "./sagas/initPostEditPageSaga";
 
 export type RemovePostTranslationFlow = "post-details-page";
@@ -139,6 +139,35 @@ const postSlice = createSlice({
             state.isPostEditPageLoading = false;
         },
         //
+        initTranslationEditPageRequest: (
+            state: PostState,
+            actions: PayloadAction<{
+                postId: number;
+                locale: string;
+                cb: {
+                    setTitle: Setter;
+                    setMTitle: Setter;
+                    setMDesc: Setter;
+                    setOgTitle: Setter;
+                    setOgDesc: Setter;
+                    setContent: Setter;
+                };
+            }>
+        ) => {
+            state.isPostTranslationEditPageLoading = true;
+        },
+        initTranslationEditPageSuccess: (
+            state: PostState,
+            action: PayloadAction<{ translation: ApiPostTranslation }>
+        ) => {
+            state.postTranslation = action.payload.translation;
+            state.isPostTranslationEditPageLoading = false;
+        },
+        initTranslationEditPageError: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = false;
+        },
+
+        //
         unmountPostDetailsPage: (state: PostState) => {
             state.post = null;
             state.postTranslations = null;
@@ -149,6 +178,10 @@ const postSlice = createSlice({
         },
         unmountPostEditPage: (state: PostState) => {
             state.isPostEditPageLoading = true;
+        },
+        unmountTranslationEditPage: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = true;
+            state.postTranslation = null;
         }
     },
     initialState: getInitialState(),
@@ -171,12 +204,14 @@ function getInitialState(): PostState {
     return {
         post: null,
         postTranslations: null,
+        postTranslation: null,
         //
         isPostDetailsPageLoading: true,
         isPostCreatePageLoading: true,
         isPostEditPageLoading: true,
         //
-        isPostTranslationCreatePageLoading: false
+        isPostTranslationCreatePageLoading: false,
+        isPostTranslationEditPageLoading: true
     };
 }
 
