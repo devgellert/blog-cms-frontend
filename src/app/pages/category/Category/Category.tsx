@@ -22,13 +22,12 @@ const Category: FC = () => {
     const dispatch = useDispatch();
 
     const translations = useSelector(CategorySelectors.getTranslations);
+    const isPageLoading = useSelector(CategorySelectors.isCategoryDetailsLoading);
+    const category = useSelector(CategorySelectors.getCategory);
 
     const { tabIndex, tabsElement } = useTranslationTabs(
         translations ? translations.map(translations => translations.locale) : []
     );
-
-    const isCategoryDetailsLoading = useSelector(CategorySelectors.isCategoryDetailsLoading);
-    const category = useSelector(CategorySelectors.getCategory);
 
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
@@ -50,7 +49,7 @@ const Category: FC = () => {
         <PageWrap
             title={`Category #${categoryId}`}
             buttons={createCategoryPageButtonConfig(navigate, Number(categoryId))}
-            isLoading={isCategoryDetailsLoading}
+            isLoading={isPageLoading}
             hasTopPadding
         >
             <Container maxWidth="lg" className={css["Category"]}>
