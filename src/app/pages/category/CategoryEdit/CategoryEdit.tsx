@@ -1,9 +1,7 @@
-import React, { FormEventHandler, useEffect } from "react";
+import React, { useEffect } from "react";
 import { FC, memo } from "react";
-import { unset } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
-import { AxiosResponse } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
 //
@@ -13,13 +11,7 @@ import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
 import useInput from "../../../../lib/hooks/useInput";
-import { ApiCategory } from "../../../../types/api";
-import api from "../../../../api";
-import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
-import getAxiosError from "../../../../lib/getAxiosError";
-import isSlugError from "../../../../lib/isSlugError";
 import SlugField from "../../../components/inputs/SlugField/SlugField";
-import { uiActions } from "../../../../redux/ui/slice";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
@@ -32,7 +24,7 @@ const CategoryEdit: FC<Props> = ({}) => {
     const navigate = useNavigate();
     const { categoryId } = useParams();
 
-    const parentCategoryOptions = useSelector(CategorySelectors.getCategoryOptions);
+    const categoryOptions = useSelector(CategorySelectors.getCategoryOptions);
     const isPageLoading = useSelector(CategorySelectors.isCategoryEditPageLoading);
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
@@ -57,58 +49,32 @@ const CategoryEdit: FC<Props> = ({}) => {
         };
     }, []);
 
-    const onSubmit: FormEventHandler = async event => {
-        try {
-            event.preventDefault();
-
-            dispatch(categoryActions.setIsCategoryCreatePageLoading(true));
-
-            setNameError("");
-            setParentError("");
-            setSlugError("");
-
-            const normalizedParent = parent == "0" ? null : Number(parent);
-
-            const body = {
-                name: name,
+    const editCategory = () => {
+        dispatch(
+            categoryActions.editCategoryRequest({
+                categoryId: Number(categoryId),
+                parent: parent == "0" ? null : parent,
+                name,
                 slug: slugify(slug),
-                parent: normalizedParent
-            };
-
-            if (body.parent === null) {
-                unset(body, "parent");
-            }
-
-            const response: AxiosResponse<ApiCategory> = await api.put(`/categories/${categoryId}`, body);
-
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully edited category." }));
-            navigate(`/categories/${response.data.id}`);
-        } catch (e) {
-            setErrors(e);
-            dispatch(uiActions.displaySnackbar({ type: "error", text: "Failed to edit category." }));
-        } finally {
-            dispatch(categoryActions.setIsCategoryCreatePageLoading(false));
-        }
-    };
-
-    const setErrors = (e: any) => {
-        const nameError = getAxiosFieldError(e, "name");
-        setNameError(nameError);
-        const slugError = getAxiosFieldError(e, "slug");
-        setSlugError(slugError);
-        const parentError = getAxiosFieldError(e, "parent");
-        setParentError(parentError);
-
-        const axiosError = getAxiosError(e);
-        if (isSlugError(axiosError)) {
-            setSlugError(axiosError);
-        }
+                cb: {
+                    setNameError,
+                    navigate,
+                    setParentError,
+                    setSlugError
+                }
+            })
+        );
     };
 
     return (
         <PageWrap title="New Category" buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["CategoryEdit"]}>
-                <form onSubmit={onSubmit}>
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+                        editCategory();
+                    }}
+                >
                     <TwoColumnGrid>
                         <SimpleCard>
                             <Typography variant="h6">General</Typography>
@@ -129,7 +95,7 @@ const CategoryEdit: FC<Props> = ({}) => {
                                 errorText={parentError}
                                 value={parent}
                                 onChange={e => setParent(e.target.value)}
-                                choices={parentCategoryOptions}
+                                choices={categoryOptions}
                             />
                         </SimpleCard>
 

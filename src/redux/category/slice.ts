@@ -84,6 +84,30 @@ const categorySlice = createSlice({
             state.isCategoryEditPageLoading = false;
         },
         //
+        editCategoryRequest: (
+            state: CategoryState,
+            action: PayloadAction<{
+                categoryId: number;
+                slug: string;
+                parent: number | null;
+                name: string;
+                cb: {
+                    setNameError: Setter;
+                    setParentError: Setter;
+                    setSlugError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isCategoryEditPageLoading = true;
+        },
+        editCategorySuccess: (state: CategoryState) => {
+            state.isCategoryEditPageLoading = false;
+        },
+        editCategoryError: (state: CategoryState) => {
+            state.isCategoryEditPageLoading = false;
+        },
+        //
         unmountCategoryDetailsPage: (state: CategoryState) => {
             state.isCategoryDetailsLoading = true;
             state.category = null;
