@@ -1,4 +1,4 @@
-import React, { FormEventHandler, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
@@ -9,15 +9,12 @@ import Paper from "@mui/material/Paper";
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import useInput from "../../../../lib/hooks/useInput";
 import Input from "../../../components/Input/Input";
-import api from "../../../../api";
-import getAxiosFieldError from "../../../../lib/getAxiosFieldError";
-import { uiActions } from "../../../../redux/ui/slice";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import { postActions } from "../../../../redux/post/slice";
+import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./PostTranslationEdit.module.scss";
-import PostSelectors from "../../../../redux/post/selector";
 
 type Props = {};
 
@@ -72,53 +69,45 @@ const PostTranslationEdit: FC<Props> = ({}) => {
         };
     }, []);
 
-    const onSubmit: FormEventHandler = async e => {
-        try {
-            e.preventDefault();
+    const onSubmit = async () => {
+        const content = await editorRef.current?.save();
 
-            setTitleError("");
-            setMTitleError("");
-            setMDescError("");
-            setOgTitleError("");
-            setOgDescError("");
+        const jsonContent = JSON.stringify(content);
 
-            const content = await editorRef.current?.save();
-            const jsonContent = JSON.stringify(content);
+        setContent(jsonContent);
 
-            setContent(jsonContent);
-
-            await api.put(`/posts/${postId}/translations/${locale}`, {
+        dispatch(
+            postActions.editTranslationRequest({
+                postId: Number(postId),
+                locale: locale as string,
+                content: jsonContent,
+                ogTitle,
+                ogDescription: ogDesc,
                 title,
                 metaTitle: mTitle,
                 metaDescription: mDesc,
-                ogTitle,
-                ogDescription: ogDesc,
-                content: jsonContent
-            });
-
-            dispatch(uiActions.displaySnackbar({ type: "success", text: "Successfully edited translation." }));
-
-            navigate(`/posts/${postId}`);
-        } catch (e) {
-            setTitleError(getAxiosFieldError(e, "title"));
-            setMTitleError(getAxiosFieldError(e, "metaTitle"));
-            setMDescError(getAxiosFieldError(e, "metaDescription"));
-            setOgTitleError(getAxiosFieldError(e, "ogTitle"));
-            setOgDescError(getAxiosFieldError(e, "ogDescription"));
-
-            dispatch(
-                uiActions.displaySnackbar({
-                    type: "error",
-                    text: "Failed to edit translation."
-                })
-            );
-        }
+                cb: {
+                    navigate,
+                    setMDescError,
+                    setOgDescError,
+                    setMTitleError,
+                    setOgTitleError,
+                    setTitleError
+                }
+            })
+        );
     };
 
     return (
         <PageWrap title={`#${postId} Post Locale Create`} buttons={[]} isLoading={isPageLoading} hasTopPadding>
             <Container maxWidth="lg" className={css["PostTranslationEdit"]}>
-                <form onSubmit={onSubmit}>
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+
+                        onSubmit();
+                    }}
+                >
                     <TwoColumnGrid>
                         <SimpleCard>
                             <Typography variant="h6" className={css["title"]}>

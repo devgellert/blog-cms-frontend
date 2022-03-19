@@ -8,6 +8,7 @@ import initPostEditPageSaga from "./initPostEditPageSaga";
 import editPostSaga from "./editPostSaga";
 import createPostTranslationSaga from "./createPostTranslationSaga";
 import initPostTranslationEditPageSaga from "./initPostTranslationEditPageSaga";
+import editPostTranslationSaga from "./editPostTranslationSaga";
 
 function* postSaga() {
     yield takeLeading(postActions.fetchAndSetPostAndTranslations, fetchAndSetPostAndTranslationsSaga);
@@ -18,6 +19,7 @@ function* postSaga() {
     //
     yield takeLeading(postActions.createTranslationRequest, createPostTranslationSaga);
     yield takeLeading(postActions.initTranslationEditPageRequest, initPostTranslationEditPageSaga);
+    yield takeLeading(postActions.editTranslationRequest, editPostTranslationSaga);
 }
 
 export default postSaga;

@@ -121,6 +121,36 @@ const postSlice = createSlice({
             state.isPostTranslationCreatePageLoading = false;
         },
         //
+        editTranslationRequest: (
+            state: PostState,
+            action: PayloadAction<{
+                postId: number;
+                locale: string;
+                title: string;
+                metaTitle: string;
+                metaDescription: string;
+                ogTitle: string;
+                ogDescription: string;
+                content: string;
+                cb: {
+                    setTitleError: Setter;
+                    setMTitleError: Setter;
+                    setMDescError: Setter;
+                    setOgTitleError: Setter;
+                    setOgDescError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isPostTranslationEditPageLoading = true;
+        },
+        editTranslationSuccess: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = false;
+        },
+        editTranslationError: (state: PostState) => {
+            state.isPostTranslationEditPageLoading = false;
+        },
+        //
         initPostEditPageRequest: (
             state: PostState,
             action: PayloadAction<{
