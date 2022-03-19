@@ -14,9 +14,9 @@ import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import { postActions } from "../../../../redux/post/slice";
 import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
+import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./PostCreate.module.scss";
-import PostSelectors from "../../../../redux/post/selector";
 
 const PostCreate: FC = () => {
     const dispatch = useDispatch();
@@ -42,9 +42,7 @@ const PostCreate: FC = () => {
         };
     }, []);
 
-    const onSubmit: FormEventHandler = async e => {
-        e.preventDefault();
-
+    const createPost = () => {
         dispatch(
             postActions.createPostRequest({
                 slug: slugify(slug),
@@ -62,7 +60,12 @@ const PostCreate: FC = () => {
     return (
         <PageWrap title="New Post" buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["PostCreate"]}>
-                <form onSubmit={onSubmit}>
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+                        createPost();
+                    }}
+                >
                     <div className={css["input-grid"]}>
                         <SimpleCard>
                             <Typography variant="h6">General</Typography>
