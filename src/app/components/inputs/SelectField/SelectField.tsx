@@ -6,6 +6,7 @@ import { map } from "lodash";
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 type Props = {
+    name: string;
     labelId: string;
     label: string;
     errorText: string;
@@ -14,12 +15,13 @@ type Props = {
     choices: { value: any; text: string }[];
 };
 
-const SelectField: FC<Props> = ({ errorText, value, onChange, label, choices, labelId }) => {
+const SelectField: FC<Props> = ({ errorText, value, onChange, label, choices, labelId, name }) => {
     return (
         <FormControl fullWidth>
             <InputLabel id={labelId}>{label}</InputLabel>
 
             <Select
+                name={name}
                 error={!!errorText}
                 variant="filled"
                 labelId={labelId}

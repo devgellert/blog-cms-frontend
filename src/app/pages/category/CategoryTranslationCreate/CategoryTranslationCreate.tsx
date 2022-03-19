@@ -75,9 +75,21 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
                         </Typography>
 
                         <TwoColumnGrid>
-                            <Input value={locale} setValue={setLocale} label="Locale" errorText={localeError} />
+                            <Input
+                                name="category-translation-locale"
+                                value={locale}
+                                setValue={setLocale}
+                                label="Locale"
+                                errorText={localeError}
+                            />
 
-                            <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                            <Input
+                                name="category-translation-name"
+                                value={name}
+                                setValue={setName}
+                                label="Name"
+                                errorText={nameError}
+                            />
                         </TwoColumnGrid>
                     </SimpleCard>
 

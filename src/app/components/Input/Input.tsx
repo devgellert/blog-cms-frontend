@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 import css from "./Input.module.scss";
 
 type Props = {
+    name: string;
     label: string;
     value: string;
     setValue: (value: string) => void;
@@ -26,10 +27,12 @@ const Input: FC<Props> = ({
     hasMarginBottom = false,
     errorText,
     onBlur,
-    onKeyPressCapture
+    onKeyPressCapture,
+    name
 }) => {
     return (
         <TextField
+            name={name}
             onKeyPressCapture={onKeyPressCapture}
             onBlur={onBlur}
             error={!!errorText}

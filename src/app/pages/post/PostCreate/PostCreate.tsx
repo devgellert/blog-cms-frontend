@@ -115,6 +115,7 @@ const PostCreate: FC = () => {
                             <Typography variant="h6">General</Typography>
 
                             <SelectField
+                                name="post-category"
                                 labelId="category-label"
                                 label="Category"
                                 errorText={categoryError}
@@ -127,7 +128,7 @@ const PostCreate: FC = () => {
                         <SimpleCard>
                             <Typography variant="h6">SEO</Typography>
 
-                            <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
+                            <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
                         </SimpleCard>
                     </div>
 

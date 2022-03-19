@@ -126,8 +126,9 @@ const PostEdit: FC<Props> = ({}) => {
                             <Typography variant="h6">General</Typography>
 
                             <SelectField
-                                labelId="parent-label"
-                                label="Parent"
+                                name="post-category"
+                                labelId="category-label"
+                                label="Category"
                                 errorText={categoryError}
                                 value={category}
                                 onChange={e => setCategory(e.target.value)}
@@ -138,7 +139,7 @@ const PostEdit: FC<Props> = ({}) => {
                         <SimpleCard>
                             <Typography variant="h6">SEO</Typography>
 
-                            <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
+                            <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
                         </SimpleCard>
                     </TwoColumnGrid>
 

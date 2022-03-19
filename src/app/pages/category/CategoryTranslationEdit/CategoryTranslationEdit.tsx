@@ -82,7 +82,13 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
                         </Typography>
 
                         <div className={css["input-wrap"]}>
-                            <Input value={name} setValue={setName} label="Name" errorText={nameError} />
+                            <Input
+                                name="category-translation-name"
+                                value={name}
+                                setValue={setName}
+                                label="Name"
+                                errorText={nameError}
+                            />
                         </div>
                     </SimpleCard>
 

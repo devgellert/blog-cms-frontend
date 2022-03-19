@@ -105,9 +105,17 @@ const CategoryCreate: FC = () => {
                         <SimpleCard>
                             <Typography variant="h6">General</Typography>
 
-                            <Input value={name} setValue={setName} label="Name" errorText={nameError} hasMarginBottom />
+                            <Input
+                                name="category-name"
+                                value={name}
+                                setValue={setName}
+                                label="Name"
+                                errorText={nameError}
+                                hasMarginBottom
+                            />
 
                             <SelectField
+                                name="category-parent"
                                 labelId="parent-label"
                                 label="Parent"
                                 errorText={parentError}
@@ -120,7 +128,7 @@ const CategoryCreate: FC = () => {
                         <SimpleCard>
                             <Typography variant="h6">SEO</Typography>
 
-                            <SlugField slug={slug} setSlug={setSlug} slugError={slugError} />
+                            <SlugField name="category-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
                         </SimpleCard>
                     </div>
 

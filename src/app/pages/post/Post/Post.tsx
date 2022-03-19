@@ -117,7 +117,6 @@ const Post: FC<Props> = ({}) => {
                         <Typography variant="h6">Translations</Typography>
 
                         <Button
-                            disabled
                             onClick={() => {
                                 navigate(`/posts/${postId}/translations/create`);
                             }}

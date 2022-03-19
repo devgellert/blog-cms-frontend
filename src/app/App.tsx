@@ -12,8 +12,8 @@ import AuthGuard from "./components/AuthGuard/AuthGuard";
 import Categories from "./pages/category/Categories/Categories";
 import Category from "./pages/category/Category/Category";
 import CategoryCreate from "./pages/category/CategoryCreate/CategoryCreate";
-import CategoryLocaleEdit from "./pages/category/CategoryTranslationEdit/CategoryTranslationEdit";
-import CategoryLocaleCreate from "./pages/category/CategoryTranslationCreate/CategoryTranslationCreate";
+import CategoryTranslationEdit from "./pages/category/CategoryTranslationEdit/CategoryTranslationEdit";
+import CategoryTranslationCreate from "./pages/category/CategoryTranslationCreate/CategoryTranslationCreate";
 import CategoryEdit from "./pages/category/CategoryEdit/CategoryEdit";
 import Snackbar from "./components/Snackbar/Snackbar";
 import Posts from "./pages/post/Posts/Posts";
@@ -22,6 +22,7 @@ import Post from "./pages/post/Post/Post";
 import css from "./App.module.scss";
 import PostCreate from "./pages/post/PostCreate/PostCreate";
 import PostEdit from "./pages/post/PostEdit/PostEdit";
+import PostTranslationCreate from "./pages/post/PostTranslationCreate/PostTranslationCreate";
 
 type Props = {};
 
@@ -50,11 +51,11 @@ const App: FC<Props> = ({}) => {
                             <Route path=":categoryId/edit" element={<AuthGuard element={<CategoryEdit />} />} />
                             <Route
                                 path=":categoryId/translations/create"
-                                element={<AuthGuard element={<CategoryLocaleCreate />} />}
+                                element={<AuthGuard element={<CategoryTranslationCreate />} />}
                             />
                             <Route
                                 path=":categoryId/translations/:locale/edit"
-                                element={<AuthGuard element={<CategoryLocaleEdit />} />}
+                                element={<AuthGuard element={<CategoryTranslationEdit />} />}
                             />
                         </Route>
 
@@ -63,6 +64,10 @@ const App: FC<Props> = ({}) => {
                             <Route path="create" element={<AuthGuard element={<PostCreate />} />} />
                             <Route path=":postId" element={<AuthGuard element={<Post />} />} />
                             <Route path=":postId/edit" element={<AuthGuard element={<PostEdit />} />} />
+                            <Route
+                                path=":postId/translations/create"
+                                element={<AuthGuard element={<PostTranslationCreate />} />}
+                            />
                         </Route>
                     </Routes>
                 </main>

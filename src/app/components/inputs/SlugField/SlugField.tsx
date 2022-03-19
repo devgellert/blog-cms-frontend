@@ -5,14 +5,16 @@ import slugify from "slugify";
 import Input from "../../Input/Input";
 
 type Props = {
+    name: string;
     slug: string;
     setSlug: (value: string) => void;
     slugError: string;
 };
 
-const SlugField: FC<Props> = ({ slug, setSlug, slugError }) => {
+const SlugField: FC<Props> = ({ slug, setSlug, slugError, name }) => {
     return (
         <Input
+            name={name}
             value={slug}
             setValue={setSlug}
             label="Slug"
