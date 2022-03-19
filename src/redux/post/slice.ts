@@ -5,6 +5,7 @@ import { ApiPost, ApiPostTranslation } from "../../types/api";
 import { Setter } from "../../types/common";
 import { categoryActions, InitCategoryOptionsFlow } from "../category/slice";
 import { CategoryOption } from "../category/types";
+import initPostEditPageSaga from "./sagas/initPostEditPageSaga";
 
 export type RemovePostTranslationFlow = "post-details-page";
 
@@ -43,6 +44,7 @@ const postSlice = createSlice({
                 state.isPostDetailsPageLoading = false;
             }
         },
+        //
         createPostRequest: (
             state: PostState,
             action: PayloadAction<{
@@ -65,6 +67,47 @@ const postSlice = createSlice({
             state.isPostCreatePageLoading = false;
         },
         //
+        editPostRequest: (
+            state: PostState,
+            action: PayloadAction<{
+                postId: number;
+                category: null | number;
+                author: number;
+                slug: string;
+                cb: {
+                    setCategoryError: Setter;
+                    setSlugError: Setter;
+                    navigate: (url: string) => void;
+                };
+            }>
+        ) => {
+            state.isPostEditPageLoading = true;
+        },
+        editPostSuccess: (state: PostState) => {
+            state.isPostEditPageLoading = false;
+        },
+        editPostError: (state: PostState) => {
+            state.isPostEditPageLoading = false;
+        },
+        //
+        initPostEditPageRequest: (
+            state: PostState,
+            action: PayloadAction<{
+                postId: number;
+                cb: { setSlug: Setter; setCategory: Setter<number>; setAuthor: Setter<number> };
+            }>
+        ) => {
+            state.isPostEditPageLoading = true;
+        },
+        initPostEditPageSuccess: (
+            state: PostState,
+            action: PayloadAction<{
+                categoryOptions: CategoryOption[];
+            }>
+        ) => {
+            state.isPostEditPageLoading = false;
+        },
+        //
         unmountPostDetailsPage: (state: PostState) => {
             state.post = null;
             state.postTranslations = null;
@@ -72,6 +115,9 @@ const postSlice = createSlice({
         },
         unmountPostCreatePage: (state: PostState) => {
             state.isPostCreatePageLoading = true;
+        },
+        unmountPostEditPage: (state: PostState) => {
+            state.isPostEditPageLoading = true;
         }
     },
     initialState: getInitialState(),
@@ -95,7 +141,8 @@ function getInitialState(): PostState {
         post: null,
         postTranslations: null,
         isPostDetailsPageLoading: true,
-        isPostCreatePageLoading: true
+        isPostCreatePageLoading: true,
+        isPostEditPageLoading: true
     };
 }
 

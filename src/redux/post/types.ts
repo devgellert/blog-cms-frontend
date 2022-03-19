@@ -6,4 +6,5 @@ export type PostState = {
     //
     isPostDetailsPageLoading: boolean;
     isPostCreatePageLoading: boolean;
+    isPostEditPageLoading: boolean;
 };

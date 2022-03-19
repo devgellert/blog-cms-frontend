@@ -76,6 +76,14 @@ const categorySlice = createSlice({
         builder.addCase(postActions.unmountPostCreatePage, state => {
             state.categoryOptions = [];
         });
+
+        builder.addCase(postActions.unmountPostEditPage, (state, action) => {
+            state.categoryOptions = [];
+        });
+
+        builder.addCase(postActions.initPostEditPageSuccess, (state, action) => {
+            state.categoryOptions = action.payload.categoryOptions;
+        });
     },
     initialState: {
         categoryOptions: [] as CategoryOption[],
