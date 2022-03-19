@@ -13,7 +13,7 @@ const useTranslationTabs = (locales: string[]) => {
     }, [locales.length]);
 
     const tabs = (
-        <Tabs value={tab} onChange={handleTabChange}>
+        <Tabs value={locales.length > tab ? tab : 0} onChange={handleTabChange}>
             {locales.map(locale => (
                 <Tab label={locale} />
             ))}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import EditorJS from "@editorjs/editorjs";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import { Button, Container, List, Typography } from "@mui/material";
@@ -19,7 +20,6 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import createPostPageButtonConfig from "../../../../lib/post/createPostPageButtonConfig";
 //
 import css from "./Post.module.scss";
-import EditorJS from "@editorjs/editorjs";
 
 type Props = {};
 
@@ -35,7 +35,7 @@ const Post: FC<Props> = ({}) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const { tabIndex, tabsElement } = useTranslationTabs(translations ? translations.map(elem => elem.locale) : []);
+    const { tabIndex, tabsElement } = useTranslationTabs((translations || []).map(elem => elem.locale));
 
     useEffect(() => {
         fetchAndSetData();
@@ -44,7 +44,7 @@ const Post: FC<Props> = ({}) => {
     const editorRef = useRef<EditorJS>();
 
     useEffect(() => {
-        if (translations && translations.length && translations[tabIndex].content) {
+        if (translations && translations.length && translations[tabIndex] && translations[tabIndex].content) {
             // @ts-ignore
             editorRef.current = new EditorJS({
                 /**
@@ -152,6 +152,24 @@ const Post: FC<Props> = ({}) => {
 
                             {translations?.map((elem, index) => (
                                 <TabPanel value={tabIndex} index={index} key={index}>
+                                    <Button
+                                        onClick={() => {
+                                            navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
+                                        }}
+                                        variant="outlined"
+                                    >
+                                        Edit
+                                    </Button>
+
+                                    <Button
+                                        onClick={() => removePostTranslation(elem.locale)}
+                                        variant="outlined"
+                                        color="error"
+                                        className={css["btn-remove"]}
+                                    >
+                                        Remove
+                                    </Button>
+
                                     <TwoColumnGrid>
                                         <List dense={false}>
                                             <Typography variant="h6">General</Typography>
@@ -180,25 +198,6 @@ const Post: FC<Props> = ({}) => {
                                     <Typography variant="h6">Content</Typography>
 
                                     {editorElement}
-
-                                    <Button
-                                        onClick={() => {
-                                            navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
-                                        }}
-                                        variant="outlined"
-                                    >
-                                        Edit
-                                    </Button>
-
-                                    <Button
-                                        disabled
-                                        onClick={() => removePostTranslation(elem.locale)}
-                                        variant="outlined"
-                                        color="error"
-                                        className={css["btn-remove"]}
-                                    >
-                                        Remove
-                                    </Button>
                                 </TabPanel>
                             ))}
                         </>
