@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 //
@@ -19,8 +19,11 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import createPostPageButtonConfig from "../../../../lib/post/createPostPageButtonConfig";
 //
 import css from "./Post.module.scss";
+import EditorJS from "@editorjs/editorjs";
 
 type Props = {};
+
+const editorElement = <div id="editor" />;
 
 const Post: FC<Props> = ({}) => {
     const { postId } = useParams();
@@ -37,6 +40,22 @@ const Post: FC<Props> = ({}) => {
     useEffect(() => {
         fetchAndSetData();
     }, []);
+
+    const editorRef = useRef<EditorJS>();
+
+    useEffect(() => {
+        if (translations && translations.length && translations[tabIndex].content) {
+            // @ts-ignore
+            editorRef.current = new EditorJS({
+                /**
+                 * Id of Element that should contain Editor instance
+                 */
+                holder: "editor",
+                data: JSON.parse(translations[tabIndex].content),
+                readOnly: true
+            });
+        }
+    }, [translations, tabIndex]);
 
     const fetchAndSetData = async () => {
         try {
@@ -157,6 +176,10 @@ const Post: FC<Props> = ({}) => {
                                             <SimpleListItem title="OG Description" text={elem.ogDescription} />
                                         </List>
                                     </TwoColumnGrid>
+
+                                    <Typography variant="h6">Content</Typography>
+
+                                    {editorElement}
 
                                     <Button
                                         disabled
