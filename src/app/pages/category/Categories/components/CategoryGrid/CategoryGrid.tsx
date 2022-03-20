@@ -28,6 +28,7 @@ export default function CategoryGrid() {
         columns: [
             { id: "id", label: "", format: (value: number) => `#${value}` },
             { id: "name", label: "Name" },
+            { id: "parent", label: "Parent" },
             {
                 id: "slug",
                 label: "Slug"
@@ -48,6 +49,7 @@ export default function CategoryGrid() {
                 id: object.id,
                 slug: object.slug,
                 name: object.name,
+                parent: object?.parent?.name ?? "-",
                 createdAt: object.createdAt,
                 updatedAt: object.updatedAt
             };

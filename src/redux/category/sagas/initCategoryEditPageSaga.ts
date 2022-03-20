@@ -8,7 +8,7 @@ import api from "../../../api";
 import { CategoryOption } from "../types";
 import { uiActions } from "../../ui/slice";
 
-function* initPostEditPageSaga(action: ReturnType<typeof categoryActions.initCategoryEditPageRequest>) {
+function* initCategoryEditPageSaga(action: ReturnType<typeof categoryActions.initCategoryEditPageRequest>) {
     const {
         categoryId,
         cb: { setSlug, setName, setParent }
@@ -16,9 +16,10 @@ function* initPostEditPageSaga(action: ReturnType<typeof categoryActions.initCat
 
     try {
         const { data: category }: AxiosResponse<ApiCategory> = yield call(api.get, `/categories/${categoryId}`);
+
         setName(category.name);
         setSlug(category.slug);
-        setParent(category.parent || null);
+        setParent(category?.parent?.id || null);
 
         const {
             data: { items: allCategories }
@@ -42,4 +43,4 @@ function* initPostEditPageSaga(action: ReturnType<typeof categoryActions.initCat
     }
 }
 
-export default initPostEditPageSaga;
+export default initCategoryEditPageSaga;

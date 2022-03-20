@@ -61,7 +61,7 @@ const Category: FC = () => {
                             <List>
                                 <SimpleListItem title="Name" text={category?.name ?? "n/a"} />
 
-                                <SimpleListItem title="Parent" text={category?.parent ? `#${category?.parent}` : "-"} />
+                                <SimpleListItem title="Parent" text={category?.parent ? category.parent.name : "-"} />
                             </List>
 
                             <List>
