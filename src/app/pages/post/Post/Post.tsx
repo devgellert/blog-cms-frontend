@@ -17,6 +17,7 @@ import { postActions } from "../../../../redux/post/slice";
 import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./Post.module.scss";
+import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 
 const editorElement = <div id="editor" />;
 
@@ -47,7 +48,8 @@ const Post: FC = ({}) => {
             editorRef.current = new EditorJS({
                 holder: "editor",
                 data: JSON.parse(translations[tabIndex].content),
-                readOnly: true
+                readOnly: true,
+                tools: editorToolsConfig
             });
         }
     }, [translations, tabIndex]);

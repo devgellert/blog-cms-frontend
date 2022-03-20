@@ -13,6 +13,7 @@ import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import { postActions } from "../../../../redux/post/slice";
 import PostSelectors from "../../../../redux/post/selector";
+import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 //
 import css from "./PostTranslationCreate.module.scss";
 
@@ -36,7 +37,8 @@ const PostTranslationCreate: FC<Props> = ({}) => {
         editorRef.current = new EditorJS({
             holder: EDITOR_ID,
             data: content ? JSON.parse(content) : {},
-            placeholder: "Let`s write an awesome post!"
+            placeholder: "Let`s write an awesome post!",
+            tools: editorToolsConfig
         });
     }, [isPageLoading]);
 

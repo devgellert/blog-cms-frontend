@@ -15,6 +15,7 @@ import { postActions } from "../../../../redux/post/slice";
 import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./PostTranslationEdit.module.scss";
+import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 
 type Props = {};
 
@@ -37,7 +38,8 @@ const PostTranslationEdit: FC<Props> = ({}) => {
             editorRef.current = new EditorJS({
                 holder: EDITOR_ID,
                 data: content ? JSON.parse(content) : {},
-                placeholder: "Let`s write an awesome post!"
+                placeholder: "Let`s write an awesome post!",
+                tools: editorToolsConfig
             });
         }
     }, [isPageLoading]);
