@@ -93,23 +93,22 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                                 General
                             </Typography>
 
-                            <TwoColumnGrid>
-                                <Input
-                                    name="post-locale"
-                                    value={locale}
-                                    setValue={setLocale}
-                                    label="Locale"
-                                    errorText={localeError}
-                                />
+                            <Input
+                                name="post-locale"
+                                value={locale}
+                                setValue={setLocale}
+                                label="Locale"
+                                errorText={localeError}
+                                hasMarginBottom
+                            />
 
-                                <Input
-                                    name="post-title"
-                                    value={title}
-                                    setValue={setTitle}
-                                    label="Title"
-                                    errorText={titleError}
-                                />
-                            </TwoColumnGrid>
+                            <Input
+                                name="post-title"
+                                value={title}
+                                setValue={setTitle}
+                                label="Title"
+                                errorText={titleError}
+                            />
                         </SimpleCard>
 
                         <SimpleCard>
@@ -117,36 +116,37 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                                 SEO
                             </Typography>
 
-                            <TwoColumnGrid>
-                                <Input
-                                    name="post-meta-title"
-                                    value={mTitle}
-                                    setValue={setMTitle}
-                                    label="Meta Title"
-                                    errorText={mTitleError}
-                                />
-                                <Input
-                                    name="post-meta-description"
-                                    value={mDesc}
-                                    setValue={setMDesc}
-                                    label="Meta Description"
-                                    errorText={mDescError}
-                                />
-                                <Input
-                                    name="post-og-title"
-                                    value={ogTitle}
-                                    setValue={setOgTitle}
-                                    label="OG Title"
-                                    errorText={ogTitleError}
-                                />
-                                <Input
-                                    name="post-og-description"
-                                    value={ogDesc}
-                                    setValue={setOgDesc}
-                                    label="OG Description"
-                                    errorText={ogDescError}
-                                />
-                            </TwoColumnGrid>
+                            <Input
+                                name="post-meta-title"
+                                value={mTitle}
+                                setValue={setMTitle}
+                                label="Meta Title"
+                                errorText={mTitleError}
+                                hasMarginBottom
+                            />
+                            <Input
+                                name="post-meta-description"
+                                value={mDesc}
+                                setValue={setMDesc}
+                                label="Meta Description"
+                                errorText={mDescError}
+                                hasMarginBottom
+                            />
+                            <Input
+                                name="post-og-title"
+                                value={ogTitle}
+                                setValue={setOgTitle}
+                                label="OG Title"
+                                errorText={ogTitleError}
+                                hasMarginBottom
+                            />
+                            <Input
+                                name="post-og-description"
+                                value={ogDesc}
+                                setValue={setOgDesc}
+                                label="OG Description"
+                                errorText={ogDescError}
+                            />
                         </SimpleCard>
                     </TwoColumnGrid>
 
