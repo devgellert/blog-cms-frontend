@@ -5,6 +5,7 @@ import api from "../../../api";
 import { uiActions } from "../../ui/slice";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* createPostTranslationSaga(action: ReturnType<typeof postActions.createTranslationRequest>) {
     const {
@@ -41,7 +42,7 @@ function* createPostTranslationSaga(action: ReturnType<typeof postActions.create
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully created translation." }));
 
-        navigate(`/posts/${postId}`);
+        navigate(prefixRoute(`/posts/${postId}`));
     } catch (e) {
         setLocaleError(getAxiosFieldError(e, "locale"));
         setTitleError(getAxiosFieldError(e, "title"));
