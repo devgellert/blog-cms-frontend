@@ -34,7 +34,7 @@ const editorToolsConfig: EditorConfig["tools"] = {
                         return {
                             success: 1,
                             file: {
-                                url: `http://localhost:5000/media/${response.data.fileName}`
+                                url: `${process.env.REACT_APP_MEDIA_URL}/${response.data.fileName}`
                             }
                         };
                     });
