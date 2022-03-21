@@ -12,6 +12,7 @@ import api from "../../../../api";
 import { gridActions } from "../../../../redux/grid/slice";
 import { uiActions } from "../../../../redux/ui/slice";
 import formatDateString from "../../../../lib/formatDateString";
+import prefixRoute from "../../../../lib/prefixRoute";
 
 type Data = {
     id: number;
@@ -74,13 +75,13 @@ const Posts: FC<Props> = ({}) => {
             {
                 text: "Details",
                 createLink: row => {
-                    return `/posts/${row.id}`;
+                    return prefixRoute(`/posts/${row.id}`);
                 }
             },
             {
                 text: "Edit",
                 createLink: row => {
-                    return `/posts/${row.id}/edit`;
+                    return prefixRoute(`/posts/${row.id}/edit`);
                 }
             },
             {
@@ -113,7 +114,7 @@ const Posts: FC<Props> = ({}) => {
                 {
                     text: "New Post",
                     onClick: () => {
-                        navigate(`/posts/create`);
+                        navigate(prefixRoute(`/posts/create`));
                     },
                     color: "success"
                 }

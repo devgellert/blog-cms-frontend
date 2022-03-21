@@ -7,6 +7,7 @@ import AuthSelectors from "../../../redux/auth/selector";
 import { LoginState } from "../../../redux/auth/types";
 //
 import css from "./AuthGuard.module.scss";
+import prefixRoute from "../../../lib/prefixRoute";
 
 type Props = {
     element: ReactElement;
@@ -19,7 +20,7 @@ const AuthGuard: FC<Props> = ({ element }) => {
 
     useEffect(() => {
         if (loginState === LoginState.LOGGED_OUT) {
-            navigate("/login");
+            navigate(prefixRoute("/login"));
         }
     }, [loginState]);
 

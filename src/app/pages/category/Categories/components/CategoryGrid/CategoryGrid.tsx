@@ -10,6 +10,7 @@ import api from "../../../../../../api";
 import { gridActions } from "../../../../../../redux/grid/slice";
 import { uiActions } from "../../../../../../redux/ui/slice";
 import formatDateString from "../../../../../../lib/formatDateString";
+import prefixRoute from "../../../../../../lib/prefixRoute";
 
 type Data = {
     id: number;
@@ -59,13 +60,13 @@ export default function CategoryGrid() {
             {
                 text: "Details",
                 createLink: row => {
-                    return `/categories/${row.id}`;
+                    return prefixRoute(`/categories/${row.id}`);
                 }
             },
             {
                 text: "Edit",
                 createLink: row => {
-                    return `/categories/${row.id}/edit`;
+                    return prefixRoute(`/categories/${row.id}/edit`);
                 }
             },
             {

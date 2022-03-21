@@ -14,10 +14,11 @@ import {
 import { Link, useLocation } from "react-router-dom";
 //
 import AuthSelectors from "../../../redux/auth/selector";
-//
-import css from "./Menu.module.scss";
 import { authActions } from "../../../redux/auth/slice";
 import { LoginState } from "../../../redux/auth/types";
+import prefixRoute from "../../../lib/prefixRoute";
+//
+import css from "./Menu.module.scss";
 
 const menuConfig: {
     items: { text: string; link: string }[];
@@ -25,15 +26,15 @@ const menuConfig: {
     items: [
         {
             text: "Dashboard",
-            link: "/"
+            link: prefixRoute("/")
         },
         {
             text: "Categories",
-            link: "/categories"
+            link: prefixRoute("/categories")
         },
         {
             text: "Posts",
-            link: "/posts"
+            link: prefixRoute("/posts")
         }
     ]
 };
@@ -64,7 +65,7 @@ const Menu: FC<Props> = ({}) => {
                 variant="permanent"
                 anchor="left"
             >
-                {location.pathname !== "/login" && (
+                {location.pathname !== prefixRoute("/login") && (
                     <>
                         {loginState === LoginState.LOGGED_IN ? (
                             <>

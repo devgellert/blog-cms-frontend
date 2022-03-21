@@ -15,6 +15,7 @@ import createCategoryPageButtonConfig from "../../../../lib/category/createCateg
 import formatDateString from "../../../../lib/formatDateString";
 //
 import css from "./Category.module.scss";
+import prefixRoute from "../../../../lib/prefixRoute";
 
 const Category: FC = () => {
     const { categoryId } = useParams();
@@ -93,7 +94,7 @@ const Category: FC = () => {
 
                         <Button
                             onClick={() => {
-                                navigate(`/categories/${categoryId}/translations/create`);
+                                navigate(prefixRoute(`/categories/${categoryId}/translations/create`));
                             }}
                             variant="outlined"
                             color="success"
@@ -114,7 +115,11 @@ const Category: FC = () => {
 
                                     <Button
                                         onClick={() => {
-                                            navigate(`/categories/${categoryId}/translations/${elem.locale}/edit`);
+                                            navigate(
+                                                prefixRoute(
+                                                    `/categories/${categoryId}/translations/${elem.locale}/edit`
+                                                )
+                                            );
                                         }}
                                         variant="outlined"
                                     >

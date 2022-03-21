@@ -9,6 +9,7 @@ import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
 import isSlugError from "../../../lib/isSlugError";
 import { ApiCategory } from "../../../types/api";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* editCategorySaga(action: ReturnType<typeof categoryActions.editCategoryRequest>) {
     const {
@@ -40,7 +41,7 @@ function* editCategorySaga(action: ReturnType<typeof categoryActions.editCategor
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited category." }));
 
-        navigate(`/categories/${response.data.id}`);
+        navigate(prefixRoute(`/categories/${response.data.id}`));
     } catch (e) {
         setNameError(getAxiosFieldError(e, "name"));
         setSlugError(getAxiosFieldError(e, "slug"));

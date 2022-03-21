@@ -8,6 +8,7 @@ import AuthSelectors from "../../../redux/auth/selector";
 import { LoginState } from "../../../redux/auth/types";
 //
 import css from "./LoginPage.module.scss";
+import prefixRoute from "../../../lib/prefixRoute";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const LoginPage: FC<Props> = ({}) => {
 
     useEffect(() => {
         if (loginState === LoginState.LOGGED_IN) {
-            navigate("/");
+            navigate(prefixRoute("/"));
         }
     }, [loginState]);
 

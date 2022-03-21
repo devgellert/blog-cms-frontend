@@ -5,6 +5,7 @@ import api from "../../../api";
 import { uiActions } from "../../ui/slice";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* createTranslationSaga(action: ReturnType<typeof categoryActions.createTranslationRequest>) {
     const {
@@ -27,7 +28,7 @@ function* createTranslationSaga(action: ReturnType<typeof categoryActions.create
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully created translation." }));
 
-        navigate(`/categories/${categoryId}`);
+        navigate(prefixRoute(`/categories/${categoryId}`));
     } catch (e) {
         setNameError(getAxiosFieldError(e, "name"));
         setLocaleError(getAxiosFieldError(e, "locale"));

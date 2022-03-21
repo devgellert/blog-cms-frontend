@@ -18,12 +18,13 @@ import CategoryEdit from "./pages/category/CategoryEdit/CategoryEdit";
 import Snackbar from "./components/Snackbar/Snackbar";
 import Posts from "./pages/post/Posts/Posts";
 import Post from "./pages/post/Post/Post";
-//
-import css from "./App.module.scss";
 import PostCreate from "./pages/post/PostCreate/PostCreate";
 import PostEdit from "./pages/post/PostEdit/PostEdit";
 import PostTranslationCreate from "./pages/post/PostTranslationCreate/PostTranslationCreate";
 import PostTranslationEdit from "./pages/post/PostTranslationEdit/PostTranslationEdit";
+import prefixRoute from "../lib/prefixRoute";
+//
+import css from "./App.module.scss";
 
 type Props = {};
 
@@ -43,9 +44,9 @@ const App: FC<Props> = ({}) => {
 
                 <main className={css["main"]}>
                     <Routes>
-                        <Route path="/" element={<AuthGuard element={<Dashboard />} />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/categories">
+                        <Route path={prefixRoute("/")} element={<AuthGuard element={<Dashboard />} />} />
+                        <Route path={prefixRoute("/login")} element={<LoginPage />} />
+                        <Route path={prefixRoute("/categories")}>
                             <Route index element={<AuthGuard element={<Categories />} />} />
                             <Route path="create" element={<AuthGuard element={<CategoryCreate />} />} />
                             <Route path=":categoryId" element={<AuthGuard element={<Category />} />} />
@@ -60,7 +61,7 @@ const App: FC<Props> = ({}) => {
                             />
                         </Route>
 
-                        <Route path="/posts">
+                        <Route path={prefixRoute("/posts")}>
                             <Route index element={<AuthGuard element={<Posts />} />} />
                             <Route path="create" element={<AuthGuard element={<PostCreate />} />} />
                             <Route path=":postId" element={<AuthGuard element={<Post />} />} />

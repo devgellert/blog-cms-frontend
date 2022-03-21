@@ -4,6 +4,7 @@ import { postActions } from "../slice";
 import api from "../../../api";
 import { uiActions } from "../../ui/slice";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* editTranslationRequest(action: ReturnType<typeof postActions.editTranslationRequest>) {
     const {
@@ -38,7 +39,7 @@ function* editTranslationRequest(action: ReturnType<typeof postActions.editTrans
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited translation." }));
 
-        navigate(`/posts/${postId}`);
+        navigate(prefixRoute(`/posts/${postId}`));
     } catch (e) {
         setTitleError(getAxiosFieldError(e, "title"));
         setMTitleError(getAxiosFieldError(e, "metaTitle"));

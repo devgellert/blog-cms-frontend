@@ -18,6 +18,7 @@ import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./Post.module.scss";
 import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
+import prefixRoute from "../../../../lib/prefixRoute";
 
 const editorElement = <div id="editor" />;
 
@@ -106,7 +107,7 @@ const Post: FC = ({}) => {
 
                         <Button
                             onClick={() => {
-                                navigate(`/posts/${postId}/translations/create`);
+                                navigate(prefixRoute(`/posts/${postId}/translations/create`));
                             }}
                             variant="outlined"
                             color="success"
@@ -123,7 +124,7 @@ const Post: FC = ({}) => {
                                 <TabPanel value={tabIndex} index={index} key={index}>
                                     <Button
                                         onClick={() => {
-                                            navigate(`/posts/${postId}/translations/${elem.locale}/edit`);
+                                            navigate(prefixRoute(`/posts/${postId}/translations/${elem.locale}/edit`));
                                         }}
                                         variant="outlined"
                                     >

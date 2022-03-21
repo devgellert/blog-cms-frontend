@@ -1,4 +1,5 @@
 import { PageButton } from "../../app/components/PageWrap/PageWrap";
+import prefixRoute from "../prefixRoute";
 
 const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId: number): PageButton[] => {
     return [
@@ -7,7 +8,7 @@ const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId:
             color: "success",
             variant: "contained",
             onClick: () => {
-                navigate(`/posts/${postId}/translations/create`);
+                navigate(prefixRoute(`/posts/${postId}/translations/create`));
             }
         },
         {
@@ -15,7 +16,7 @@ const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId:
             color: "primary",
             variant: "contained",
             onClick: () => {
-                navigate(`/posts/${postId}/edit`);
+                navigate(prefixRoute(`/posts/${postId}/edit`));
             }
         }
     ];

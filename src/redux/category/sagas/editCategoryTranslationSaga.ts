@@ -4,6 +4,7 @@ import { categoryActions } from "../slice";
 import api from "../../../api";
 import { uiActions } from "../../ui/slice";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* editCategoryTranslationSaga(action: ReturnType<typeof categoryActions.editTranslationRequest>) {
     const {
@@ -24,7 +25,7 @@ function* editCategoryTranslationSaga(action: ReturnType<typeof categoryActions.
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited translation." }));
 
-        navigate(`/categories/${categoryId}`);
+        navigate(prefixRoute(`/categories/${categoryId}`));
     } catch (e) {
         const nameError = getAxiosFieldError(e, "name");
         setNameError(nameError);

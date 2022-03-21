@@ -10,6 +10,7 @@ import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
 import isSlugError from "../../../lib/isSlugError";
 import { ApiPost } from "../../../types/api";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest>) {
     const {
@@ -39,7 +40,7 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
 
         yield put(postActions.createPostSuccess());
 
-        navigate(`/posts/${response.data.id}`);
+        navigate(prefixRoute(`/posts/${response.data.id}`));
     } catch (e) {
         setSlugError(getAxiosFieldError(e, "slug"));
         setCategoryError(getAxiosFieldError(e, "category"));

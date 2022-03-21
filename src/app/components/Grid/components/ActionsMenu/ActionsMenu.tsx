@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 //
 import css from "./ActionsMenu.module.scss";
+import prefixRoute from "../../../../../lib/prefixRoute";
 
 type Props = {
     actions: {

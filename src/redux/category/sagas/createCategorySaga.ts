@@ -9,6 +9,7 @@ import { uiActions } from "../../ui/slice";
 import getAxiosFieldError from "../../../lib/getAxiosFieldError";
 import getAxiosError from "../../../lib/getAxiosError";
 import isSlugError from "../../../lib/isSlugError";
+import prefixRoute from "../../../lib/prefixRoute";
 
 function* createCategorySaga(action: ReturnType<typeof categoryActions.createCategoryRequest>) {
     const {
@@ -39,7 +40,7 @@ function* createCategorySaga(action: ReturnType<typeof categoryActions.createCat
 
         yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully created category." }));
 
-        navigate(`/categories/${response.data.id}`);
+        navigate(prefixRoute(`/categories/${response.data.id}`));
     } catch (e) {
         setNameError(getAxiosFieldError(e, "name"));
         setSlugError(getAxiosFieldError(e, "slug"));

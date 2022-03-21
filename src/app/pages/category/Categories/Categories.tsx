@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import CategoryGrid from "./components/CategoryGrid/CategoryGrid";
+import prefixRoute from "../../../../lib/prefixRoute";
 
 const Categories: FC = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Categories: FC = () => {
                 {
                     text: "New Category",
                     onClick: () => {
-                        navigate("/categories/create");
+                        navigate(prefixRoute("/categories/create"));
                     },
                     color: "success"
                 }
