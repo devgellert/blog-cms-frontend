@@ -14,6 +14,8 @@ import prefixRoute from "../../../../../../lib/prefixRoute";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import formatId from "../../../../../../lib/formatId";
+import { useNavigate } from "react-router-dom";
 
 type Data = {
     id: number;
@@ -21,18 +23,44 @@ type Data = {
     slug: string;
     createdAt: string;
     updatedAt: string;
+    meta: {
+        parentId: null | number;
+    };
 };
 
 export default function CategoryGrid() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [removeId, setRemoveId] = useState<null | number>(null);
 
     const config: GridConfig<Data, ApiCategory> = {
         columns: [
-            { id: "id", label: "", format: (value: number) => `#${value}` },
-            { id: "name", label: "Name" },
-            { id: "parent", label: "Parent" },
+            {
+                id: "id",
+                label: "",
+                format: (value: number) => formatId(value, "C"),
+                onClick: row => {
+                    navigate(prefixRoute(`/categories/${row.id}`));
+                }
+            },
+            {
+                id: "name",
+                label: "Name",
+                onClick: row => {
+                    navigate(prefixRoute(`/categories/${row.id}`));
+                }
+            },
+            {
+                id: "parent",
+                label: "Parent",
+                onClick: row => {
+                    navigate(prefixRoute(`/categories/${row?.meta?.parentId}`));
+                },
+                isClickDisabled: row => {
+                    return row?.meta?.parentId === null;
+                }
+            },
             {
                 id: "slug",
                 label: "Slug"
@@ -55,7 +83,10 @@ export default function CategoryGrid() {
                 name: object.name,
                 parent: object?.parent?.name ?? "-",
                 createdAt: object.createdAt,
-                updatedAt: object.updatedAt
+                updatedAt: object.updatedAt,
+                meta: {
+                    parentId: object?.parent?.id ?? null
+                }
             };
         },
         apiEndpoint: "/categories",
