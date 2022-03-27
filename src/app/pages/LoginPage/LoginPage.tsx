@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { authActions } from "../../../redux/auth/slice";
 import AuthSelectors from "../../../redux/auth/selector";
 import { LoginState } from "../../../redux/auth/types";
+import prefixRoute from "../../../lib/prefixRoute";
 //
 import css from "./LoginPage.module.scss";
-import prefixRoute from "../../../lib/prefixRoute";
 
 type Props = {};
 
@@ -69,8 +69,6 @@ const LoginPage: FC<Props> = ({}) => {
                     <Button className={css["field"]} type="submit">
                         Log in
                     </Button>
-
-                    {loginState === LoginState.FAILED_TO_LOGIN && <Typography color="red">Failed to login.</Typography>}
                 </form>
             </div>
         </div>
