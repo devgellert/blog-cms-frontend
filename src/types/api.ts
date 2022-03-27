@@ -51,6 +51,8 @@ export type ApiStatistics = {
     numbers: {
         post: number;
         category: number;
+        postTranslation: number;
+        categoryTranslation: number;
     };
 };
 

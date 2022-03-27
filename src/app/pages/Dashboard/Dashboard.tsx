@@ -8,6 +8,7 @@ import PageWrap from "../../components/PageWrap/PageWrap";
 import SimpleCard from "../../components/SimpleCard/SimpleCard";
 import DashboardSelectors from "../../../redux/dashboard/selector";
 import { dashboardActions } from "../../../redux/dashboard/slice";
+import TwoColumnGrid from "../../components/TwoColumnGrid/TwoColumnGrid";
 //
 import css from "../post/Post/Post.module.scss";
 
@@ -26,7 +27,7 @@ const Dashboard: FC<Props> = ({}) => {
     return (
         <PageWrap title="Dashboard" buttons={[]} hasTopPadding isLoading={isLoading}>
             <Container maxWidth="lg" className={css["Dashboard"]}>
-                <div className={css["grid"]}>
+                <TwoColumnGrid>
                     <SimpleCard>
                         <header className={css["card-header"]}>
                             <h2>Posts</h2>
@@ -42,8 +43,23 @@ const Dashboard: FC<Props> = ({}) => {
 
                         <div className={css["number"]}>{numbers.category}</div>
                     </SimpleCard>
-                    <SimpleCard className={css["grey"]} />
-                </div>
+
+                    <SimpleCard>
+                        <header className={css["card-header"]}>
+                            <h2>Post Translations</h2>
+                            <ArticleIcon color="primary" />
+                        </header>
+                        <div className={css["number"]}>{numbers.postTranslation}</div>
+                    </SimpleCard>
+                    <SimpleCard>
+                        <header className={css["card-header"]}>
+                            <h2>Category Translations</h2>
+                            <CategoryIcon color="primary" />
+                        </header>
+
+                        <div className={css["number"]}>{numbers.categoryTranslation}</div>
+                    </SimpleCard>
+                </TwoColumnGrid>
             </Container>
         </PageWrap>
     );

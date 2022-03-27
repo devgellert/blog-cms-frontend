@@ -2,8 +2,10 @@ export type DashboardState = {
     isLoading: boolean;
     statistics: {
         numbers: {
-            category: number | null;
             post: number | null;
+            category: number | null;
+            categoryTranslation: number | null;
+            postTranslation: number | null;
         };
     };
 };

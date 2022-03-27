@@ -8,7 +8,12 @@ const dashboardSlice = createSlice({
         initDashboardRequest: state => {
             state.isLoading = true;
         },
-        initDashboardSuccess: (state, action: PayloadAction<{ numbers: { category: number; post: number } }>) => {
+        initDashboardSuccess: (
+            state,
+            action: PayloadAction<{
+                numbers: { category: number; post: number; postTranslation: number; categoryTranslation: number };
+            }>
+        ) => {
             state.statistics.numbers = action.payload.numbers;
             state.isLoading = false;
         },
@@ -25,7 +30,9 @@ function getInitialState(): DashboardState {
         statistics: {
             numbers: {
                 category: null,
-                post: null
+                post: null,
+                postTranslation: null,
+                categoryTranslation: null
             }
         }
     };
