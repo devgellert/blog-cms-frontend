@@ -10,7 +10,7 @@ import DashboardSelectors from "../../../redux/dashboard/selector";
 import { dashboardActions } from "../../../redux/dashboard/slice";
 import TwoColumnGrid from "../../components/TwoColumnGrid/TwoColumnGrid";
 //
-import css from "../post/Post/Post.module.scss";
+import css from "./Dashboard.module.scss";
 
 type Props = {};
 

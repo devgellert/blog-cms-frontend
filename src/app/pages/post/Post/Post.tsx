@@ -65,7 +65,7 @@ const Post: FC = ({}) => {
         <PageWrap
             title="Post"
             isLoading={isPageLoading}
-            hasTopPadding={true}
+            hasTopPadding
             buttons={createPostPageButtonConfig(navigate, Number(postId))}
         >
             <Container maxWidth="lg" className={css["Post"]}>
