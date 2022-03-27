@@ -7,6 +7,7 @@ import { gridReducer } from "./grid/slice";
 import { categoryReducer } from "./category/slice";
 import { uiReducer } from "./ui/slice";
 import { postReducer } from "./post/slice";
+import { dashboardReducer } from "./dashboard/slice";
 
 const rootReducer = combineReducers<StoreState>({
     app: appSlice.reducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers<StoreState>({
     grid: gridReducer,
     category: categoryReducer,
     post: postReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    dashboard: dashboardReducer
 });
 
 export default rootReducer;

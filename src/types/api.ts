@@ -1,4 +1,5 @@
 import { ApiResource } from "./common";
+import { AxiosResponse } from "axios";
 
 export type ApiUser = { username: string } & ApiResource;
 
@@ -45,3 +46,12 @@ export type ApiPostTranslation = {
     parent: number;
     title: string;
 } & ApiResource;
+
+export type ApiStatistics = {
+    numbers: {
+        post: number;
+        category: number;
+    };
+};
+
+export type ApiStatisticsResponse = AxiosResponse<ApiStatistics>;

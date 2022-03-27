@@ -4,6 +4,7 @@ import { GridState } from "./grid/types";
 import { CategoryState } from "./category/types";
 import { UIState } from "./ui/types";
 import { PostState } from "./post/types";
+import { DashboardState } from "./dashboard/types";
 
 export type StoreState = {
     app: AppState;
@@ -12,4 +13,5 @@ export type StoreState = {
     category: CategoryState;
     post: PostState;
     ui: UIState;
+    dashboard: DashboardState;
 };

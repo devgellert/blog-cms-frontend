@@ -5,7 +5,7 @@ import cn from "classnames";
 //
 
 type Props = {
-    children: any;
+    children?: any;
     //
     className?: string;
 };

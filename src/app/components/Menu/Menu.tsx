@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Avatar,
@@ -12,6 +12,8 @@ import {
     Typography
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import CategoryIcon from "@mui/icons-material/Category";
 //
 import AuthSelectors from "../../../redux/auth/selector";
 import { authActions } from "../../../redux/auth/slice";
@@ -19,22 +21,26 @@ import { LoginState } from "../../../redux/auth/types";
 import prefixRoute from "../../../lib/prefixRoute";
 //
 import css from "./Menu.module.scss";
+import ArticleIcon from "@mui/icons-material/Article";
 
 const menuConfig: {
-    items: { text: string; link: string }[];
+    items: { text: string; link: string; icon: ReactElement }[];
 } = {
     items: [
         {
             text: "Dashboard",
-            link: prefixRoute("/")
+            link: prefixRoute("/"),
+            icon: <DashboardIcon />
         },
         {
             text: "Categories",
-            link: prefixRoute("/categories")
+            link: prefixRoute("/categories"),
+            icon: <CategoryIcon />
         },
         {
             text: "Posts",
-            link: prefixRoute("/posts")
+            link: prefixRoute("/posts"),
+            icon: <ArticleIcon />
         }
     ]
 };
@@ -91,10 +97,11 @@ const Menu: FC<Props> = ({}) => {
                         <Divider />
 
                         <List>
-                            {menuConfig.items.map(({ text, link }) => (
+                            {menuConfig.items.map(({ text, link, icon }) => (
                                 <Link to={link} key={text}>
                                     <ListItem button key={text}>
-                                        <ListItemText primary={text} />
+                                        {icon}
+                                        <ListItemText primary={text} style={{ marginLeft: 10 }} />
                                     </ListItem>
                                 </Link>
                             ))}
