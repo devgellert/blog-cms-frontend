@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, ReactElement } from "react";
 import { FC } from "react";
 import { useState } from "react";
 import { isFunction } from "lodash";
@@ -7,15 +7,16 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import cn from "classnames";
 //
 import css from "./ActionsMenu.module.scss";
-import prefixRoute from "../../../../../lib/prefixRoute";
 
 type Props = {
     actions: {
         text: string;
         onClick?: () => void;
         link?: string;
+        icon?: ReactElement;
     }[];
 };
 
@@ -56,7 +57,11 @@ const ActionsMenu: FC<Props> = ({ actions }) => {
                             handleClose();
                         }}
                     >
-                        {action.text}
+                        {!!action.icon && action.icon}
+
+                        <span className={cn(css["action-text"], { [css["has-icon"]]: !!action.icon })}>
+                            {action.text}
+                        </span>
                     </MenuItem>
                 ))}
             </Menu>

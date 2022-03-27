@@ -11,6 +11,9 @@ import { gridActions } from "../../../../../../redux/grid/slice";
 import { uiActions } from "../../../../../../redux/ui/slice";
 import formatDateString from "../../../../../../lib/formatDateString";
 import prefixRoute from "../../../../../../lib/prefixRoute";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type Data = {
     id: number;
@@ -58,22 +61,25 @@ export default function CategoryGrid() {
         apiEndpoint: "/categories",
         actions: [
             {
-                text: "Details",
+                text: "View",
                 createLink: row => {
                     return prefixRoute(`/categories/${row.id}`);
-                }
+                },
+                icon: <VisibilityIcon />
             },
             {
                 text: "Edit",
                 createLink: row => {
                     return prefixRoute(`/categories/${row.id}/edit`);
-                }
+                },
+                icon: <EditIcon />
             },
             {
                 text: "Delete",
                 onClick: row => {
                     setRemoveId(row.id);
-                }
+                },
+                icon: <DeleteIcon />
             }
         ]
     };

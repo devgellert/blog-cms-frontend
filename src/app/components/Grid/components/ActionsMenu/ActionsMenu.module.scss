@@ -11,3 +11,8 @@
     min-width: 300px;
   }
 }
+.action-text {
+  &.has-icon {
+    margin-left: 5px;
+  }
+}

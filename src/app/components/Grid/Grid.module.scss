@@ -2,6 +2,14 @@
   .table-container {
     height: calc(100vh - 64px - 52px);
   }
+
+  .clickable {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .loader-wrap {

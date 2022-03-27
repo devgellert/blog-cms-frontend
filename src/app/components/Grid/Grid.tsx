@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
+import cn from "classnames";
 //
 import GridConfig from "./types/GridConfig";
 import GridSelectors from "../../../redux/grid/selector";
@@ -77,8 +78,25 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
                                 <TableRow key={row.id} hover role="checkbox" tabIndex={-1}>
                                     {columns.map(column => {
                                         const value = row[column.id];
+
+                                        const hasOnclick = isFunction(column.onClick);
+
+                                        const isClickDisabled = isFunction(column.isClickDisabled)
+                                            ? column.isClickDisabled(row)
+                                            : false;
+
                                         return (
-                                            <TableCell key={column.id} align={column.align}>
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                onClick={
+                                                    hasOnclick && !isClickDisabled
+                                                        ? // @ts-ignore
+                                                          () => column.onClick(row)
+                                                        : undefined
+                                                }
+                                                className={cn({ [css["clickable"]]: hasOnclick && !isClickDisabled })}
+                                            >
                                                 {isFunction(column.format) ? column.format(value) : value}
                                             </TableCell>
                                         );
@@ -89,6 +107,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
                                             <ActionsMenu
                                                 actions={actions.map(action => ({
                                                     text: action.text,
+                                                    icon: action.icon,
                                                     onClick: (() => {
                                                         if (isFunction(action.onClick)) {
                                                             // @ts-ignore

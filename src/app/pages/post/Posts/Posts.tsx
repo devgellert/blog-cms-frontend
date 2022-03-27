@@ -13,6 +13,10 @@ import { gridActions } from "../../../../redux/grid/slice";
 import { uiActions } from "../../../../redux/ui/slice";
 import formatDateString from "../../../../lib/formatDateString";
 import prefixRoute from "../../../../lib/prefixRoute";
+import formatId from "../../../../lib/formatId";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type Data = {
     id: number;
@@ -21,6 +25,9 @@ type Data = {
     category: string;
     createdAt: string;
     updatedAt: string;
+    meta: {
+        categoryId: number | null;
+    };
 };
 
 type Props = {};
@@ -35,7 +42,11 @@ const Posts: FC<Props> = ({}) => {
         columns: [
             {
                 id: "id",
-                label: ""
+                label: "",
+                format: value => formatId(value, "P"),
+                onClick: row => {
+                    navigate(prefixRoute(`/posts/${row.id}`));
+                }
             },
             {
                 id: "slug",
@@ -43,11 +54,17 @@ const Posts: FC<Props> = ({}) => {
             },
             {
                 id: "userEmail",
-                label: "User"
+                label: "Author"
             },
             {
                 id: "category",
-                label: "Category"
+                label: "Category",
+                onClick: row => {
+                    navigate(prefixRoute(`/categories/${row?.meta?.categoryId}`));
+                },
+                isClickDisabled: row => {
+                    return row?.meta?.categoryId === null;
+                }
             },
             {
                 id: "createdAt",
@@ -67,26 +84,32 @@ const Posts: FC<Props> = ({}) => {
                 category: get(object, "category.name", "-"),
                 userEmail: object.author.username,
                 createdAt: object.createdAt,
-                updatedAt: object.updatedAt
+                updatedAt: object.updatedAt,
+                meta: {
+                    categoryId: object.category?.id ?? null
+                }
             };
         },
         apiEndpoint: "/posts",
         actions: [
             {
-                text: "Details",
+                text: "View",
                 createLink: row => {
                     return prefixRoute(`/posts/${row.id}`);
-                }
+                },
+                icon: <VisibilityIcon />
             },
             {
                 text: "Edit",
                 createLink: row => {
                     return prefixRoute(`/posts/${row.id}/edit`);
-                }
+                },
+                icon: <EditIcon />
             },
             {
                 text: "Delete",
-                onClick: row => setRemoveId(row.id)
+                onClick: row => setRemoveId(row.id),
+                icon: <DeleteIcon />
             }
         ]
     };
