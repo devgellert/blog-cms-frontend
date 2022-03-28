@@ -10,7 +10,7 @@ import { CategoryOption } from "../../category/types";
 function* initPostEditPageSaga(action: ReturnType<typeof postActions.initPostEditPageRequest>) {
     const {
         postId,
-        cb: { setSlug, setCategory, setAuthor }
+        cb: { setSlug, setCategory, setAuthor, setEnabled }
     } = action.payload;
 
     try {
@@ -19,6 +19,7 @@ function* initPostEditPageSaga(action: ReturnType<typeof postActions.initPostEdi
         setSlug(post.slug);
         setCategory(post.category?.id ?? 0);
         setAuthor(post.author.id);
+        setEnabled(post.enabled);
 
         const {
             data: { items: categories }

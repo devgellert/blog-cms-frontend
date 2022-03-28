@@ -18,6 +18,7 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
         slug,
         author,
         category,
+        enabled,
         cb: { setCategoryError, setSlugError, navigate }
     } = action.payload;
 
@@ -28,7 +29,8 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
         const body = {
             slug: slugify(slug),
             category,
-            author
+            author,
+            enabled
         };
 
         if (body.category === null) {

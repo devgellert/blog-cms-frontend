@@ -51,6 +51,7 @@ const postSlice = createSlice({
                 category: null | number;
                 author: number;
                 slug: string;
+                enabled: boolean;
                 cb: {
                     setCategoryError: Setter;
                     setSlugError: Setter;
@@ -74,6 +75,7 @@ const postSlice = createSlice({
                 category: null | number;
                 author: number;
                 slug: string;
+                enabled: boolean;
                 cb: {
                     setCategoryError: Setter;
                     setSlugError: Setter;
@@ -155,7 +157,12 @@ const postSlice = createSlice({
             state: PostState,
             action: PayloadAction<{
                 postId: number;
-                cb: { setSlug: Setter; setCategory: Setter<number>; setAuthor: Setter<number> };
+                cb: {
+                    setSlug: Setter;
+                    setCategory: Setter<number>;
+                    setAuthor: Setter<number>;
+                    setEnabled: Setter<boolean>;
+                };
             }>
         ) => {
             state.isPostEditPageLoading = true;

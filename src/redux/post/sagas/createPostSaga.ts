@@ -17,6 +17,7 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
         slug,
         author,
         category,
+        enabled,
         cb: { setCategoryError, setSlugError, navigate }
     } = action.payload;
 
@@ -27,7 +28,8 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
         const body = {
             slug: slugify(slug),
             category,
-            author
+            author,
+            enabled
         };
 
         if (body.category === null) {

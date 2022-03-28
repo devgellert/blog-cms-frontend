@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
@@ -16,6 +16,8 @@ import CategorySelectors from "../../../../redux/category/selector";
 import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./PostEdit.module.scss";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
@@ -35,10 +37,14 @@ const PostEdit: FC<Props> = ({}) => {
         errorText: categoryError,
         setError: setCategoryError
     } = useInput({ initialValue: "0" });
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
         dispatch(
-            postActions.initPostEditPageRequest({ postId: Number(postId), cb: { setCategory, setSlug, setAuthor } })
+            postActions.initPostEditPageRequest({
+                postId: Number(postId),
+                cb: { setCategory, setSlug, setAuthor, setEnabled }
+            })
         );
 
         return () => {
@@ -53,6 +59,7 @@ const PostEdit: FC<Props> = ({}) => {
                 slug: slugify(slug),
                 author,
                 category,
+                enabled,
                 cb: {
                     navigate,
                     setCategoryError,
@@ -76,15 +83,31 @@ const PostEdit: FC<Props> = ({}) => {
                         <SimpleCard>
                             <Typography variant="h6">General</Typography>
 
-                            <SelectField
-                                name="post-category"
-                                labelId="category-label"
-                                label="Category"
-                                errorText={categoryError}
-                                value={category}
-                                onChange={e => setCategory(e.target.value)}
-                                choices={categoryOptions}
-                            />
+                            <TwoColumnGrid>
+                                <SelectField
+                                    name="post-category"
+                                    labelId="category-label"
+                                    label="Category"
+                                    errorText={categoryError}
+                                    value={category}
+                                    onChange={e => setCategory(e.target.value)}
+                                    choices={categoryOptions}
+                                />
+
+                                <div />
+
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            onChange={e => {
+                                                setEnabled((e.target as any)?.checked);
+                                            }}
+                                            checked={enabled}
+                                        />
+                                    }
+                                    label="Enabled"
+                                />
+                            </TwoColumnGrid>
                         </SimpleCard>
 
                         <SimpleCard>

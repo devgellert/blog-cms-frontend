@@ -115,6 +115,7 @@ const Category: FC = () => {
                                         <List>
                                             <SimpleListItem title="Name" text={elem.name} />
                                         </List>
+
                                         <List>
                                             <SimpleListItem
                                                 title="Enabled"

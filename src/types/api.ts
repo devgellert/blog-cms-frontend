@@ -27,6 +27,7 @@ export type ApiPost = {
     id: number;
     category?: { id: number; name: string };
     slug: string;
+    enabled: boolean;
 } & ApiResource;
 
 export type ApiGetPostsResponse = {

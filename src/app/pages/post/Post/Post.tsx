@@ -73,19 +73,24 @@ const Post: FC = ({}) => {
                     <SimpleCard>
                         <Typography variant="h6">General</Typography>
 
-                        <List dense={false}>
-                            <SimpleListItem title="Category" text={post?.category?.name || "Uncategorized"} />
+                        <TwoColumnGrid>
+                            <List dense={false}>
+                                <SimpleListItem title="Category" text={post?.category?.name || "Uncategorized"} />
 
-                            <SimpleListItem
-                                title="Created At"
-                                text={post ? formatDateString(post?.createdAt) : "n/a"}
-                            />
+                                <SimpleListItem title="Enabled" text={post?.enabled ? "Enabled" : "Not Enabled"} />
+                            </List>
 
-                            <SimpleListItem
-                                title="Last Updated At"
-                                text={post ? formatDateString(post?.updatedAt) : "n/a"}
-                            />
-                        </List>
+                            <List dense={false}>
+                                <SimpleListItem
+                                    title="Created At"
+                                    text={post ? formatDateString(post?.createdAt) : "n/a"}
+                                />
+                                <SimpleListItem
+                                    title="Last Updated At"
+                                    text={post ? formatDateString(post?.updatedAt) : "n/a"}
+                                />
+                            </List>
+                        </TwoColumnGrid>
                     </SimpleCard>
 
                     <SimpleCard>
