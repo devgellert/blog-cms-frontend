@@ -16,6 +16,7 @@ function* createCategorySaga(action: ReturnType<typeof categoryActions.createCat
         slug,
         parent,
         name,
+        enabled,
         cb: { setNameError, setParentError, setSlugError, navigate }
     } = action.payload;
 
@@ -27,7 +28,8 @@ function* createCategorySaga(action: ReturnType<typeof categoryActions.createCat
         const body = {
             name,
             slug,
-            parent
+            parent,
+            enabled
         };
 
         if (body.parent === null) {

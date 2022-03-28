@@ -67,6 +67,7 @@ const categorySlice = createSlice({
                     setName: Setter;
                     setSlug: Setter;
                     setParent: Setter<number | null>;
+                    setEnabled: Setter<boolean>;
                 };
             }>
         ) => {
@@ -114,6 +115,7 @@ const categorySlice = createSlice({
                 slug: string;
                 parent: number | null;
                 name: string;
+                enabled: boolean;
                 cb: {
                     setNameError: Setter;
                     setParentError: Setter;
@@ -137,6 +139,7 @@ const categorySlice = createSlice({
                 slug: string;
                 parent: number | null;
                 name: string;
+                enabled: boolean;
                 cb: {
                     setNameError: Setter;
                     setParentError: Setter;

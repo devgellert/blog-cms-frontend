@@ -11,7 +11,7 @@ import { uiActions } from "../../ui/slice";
 function* initCategoryEditPageSaga(action: ReturnType<typeof categoryActions.initCategoryEditPageRequest>) {
     const {
         categoryId,
-        cb: { setSlug, setName, setParent }
+        cb: { setSlug, setName, setParent, setEnabled }
     } = action.payload;
 
     try {
@@ -20,6 +20,7 @@ function* initCategoryEditPageSaga(action: ReturnType<typeof categoryActions.ini
         setName(category.name);
         setSlug(category.slug);
         setParent(category?.parent?.id || null);
+        setEnabled(category.enabled);
 
         const {
             data: { items: allCategories }

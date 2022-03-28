@@ -63,6 +63,8 @@ const Category: FC = () => {
                                 <SimpleListItem title="Name" text={category?.name ?? "n/a"} />
 
                                 <SimpleListItem title="Parent" text={category?.parent ? category.parent.name : "-"} />
+
+                                <SimpleListItem title="Enabled" text={category?.enabled ? "Enabled" : "Not Enabled"} />
                             </List>
 
                             <List>

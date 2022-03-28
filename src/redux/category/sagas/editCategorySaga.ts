@@ -17,6 +17,7 @@ function* editCategorySaga(action: ReturnType<typeof categoryActions.editCategor
         slug,
         parent,
         name,
+        enabled,
         cb: { setNameError, setParentError, setSlugError, navigate }
     } = action.payload;
 
@@ -28,7 +29,8 @@ function* editCategorySaga(action: ReturnType<typeof categoryActions.editCategor
         const body = {
             name,
             slug,
-            parent
+            parent,
+            enabled
         };
 
         if (body.parent === null) {

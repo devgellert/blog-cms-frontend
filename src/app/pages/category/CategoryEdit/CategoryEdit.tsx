@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
@@ -16,6 +16,8 @@ import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 //
 import css from "./CategoryEdit.module.scss";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
@@ -35,12 +37,13 @@ const CategoryEdit: FC<Props> = ({}) => {
         errorText: parentError,
         setError: setParentError
     } = useInput({ initialValue: "0" });
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
         dispatch(
             categoryActions.initCategoryEditPageRequest({
                 categoryId: Number(categoryId),
-                cb: { setName, setSlug, setParent }
+                cb: { setName, setSlug, setParent, setEnabled }
             })
         );
 
@@ -56,6 +59,7 @@ const CategoryEdit: FC<Props> = ({}) => {
                 parent: parent == "0" ? null : parent,
                 name,
                 slug: slugify(slug),
+                enabled,
                 cb: {
                     setNameError,
                     navigate,
@@ -97,6 +101,18 @@ const CategoryEdit: FC<Props> = ({}) => {
                                 value={parent}
                                 onChange={e => setParent(e.target.value)}
                                 choices={categoryOptions}
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        onChange={e => {
+                                            setEnabled((e.target as any)?.checked);
+                                        }}
+                                        checked={enabled}
+                                    />
+                                }
+                                label="Enabled"
                             />
                         </SimpleCard>
 

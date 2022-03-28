@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import Input from "../../../components/Input/Input";
@@ -30,6 +32,7 @@ const CategoryCreate: FC = () => {
         errorText: parentError,
         setError: setParentError
     } = useInput({ initialValue: "0" });
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
         dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-create-page" }));
@@ -45,6 +48,7 @@ const CategoryCreate: FC = () => {
                 parent: parent == "0" ? null : Number(parent),
                 name,
                 slug,
+                enabled,
                 cb: {
                     navigate,
                     setParentError,
@@ -86,6 +90,18 @@ const CategoryCreate: FC = () => {
                                 value={parent}
                                 onChange={e => setParent(e.target.value)}
                                 choices={categoryOptions}
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        onChange={e => {
+                                            setEnabled((e.target as any)?.checked);
+                                        }}
+                                        checked={enabled}
+                                    />
+                                }
+                                label="Enabled"
                             />
                         </SimpleCard>
 
