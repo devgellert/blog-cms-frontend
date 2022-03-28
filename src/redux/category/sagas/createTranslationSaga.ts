@@ -12,6 +12,7 @@ function* createTranslationSaga(action: ReturnType<typeof categoryActions.create
         categoryId,
         name,
         locale,
+        enabled,
         cb: { setNameError, setLocaleError, navigate }
     } = action.payload;
 
@@ -21,7 +22,8 @@ function* createTranslationSaga(action: ReturnType<typeof categoryActions.create
     try {
         yield call(api.post, `/categories/${categoryId}/translations`, {
             locale,
-            name
+            name,
+            enabled
         });
 
         yield put(categoryActions.createTranslationSuccess());

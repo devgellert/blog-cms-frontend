@@ -12,6 +12,9 @@ import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./CategoryTranslationEdit.module.scss";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 
 type Props = {};
 
@@ -21,6 +24,7 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
     const navigate = useNavigate();
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
+    const [enabled, setEnabled] = useState(false);
 
     const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationEditPageLoading);
 
@@ -30,7 +34,8 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
                 categoryId: Number(categoryId),
                 locale: locale as string,
                 cb: {
-                    setName
+                    setName,
+                    setEnabled
                 }
             })
         );
@@ -46,6 +51,7 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
                 locale: locale as string,
                 categoryId: Number(categoryId),
                 name,
+                enabled,
                 cb: {
                     navigate,
                     setNameError
@@ -74,7 +80,7 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
                             Locale - {locale}
                         </Typography>
 
-                        <div className={css["input-wrap"]}>
+                        <TwoColumnGrid>
                             <Input
                                 name="category-translation-name"
                                 value={name}
@@ -82,7 +88,21 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
                                 label="Name"
                                 errorText={nameError}
                             />
-                        </div>
+
+                            <div />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        onChange={e => {
+                                            setEnabled((e.target as any)?.checked);
+                                        }}
+                                        checked={enabled}
+                                    />
+                                }
+                                label="Enabled"
+                            />
+                        </TwoColumnGrid>
                     </SimpleCard>
 
                     <Button type="submit" color="success" variant="contained" className={css["button"]}>

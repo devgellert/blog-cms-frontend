@@ -11,6 +11,7 @@ function* editCategoryTranslationSaga(action: ReturnType<typeof categoryActions.
         categoryId,
         name,
         locale,
+        enabled,
         cb: { setNameError, navigate }
     } = action.payload;
 
@@ -18,7 +19,8 @@ function* editCategoryTranslationSaga(action: ReturnType<typeof categoryActions.
 
     try {
         yield call(api.put, `/categories/${categoryId}/translations/${locale}`, {
-            name
+            name,
+            enabled
         });
 
         yield put(categoryActions.editTranslationSuccess());

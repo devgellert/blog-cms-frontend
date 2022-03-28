@@ -92,6 +92,7 @@ const categorySlice = createSlice({
                 locale: string;
                 cb: {
                     setName: Setter;
+                    setEnabled: Setter<boolean>;
                 };
             }>
         ) => {
@@ -163,6 +164,7 @@ const categorySlice = createSlice({
                 categoryId: number;
                 locale: string;
                 name: string;
+                enabled: boolean;
                 cb: {
                     setNameError: Setter;
                     setLocaleError: Setter;
@@ -185,6 +187,7 @@ const categorySlice = createSlice({
                 categoryId: number;
                 locale: string;
                 name: string;
+                enabled: boolean;
                 cb: {
                     setNameError: Setter;
                     navigate: (url: string) => void;

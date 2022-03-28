@@ -9,7 +9,7 @@ function* initTranslationEditPageSaga(action: ReturnType<typeof categoryActions.
     const {
         categoryId,
         locale,
-        cb: { setName }
+        cb: { setName, setEnabled }
     } = action.payload;
 
     try {
@@ -19,6 +19,7 @@ function* initTranslationEditPageSaga(action: ReturnType<typeof categoryActions.
         );
 
         setName(translation.name);
+        setEnabled(translation.enabled);
 
         yield put(categoryActions.initTranslationEditPageSuccess({ translation }));
     } catch (e) {

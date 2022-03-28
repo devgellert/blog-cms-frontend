@@ -111,9 +111,17 @@ const Category: FC = () => {
 
                             {translations?.map((elem, index) => (
                                 <TabPanel key={elem.id} value={tabIndex} index={index}>
-                                    <List>
-                                        <SimpleListItem title="Name" text={elem.name} />
-                                    </List>
+                                    <TwoColumnGrid>
+                                        <List>
+                                            <SimpleListItem title="Name" text={elem.name} />
+                                        </List>
+                                        <List>
+                                            <SimpleListItem
+                                                title="Enabled"
+                                                text={elem.enabled ? "Enabled" : "Not Enabled"}
+                                            />
+                                        </List>
+                                    </TwoColumnGrid>
 
                                     <Button
                                         onClick={() => {

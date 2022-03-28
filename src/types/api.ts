@@ -38,6 +38,7 @@ export type ApiCategoryTranslation = {
     id: number;
     locale: string;
     name: string;
+    enabled: boolean;
 };
 
 export type ApiPostTranslation = {

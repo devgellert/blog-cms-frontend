@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
@@ -13,6 +13,8 @@ import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 //
 import css from "./CategoryTranslationCreate.module.scss";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
@@ -32,6 +34,7 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
     } = useInput({
         initialValue: searchParams.get("locale") || ""
     });
+    const [enabled, setEnabled] = useState(false);
 
     const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationCreatePageLoading);
 
@@ -41,6 +44,7 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
                 categoryId: Number(categoryId),
                 locale,
                 name,
+                enabled,
                 cb: {
                     navigate,
                     setNameError,
@@ -80,6 +84,18 @@ const CategoryTranslationCreate: FC<Props> = ({}) => {
                                 setValue={setName}
                                 label="Name"
                                 errorText={nameError}
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        onChange={e => {
+                                            setEnabled((e.target as any)?.checked);
+                                        }}
+                                        checked={enabled}
+                                    />
+                                }
+                                label="Enabled"
                             />
                         </TwoColumnGrid>
                     </SimpleCard>
