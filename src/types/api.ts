@@ -63,7 +63,8 @@ export type ApiStatisticsError = {
 };
 
 export enum ApiStatisticsErrorEnum {
-    CATEGORY_TRANSLATION_MISSING = "category-translation-missing"
+    CATEGORY_TRANSLATION_MISSING = "category-translation-missing",
+    CATEGORY_TRANSLATION_NOT_ENABLED = "category-translation-not-enabled"
 }
 
 export type ApiStatisticsResponse = AxiosResponse<ApiStatistics>;

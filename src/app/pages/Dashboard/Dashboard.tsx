@@ -110,6 +110,29 @@ const Dashboard: FC<Props> = ({}) => {
                                             );
                                         }
 
+                                        if (error.type === ApiStatisticsErrorEnum.CATEGORY_TRANSLATION_NOT_ENABLED) {
+                                            return (
+                                                <ListItemButton
+                                                    onClick={() => {
+                                                        navigate(
+                                                            prefixRoute(
+                                                                `/categories/${error.meta.category}/translations/${error.meta.locale}/edit`
+                                                            )
+                                                        );
+                                                    }}
+                                                >
+                                                    <ErrorOutlineIcon className={css["error-icon"]} color="warning" />
+                                                    <ListItemText
+                                                        secondary={`Click here to edit category translation (${error.meta.locale}).`}
+                                                        primary={`Locale ${
+                                                            error.meta.locale
+                                                        } is enabled for post ${formatId(error.meta.post, "P")}, but
+                                            disabled for category ${formatId(error.meta.category, "C")}.`}
+                                                    />
+                                                </ListItemButton>
+                                            );
+                                        }
+
                                         return (
                                             <ListItemButton>
                                                 <ListItemText primary="Trash" />
