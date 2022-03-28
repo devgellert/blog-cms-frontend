@@ -7,10 +7,10 @@ import { dashboardActions } from "../slice";
 function* initDashboardSaga() {
     try {
         const {
-            data: { numbers }
+            data: { numbers, errors }
         }: ApiStatisticsResponse = yield call(api.get, "/statistics");
 
-        yield put(dashboardActions.initDashboardSuccess({ numbers }));
+        yield put(dashboardActions.initDashboardSuccess({ numbers, errors }));
     } catch (e) {
         console.log(e);
         yield put(dashboardActions.initDashboardError());

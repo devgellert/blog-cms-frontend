@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FC, memo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 //
@@ -19,10 +19,19 @@ type Props = {};
 const CategoryTranslationCreate: FC<Props> = ({}) => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
+    let [searchParams] = useSearchParams();
+
     const dispatch = useDispatch();
 
     const { value: name, setValue: setName, errorText: nameError, setError: setNameError } = useInput({});
-    const { value: locale, setValue: setLocale, errorText: localeError, setError: setLocaleError } = useInput({});
+    const {
+        value: locale,
+        setValue: setLocale,
+        errorText: localeError,
+        setError: setLocaleError
+    } = useInput({
+        initialValue: searchParams.get("locale") || ""
+    });
 
     const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationCreatePageLoading);
 

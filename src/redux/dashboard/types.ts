@@ -1,3 +1,5 @@
+import { ApiStatisticsError } from "../../types/api";
+
 export type DashboardState = {
     isLoading: boolean;
     statistics: {
@@ -7,5 +9,6 @@ export type DashboardState = {
             categoryTranslation: number | null;
             postTranslation: number | null;
         };
+        errors: ApiStatisticsError[];
     };
 };

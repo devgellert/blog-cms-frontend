@@ -24,11 +24,22 @@
 
   .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-gap: 15px;
   }
 
   .grey {
     background-color: lightgrey;
+  }
+
+  .todos-body {
+    overflow-y: scroll;
+    max-height: 200px;
+    margin-top: 10px;
+    padding-right: 10px;
+
+    .error-icon {
+      margin-right: 10px;
+    }
   }
 }

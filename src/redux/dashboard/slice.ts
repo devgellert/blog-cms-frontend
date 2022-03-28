@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //
 import { DashboardState } from "./types";
+import { ApiStatisticsError } from "../../types/api";
 
 const dashboardSlice = createSlice({
     name: "dashboardSlice",
@@ -12,9 +13,11 @@ const dashboardSlice = createSlice({
             state,
             action: PayloadAction<{
                 numbers: { category: number; post: number; postTranslation: number; categoryTranslation: number };
+                errors: ApiStatisticsError[];
             }>
         ) => {
             state.statistics.numbers = action.payload.numbers;
+            state.statistics.errors = action.payload.errors;
             state.isLoading = false;
         },
         initDashboardError: state => {
@@ -33,7 +36,8 @@ function getInitialState(): DashboardState {
                 post: null,
                 postTranslation: null,
                 categoryTranslation: null
-            }
+            },
+            errors: []
         }
     };
 }

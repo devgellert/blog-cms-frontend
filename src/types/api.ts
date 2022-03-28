@@ -54,6 +54,16 @@ export type ApiStatistics = {
         postTranslation: number;
         categoryTranslation: number;
     };
+    errors: ApiStatisticsError[];
 };
+
+export type ApiStatisticsError = {
+    type: ApiStatisticsErrorEnum;
+    meta: any;
+};
+
+export enum ApiStatisticsErrorEnum {
+    CATEGORY_TRANSLATION_MISSING = "category-translation-missing"
+}
 
 export type ApiStatisticsResponse = AxiosResponse<ApiStatistics>;
