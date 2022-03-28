@@ -9,7 +9,7 @@ function* initPostTranslationEditPageSaga(action: ReturnType<typeof postActions.
     const {
         postId,
         locale,
-        cb: { setMDesc, setOgDesc, setMTitle, setOgTitle, setTitle, setContent }
+        cb: { setMDesc, setOgDesc, setMTitle, setOgTitle, setTitle, setContent, setEnabled }
     } = action.payload;
 
     try {
@@ -24,6 +24,7 @@ function* initPostTranslationEditPageSaga(action: ReturnType<typeof postActions.
         setOgTitle(translation.ogTitle);
         setOgDesc(translation.ogDescription);
         setContent(translation.content);
+        setEnabled(translation.enabled);
 
         yield put(postActions.initTranslationEditPageSuccess({ translation }));
     } catch (e) {

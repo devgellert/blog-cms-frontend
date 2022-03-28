@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
@@ -16,6 +16,8 @@ import PostSelectors from "../../../../redux/post/selector";
 import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 //
 import css from "./PostTranslationCreate.module.scss";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
@@ -48,6 +50,7 @@ const PostTranslationCreate: FC<Props> = ({}) => {
     const { value: mDesc, setValue: setMDesc, errorText: mDescError, setError: setMDescError } = useInput({});
     const { value: ogTitle, setValue: setOgTitle, errorText: ogTitleError, setError: setOgTitleError } = useInput({});
     const { value: ogDesc, setValue: setOgDesc, errorText: ogDescError, setError: setOgDescError } = useInput({});
+    const [enabled, setEnabled] = useState(false);
 
     const createTranslation = async () => {
         const content = await editorRef.current?.save();
@@ -66,6 +69,7 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                 ogDescription: ogDesc,
                 content: jsonContent,
                 metaDescription: mDesc,
+                enabled,
                 cb: {
                     setOgTitleError,
                     setTitleError,
@@ -110,6 +114,18 @@ const PostTranslationCreate: FC<Props> = ({}) => {
                                 setValue={setTitle}
                                 label="Title"
                                 errorText={titleError}
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        onChange={e => {
+                                            setEnabled((e.target as any)?.checked);
+                                        }}
+                                        checked={enabled}
+                                    />
+                                }
+                                label="Enabled"
                             />
                         </SimpleCard>
 

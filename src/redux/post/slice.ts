@@ -103,6 +103,7 @@ const postSlice = createSlice({
                 ogTitle: string;
                 ogDescription: string;
                 content: string;
+                enabled: boolean;
                 cb: {
                     setTitleError: Setter;
                     setLocaleError: Setter;
@@ -134,6 +135,7 @@ const postSlice = createSlice({
                 ogTitle: string;
                 ogDescription: string;
                 content: string;
+                enabled: boolean;
                 cb: {
                     setTitleError: Setter;
                     setMTitleError: Setter;
@@ -188,6 +190,7 @@ const postSlice = createSlice({
                     setOgTitle: Setter;
                     setOgDesc: Setter;
                     setContent: Setter;
+                    setEnabled: Setter<boolean>;
                 };
             }>
         ) => {

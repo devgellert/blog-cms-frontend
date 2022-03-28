@@ -153,7 +153,7 @@ const Post: FC = ({}) => {
 
                                             <SimpleListItem
                                                 title="Enabled"
-                                                text={elem.enabled ? "Enabled" : "Disabled"}
+                                                text={elem.enabled ? "Enabled" : "Not Enabled"}
                                             />
                                         </List>
 

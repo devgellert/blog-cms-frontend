@@ -17,6 +17,7 @@ function* createPostTranslationSaga(action: ReturnType<typeof postActions.create
         metaTitle,
         ogTitle,
         title,
+        enabled,
         cb: { setLocaleError, setMDescError, setOgDescError, setMTitleError, setTitleError, setOgTitleError, navigate }
     } = action.payload;
 
@@ -35,7 +36,8 @@ function* createPostTranslationSaga(action: ReturnType<typeof postActions.create
             metaDescription,
             ogTitle,
             ogDescription,
-            content
+            content,
+            enabled
         });
 
         yield put(postActions.createTranslationSuccess());

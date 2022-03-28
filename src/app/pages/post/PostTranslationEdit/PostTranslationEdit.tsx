@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
@@ -16,6 +16,8 @@ import PostSelectors from "../../../../redux/post/selector";
 //
 import css from "./PostTranslationEdit.module.scss";
 import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
@@ -49,6 +51,7 @@ const PostTranslationEdit: FC<Props> = ({}) => {
     const { value: mDesc, setValue: setMDesc, errorText: mDescError, setError: setMDescError } = useInput({});
     const { value: ogTitle, setValue: setOgTitle, errorText: ogTitleError, setError: setOgTitleError } = useInput({});
     const { value: ogDesc, setValue: setOgDesc, errorText: ogDescError, setError: setOgDescError } = useInput({});
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
         dispatch(
@@ -61,7 +64,8 @@ const PostTranslationEdit: FC<Props> = ({}) => {
                     setMTitle,
                     setOgDesc,
                     setMDesc,
-                    setContent
+                    setContent,
+                    setEnabled
                 }
             })
         );
@@ -88,6 +92,7 @@ const PostTranslationEdit: FC<Props> = ({}) => {
                 title,
                 metaTitle: mTitle,
                 metaDescription: mDesc,
+                enabled,
                 cb: {
                     navigate,
                     setMDescError,
@@ -123,6 +128,20 @@ const PostTranslationEdit: FC<Props> = ({}) => {
                                     setValue={setTitle}
                                     label="Title"
                                     errorText={titleError}
+                                />
+
+                                <div />
+
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            onChange={e => {
+                                                setEnabled((e.target as any)?.checked);
+                                            }}
+                                            checked={enabled}
+                                        />
+                                    }
+                                    label="Enabled"
                                 />
                             </TwoColumnGrid>
                         </SimpleCard>

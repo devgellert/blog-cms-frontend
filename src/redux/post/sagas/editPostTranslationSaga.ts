@@ -16,6 +16,7 @@ function* editTranslationRequest(action: ReturnType<typeof postActions.editTrans
         metaTitle,
         ogTitle,
         title,
+        enabled,
         cb: { setMDescError, setOgDescError, setMTitleError, setTitleError, setOgTitleError, navigate }
     } = action.payload;
 
@@ -32,7 +33,8 @@ function* editTranslationRequest(action: ReturnType<typeof postActions.editTrans
             metaDescription,
             ogTitle,
             ogDescription,
-            content
+            content,
+            enabled
         });
 
         yield put(postActions.editTranslationSuccess());
