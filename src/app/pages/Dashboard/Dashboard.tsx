@@ -37,41 +37,42 @@ const Dashboard: FC<Props> = ({}) => {
         <PageWrap title="Dashboard" buttons={[]} hasTopPadding isLoading={isLoading}>
             <Container maxWidth="lg" className={css["Dashboard"]}>
                 <div className={css["grid"]}>
-                    <TwoColumnGrid>
-                        <SimpleCard>
-                            <header className={css["card-header"]}>
-                                <h2>Posts</h2>
-                                <ArticleIcon />
-                            </header>
-                            <div className={css["number"]}>{numbers.post}</div>
-                        </SimpleCard>
-                        <SimpleCard>
-                            <header className={css["card-header"]}>
-                                <h2>Categories</h2>
-                                <CategoryIcon />
-                            </header>
+                    <div>
+                        <TwoColumnGrid className={css["numbers-wrap"]}>
+                            <SimpleCard className={css["number-card"]}>
+                                <header className={css["card-header"]}>
+                                    <h2>Posts</h2>
+                                    <ArticleIcon />
+                                </header>
+                                <div className={css["number"]}>{numbers.post}</div>
+                            </SimpleCard>
+                            <SimpleCard className={css["number-card"]}>
+                                <header className={css["card-header"]}>
+                                    <h2>Categories</h2>
+                                    <CategoryIcon />
+                                </header>
 
-                            <div className={css["number"]}>{numbers.category}</div>
-                        </SimpleCard>
+                                <div className={css["number"]}>{numbers.category}</div>
+                            </SimpleCard>
 
-                        <SimpleCard>
-                            <header className={css["card-header"]}>
-                                <h2>Post Translations</h2>
-                                <ArticleIcon color="primary" />
-                            </header>
-                            <div className={css["number"]}>{numbers.postTranslation}</div>
-                        </SimpleCard>
-                        <SimpleCard>
-                            <header className={css["card-header"]}>
-                                <h2>Category Translations</h2>
-                                <CategoryIcon color="primary" />
-                            </header>
+                            <SimpleCard className={css["number-card"]}>
+                                <header className={css["card-header"]}>
+                                    <h2>Post Translations</h2>
+                                    <ArticleIcon color="primary" />
+                                </header>
+                                <div className={css["number"]}>{numbers.postTranslation}</div>
+                            </SimpleCard>
+                            <SimpleCard className={css["number-card"]}>
+                                <header className={css["card-header"]}>
+                                    <h2>Category Translations</h2>
+                                    <CategoryIcon color="primary" />
+                                </header>
 
-                            <div className={css["number"]}>{numbers.categoryTranslation}</div>
-                        </SimpleCard>
-                    </TwoColumnGrid>
-
-                    <SimpleCard>
+                                <div className={css["number"]}>{numbers.categoryTranslation}</div>
+                            </SimpleCard>
+                        </TwoColumnGrid>
+                    </div>
+                    <SimpleCard className={css["todo-wrap"]}>
                         <header className={css["card-header"]}>
                             <h2>Todos</h2>
                             <FormatListBulletedIcon />

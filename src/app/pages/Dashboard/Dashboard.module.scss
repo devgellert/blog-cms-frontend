@@ -25,7 +25,19 @@
   .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-gap: 15px;
+
+    .numbers-wrap {
+      width: auto;
+
+      .number-card {
+        height: 150px;
+      }
+    }
+
+    .todo-wrap {
+      width: 400px;
+      margin-left: 15px;
+    }
   }
 
   .grey {
@@ -33,8 +45,6 @@
   }
 
   .todos-body {
-    overflow-y: scroll;
-    max-height: 200px;
     margin-top: 10px;
     padding-right: 10px;
 
