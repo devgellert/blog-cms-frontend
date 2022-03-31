@@ -1,14 +1,15 @@
 import { EditorConfig } from "@editorjs/editorjs";
 import { AxiosResponse } from "axios";
 import api from "../../api";
-
 const ImageTool = require("@editorjs/image");
 const Header = require("@editorjs/header");
 const SimpleImage = require("@editorjs/simple-image");
+const Underline = require("@editorjs/underline");
 
 const editorToolsConfig: EditorConfig["tools"] = {
     Header,
     SimpleImage,
+    Underline,
     image: {
         class: ImageTool,
         config: {
