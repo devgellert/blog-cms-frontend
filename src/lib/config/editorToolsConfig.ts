@@ -7,6 +7,7 @@ const SimpleImage = require("@editorjs/simple-image");
 const Underline = require("@editorjs/underline");
 const List = require("@editorjs/list");
 const Table = require("@editorjs/table");
+const Warning = require("@editorjs/warning");
 
 const editorToolsConfig: EditorConfig["tools"] = {
     Header,
@@ -14,6 +15,7 @@ const editorToolsConfig: EditorConfig["tools"] = {
     Underline,
     List,
     Table,
+    Warning,
     image: {
         class: ImageTool,
         config: {

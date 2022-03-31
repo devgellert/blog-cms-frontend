@@ -10,6 +10,7 @@
     "@editorjs/simple-image": "^1.4.1",
     "@editorjs/table": "^2.0.1",
     "@editorjs/underline": "^1.0.0",
+    "@editorjs/warning": "^1.2.0",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.0",
