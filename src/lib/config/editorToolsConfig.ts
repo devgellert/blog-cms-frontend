@@ -5,11 +5,13 @@ const ImageTool = require("@editorjs/image");
 const Header = require("@editorjs/header");
 const SimpleImage = require("@editorjs/simple-image");
 const Underline = require("@editorjs/underline");
+const List = require("@editorjs/list");
 
 const editorToolsConfig: EditorConfig["tools"] = {
     Header,
     SimpleImage,
     Underline,
+    List,
     image: {
         class: ImageTool,
         config: {
