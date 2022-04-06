@@ -56,7 +56,7 @@ const CategoryEdit: FC<Props> = ({}) => {
         dispatch(
             categoryActions.editCategoryRequest({
                 categoryId: Number(categoryId),
-                parent: parent == "0" ? null : parent,
+                parent,
                 name,
                 slug: slugify(slug),
                 enabled,

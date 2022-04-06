@@ -29,7 +29,7 @@ function* editCategorySaga(action: ReturnType<typeof categoryActions.editCategor
         const body = {
             name,
             slug,
-            parent,
+            parent: !parent ? null : parent,
             enabled
         };
 

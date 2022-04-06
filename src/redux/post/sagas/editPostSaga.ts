@@ -28,7 +28,7 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
     try {
         const body = {
             slug: slugify(slug),
-            category,
+            category: !category ? null : category,
             author,
             enabled
         };
