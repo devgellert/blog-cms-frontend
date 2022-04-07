@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
+import { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,14 +16,13 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import { postActions } from "../../../../redux/post/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 import PostSelectors from "../../../../redux/post/selector";
-//
-import css from "./PostEdit.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import api from "../../../../api";
-import { AxiosResponse } from "axios";
 import { ApiImage } from "../../../../types/api";
 import createMediaUrl from "../../../../lib/createMediaUrl";
+//
+import css from "./PostEdit.module.scss";
 
 const Input = styled("input")({
     display: "none"
@@ -158,10 +158,24 @@ const PostEdit: FC<Props> = () => {
                                                 });
                                             }}
                                         />
+
                                         <Button variant="contained" component="span">
                                             {ogImage !== null ? "Change" : "Upload"} OG Image
                                         </Button>
                                     </label>
+
+                                    {ogImage !== null && (
+                                        <div
+                                            onClick={() => {
+                                                setOgImage(null);
+                                            }}
+                                            className={css["button-delete-og-image"]}
+                                        >
+                                            <Button variant="contained" component="span" color="error">
+                                                Delete Og Image
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             </TwoColumnGrid>
                         </SimpleCard>
