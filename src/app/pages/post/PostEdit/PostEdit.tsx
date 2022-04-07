@@ -21,8 +21,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import api from "../../../../api";
 import { ApiImage } from "../../../../types/api";
 import createMediaUrl from "../../../../lib/createMediaUrl";
+import SimpleImage from "../../../components/SimpleImage/SimpleImage";
 //
 import css from "./PostEdit.module.scss";
+import FileField from "../../../components/inputs/FileField/FileField";
 
 const Input = styled("input")({
     display: "none"
@@ -130,39 +132,34 @@ const PostEdit: FC<Props> = () => {
                                 <div />
 
                                 <div>
-                                    {ogImage !== null && <img width={100} src={createMediaUrl(ogImage.fileName)} />}
+                                    {ogImage !== null && (
+                                        <SimpleImage width={100} src={createMediaUrl(ogImage.fileName)} />
+                                    )}
 
-                                    <label htmlFor="contained-button-file">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file"
-                                            type="file"
-                                            onChange={e => {
-                                                const file = e.target.files?.[0];
+                                    <FileField
+                                        id="og-image-file"
+                                        onChange={e => {
+                                            const file = e.target.files?.[0];
 
-                                                if (!file) return;
+                                            if (!file) return;
 
-                                                const formData = new FormData();
-                                                formData.append("image", file);
+                                            const formData = new FormData();
+                                            formData.append("image", file);
 
-                                                const promise = api.post("/upload-image", formData, {
-                                                    headers: {
-                                                        "Content-Type": "multipart/form-data"
-                                                    }
+                                            const promise = api.post("/upload-image", formData, {
+                                                headers: {
+                                                    "Content-Type": "multipart/form-data"
+                                                }
+                                            });
+
+                                            return promise.then((response: AxiosResponse<ApiImage>) => {
+                                                setOgImage({
+                                                    ...response.data
                                                 });
-
-                                                return promise.then((response: AxiosResponse<ApiImage>) => {
-                                                    setOgImage({
-                                                        ...response.data
-                                                    });
-                                                });
-                                            }}
-                                        />
-
-                                        <Button variant="contained" component="span">
-                                            {ogImage !== null ? "Change" : "Upload"} OG Image
-                                        </Button>
-                                    </label>
+                                            });
+                                        }}
+                                        text={`${ogImage !== null ? "Change" : "Upload"} OG Image`}
+                                    />
 
                                     {ogImage !== null && (
                                         <div
