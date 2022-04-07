@@ -2,6 +2,7 @@ import { EditorConfig } from "@editorjs/editorjs";
 import { AxiosResponse } from "axios";
 import api from "../../api";
 import { ApiImage } from "../../types/api";
+import createMediaUrl from "../createMediaUrl";
 const ImageTool = require("@editorjs/image");
 const Header = require("@editorjs/header");
 const SimpleImage = require("@editorjs/simple-image");
@@ -45,7 +46,7 @@ const editorToolsConfig: EditorConfig["tools"] = {
                         return {
                             success: 1,
                             file: {
-                                url: `${process.env.REACT_APP_MEDIA_URL}/${response.data.fileName}`
+                                url: createMediaUrl(response.data.fileName)
                             }
                         };
                     });

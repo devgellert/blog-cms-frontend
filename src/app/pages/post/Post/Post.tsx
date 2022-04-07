@@ -15,10 +15,12 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import createPostPageButtonConfig from "../../../../lib/post/createPostPageButtonConfig";
 import { postActions } from "../../../../redux/post/slice";
 import PostSelectors from "../../../../redux/post/selector";
-//
-import css from "./Post.module.scss";
 import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 import prefixRoute from "../../../../lib/prefixRoute";
+import SimpleImage from "../../../components/SimpleImage/SimpleImage";
+import createMediaUrl from "../../../../lib/createMediaUrl";
+//
+import css from "./Post.module.scss";
 
 const editorElement = <div id="editor" />;
 
@@ -97,7 +99,13 @@ const Post: FC = () => {
                     <SimpleCard>
                         <Typography variant="h6">SEO</Typography>
 
-                        <SimpleListItem title="Slug" text={post?.slug || "n/a"} />
+                        <TwoColumnGrid className={css["seo-grid"]}>
+                            <SimpleListItem title="Slug" text={post?.slug || "n/a"} />
+
+                            {!!post?.ogImage?.fileName && (
+                                <SimpleImage src={createMediaUrl(post?.ogImage?.fileName)} width={200} />
+                            )}
+                        </TwoColumnGrid>
 
                         <Typography variant="h6">Author</Typography>
 

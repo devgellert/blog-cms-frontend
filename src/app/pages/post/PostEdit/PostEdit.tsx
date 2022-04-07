@@ -22,6 +22,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import api from "../../../../api";
 import { AxiosResponse } from "axios";
 import { ApiImage } from "../../../../types/api";
+import createMediaUrl from "../../../../lib/createMediaUrl";
 
 const Input = styled("input")({
     display: "none"
@@ -129,12 +130,7 @@ const PostEdit: FC<Props> = () => {
                                 <div />
 
                                 <div>
-                                    {ogImage !== null && (
-                                        <img
-                                            width={100}
-                                            src={`${process.env.REACT_APP_MEDIA_URL}/${ogImage.fileName}`}
-                                        />
-                                    )}
+                                    {ogImage !== null && <img width={100} src={createMediaUrl(ogImage.fileName)} />}
 
                                     <label htmlFor="contained-button-file">
                                         <Input
