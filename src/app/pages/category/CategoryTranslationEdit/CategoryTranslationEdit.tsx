@@ -1,4 +1,4 @@
-import React, { FormEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 
 type Props = {};
 
-const CategoryTranslationEdit: FC<Props> = ({}) => {
+const CategoryTranslationEdit: FC<Props> = () => {
     const dispatch = useDispatch();
     const { locale, categoryId } = useParams();
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ const CategoryTranslationEdit: FC<Props> = ({}) => {
 
     const isPageLoading = useSelector(CategorySelectors.isCategoryTranslationEditPageLoading);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(
             categoryActions.initTranslationEditPageRequest({

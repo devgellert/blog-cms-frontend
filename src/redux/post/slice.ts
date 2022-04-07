@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostState } from "./types";
-import fetchAndSetPostAndTranslationsSaga from "./sagas/fetchAndSetPostAndTranslationsSaga";
-import { ApiCategoryTranslation, ApiPost, ApiPostTranslation } from "../../types/api";
+import { ApiPost, ApiPostTranslation } from "../../types/api";
 import { Setter } from "../../types/common";
-import { categoryActions, InitCategoryOptionsFlow } from "../category/slice";
-import { CategoryOption, CategoryState } from "../category/types";
-import initPostEditPageSaga from "./sagas/initPostEditPageSaga";
+import { categoryActions } from "../category/slice";
+import { CategoryOption } from "../category/types";
 
 export type RemovePostTranslationFlow = "post-details-page";
 

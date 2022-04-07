@@ -38,6 +38,7 @@ const PostCreate: FC = () => {
     } = useInput({ initialValue: "0" });
     const [enabled, setEnabled] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(categoryActions.initCategoryOptionsRequest({ flow: "post-create-page" }));
 
@@ -50,7 +51,7 @@ const PostCreate: FC = () => {
         dispatch(
             postActions.createPostRequest({
                 slug: slugify(slug),
-                category: category == "0" ? null : Number(category),
+                category: category === "0" || category === 0 ? null : Number(category),
                 author: user?.id as number,
                 enabled,
                 cb: {

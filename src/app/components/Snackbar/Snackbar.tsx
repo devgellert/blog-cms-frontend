@@ -8,7 +8,7 @@ import UISelectors from "../../../redux/ui/selector";
 
 type Props = {};
 
-const Snackbar: FC<Props> = ({}) => {
+const Snackbar: FC<Props> = () => {
     const dispatch = useDispatch();
 
     const snackbarConfig = useSelector(UISelectors.getSnackbarConfig);

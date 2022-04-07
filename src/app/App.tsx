@@ -28,12 +28,12 @@ import css from "./App.module.scss";
 
 type Props = {};
 
-const App: FC<Props> = ({}) => {
+const App: FC<Props> = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(authActions.refreshJwt());
-    }, []);
+    });
 
     return (
         <div className={css["App"]}>

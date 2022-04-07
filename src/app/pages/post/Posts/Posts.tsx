@@ -32,7 +32,7 @@ type Data = {
 
 type Props = {};
 
-const Posts: FC<Props> = ({}) => {
+const Posts: FC<Props> = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

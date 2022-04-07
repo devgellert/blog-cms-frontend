@@ -21,7 +21,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
-const PostEdit: FC<Props> = ({}) => {
+const PostEdit: FC<Props> = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { postId } = useParams();
@@ -39,6 +39,7 @@ const PostEdit: FC<Props> = ({}) => {
     } = useInput({ initialValue: "0" });
     const [enabled, setEnabled] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(
             postActions.initPostEditPageRequest({

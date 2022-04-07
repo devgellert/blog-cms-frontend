@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditorJS from "@editorjs/editorjs";
@@ -22,7 +22,7 @@ import prefixRoute from "../../../../lib/prefixRoute";
 
 const editorElement = <div id="editor" />;
 
-const Post: FC = ({}) => {
+const Post: FC = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -43,6 +43,7 @@ const Post: FC = ({}) => {
 
     const editorRef = useRef<EditorJS>();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (translations && translations.length && translations[tabIndex] && translations[tabIndex].content) {
             // @ts-ignore

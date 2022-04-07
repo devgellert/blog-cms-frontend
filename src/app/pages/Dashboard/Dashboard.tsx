@@ -21,7 +21,7 @@ import formatId from "../../../lib/formatId";
 
 type Props = {};
 
-const Dashboard: FC<Props> = ({}) => {
+const Dashboard: FC<Props> = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const Dashboard: FC<Props> = ({}) => {
 
     useEffect(() => {
         dispatch(dashboardActions.initDashboardRequest());
-    }, []);
+    });
 
     return (
         <PageWrap title="Dashboard" buttons={[]} hasTopPadding isLoading={isLoading}>

@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useState } from "react";
-import { Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //
@@ -12,7 +12,7 @@ import css from "./LoginPage.module.scss";
 
 type Props = {};
 
-const LoginPage: FC<Props> = ({}) => {
+const LoginPage: FC<Props> = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,6 +21,7 @@ const LoginPage: FC<Props> = ({}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (loginState === LoginState.LOGGED_IN) {
             navigate(prefixRoute("/"));

@@ -22,7 +22,7 @@ const AuthGuard: FC<Props> = ({ element }) => {
         if (loginState === LoginState.LOGGED_OUT) {
             navigate(prefixRoute("/login"));
         }
-    }, [loginState]);
+    }, [loginState, navigate]);
 
     if ([LoginState.REFRESHING, LoginState.IN_PROGRESS].includes(loginState)) {
         return (

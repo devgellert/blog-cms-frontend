@@ -47,7 +47,7 @@ const menuConfig: {
 
 type Props = {};
 
-const Menu: FC<Props> = ({}) => {
+const Menu: FC<Props> = () => {
     const dispatch = useDispatch();
 
     const location = useLocation();

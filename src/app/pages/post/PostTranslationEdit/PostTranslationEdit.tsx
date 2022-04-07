@@ -23,17 +23,18 @@ type Props = {};
 
 const EDITOR_ID = "editor";
 
-const PostTranslationEdit: FC<Props> = ({}) => {
+const PostTranslationEdit: FC<Props> = () => {
     const { postId, locale } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const isPageLoading = useSelector(PostSelectors.isPostTranslationEditPageLoading);
 
-    const { value: content, setValue: setContent, errorText: contentError, setError: setContentError } = useInput({});
+    const { value: content, setValue: setContent } = useInput({});
 
     const editorRef = useRef<EditorJS>();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!isPageLoading) {
             // @ts-ignore
@@ -53,6 +54,7 @@ const PostTranslationEdit: FC<Props> = ({}) => {
     const { value: ogDesc, setValue: setOgDesc, errorText: ogDescError, setError: setOgDescError } = useInput({});
     const [enabled, setEnabled] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(
             postActions.initTranslationEditPageRequest({

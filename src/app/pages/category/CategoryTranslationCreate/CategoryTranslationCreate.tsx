@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FC, memo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
@@ -18,7 +18,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 
 type Props = {};
 
-const CategoryTranslationCreate: FC<Props> = ({}) => {
+const CategoryTranslationCreate: FC<Props> = () => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
     let [searchParams] = useSearchParams();

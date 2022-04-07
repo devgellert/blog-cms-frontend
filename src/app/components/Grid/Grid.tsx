@@ -33,6 +33,7 @@ const Grid: FC<Props> = ({ config: { columns, transformer, apiEndpoint, actions 
 
     const [isMounted, setIsMounted] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(gridActions.fetchRows({ transformer, apiEndpoint, setPaginationToInitial: !isMounted }));
 

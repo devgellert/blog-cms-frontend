@@ -23,17 +23,18 @@ type Props = {};
 
 const EDITOR_ID = "editor";
 
-const PostTranslationCreate: FC<Props> = ({}) => {
+const PostTranslationCreate: FC<Props> = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { postId } = useParams();
 
     const isPageLoading = useSelector(PostSelectors.isPostTranslationCreatePageLoading);
 
-    const { value: content, setValue: setContent, errorText: contentError, setError: setContentError } = useInput({});
+    const { value: content, setValue: setContent } = useInput({});
 
     const editorRef = useRef<EditorJS>();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         // @ts-ignore
         editorRef.current = new EditorJS({

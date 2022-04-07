@@ -30,6 +30,7 @@ const Category: FC = () => {
         translations ? translations.map(translations => translations.locale) : []
     );
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(categoryActions.initializeCategoryDetailsPage({ id: Number(categoryId) }));
 

@@ -34,6 +34,7 @@ const CategoryCreate: FC = () => {
     } = useInput({ initialValue: "0" });
     const [enabled, setEnabled] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         dispatch(categoryActions.initCategoryOptionsRequest({ flow: "category-create-page" }));
 
@@ -45,7 +46,7 @@ const CategoryCreate: FC = () => {
     const createCategory = () => {
         dispatch(
             categoryActions.createCategoryRequest({
-                parent: parent == "0" ? null : Number(parent),
+                parent: parent === "0" || parent === 0 ? null : Number(parent),
                 name,
                 slug,
                 enabled,
