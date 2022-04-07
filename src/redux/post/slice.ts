@@ -50,6 +50,7 @@ const postSlice = createSlice({
                 author: number;
                 slug: string;
                 enabled: boolean;
+                ogImage: ApiImage | null;
                 cb: {
                     setCategoryError: Setter;
                     setSlugError: Setter;

@@ -25,6 +25,7 @@ import SimpleImage from "../../../components/SimpleImage/SimpleImage";
 //
 import css from "./PostEdit.module.scss";
 import FileField from "../../../components/inputs/FileField/FileField";
+import OgImageFields from "../../../components/OgImageFields/OgImageFields";
 
 const Input = styled("input")({
     display: "none"
@@ -129,51 +130,10 @@ const PostEdit: FC<Props> = () => {
 
                             <TwoColumnGrid>
                                 <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
+
                                 <div />
 
-                                <div>
-                                    {ogImage !== null && (
-                                        <SimpleImage width={100} src={createMediaUrl(ogImage.fileName)} />
-                                    )}
-
-                                    <FileField
-                                        id="og-image-file"
-                                        onChange={e => {
-                                            const file = e.target.files?.[0];
-
-                                            if (!file) return;
-
-                                            const formData = new FormData();
-                                            formData.append("image", file);
-
-                                            const promise = api.post("/upload-image", formData, {
-                                                headers: {
-                                                    "Content-Type": "multipart/form-data"
-                                                }
-                                            });
-
-                                            return promise.then((response: AxiosResponse<ApiImage>) => {
-                                                setOgImage({
-                                                    ...response.data
-                                                });
-                                            });
-                                        }}
-                                        text={`${ogImage !== null ? "Change" : "Upload"} OG Image`}
-                                    />
-
-                                    {ogImage !== null && (
-                                        <div
-                                            onClick={() => {
-                                                setOgImage(null);
-                                            }}
-                                            className={css["button-delete-og-image"]}
-                                        >
-                                            <Button variant="contained" component="span" color="error">
-                                                Delete Og Image
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
+                                <OgImageFields ogImage={ogImage} setOgImage={setOgImage} />
                             </TwoColumnGrid>
                         </SimpleCard>
                     </TwoColumnGrid>

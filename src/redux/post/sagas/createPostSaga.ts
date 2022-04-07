@@ -18,6 +18,7 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
         author,
         category,
         enabled,
+        ogImage,
         cb: { setCategoryError, setSlugError, navigate }
     } = action.payload;
 
@@ -29,11 +30,16 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
             slug: slugify(slug),
             category,
             author,
-            enabled
+            enabled,
+            ogImage: ogImage?.id
         };
 
         if (body.category === null) {
             unset(body, "category");
+        }
+
+        if (!body.ogImage) {
+            unset(body, "ogImage");
         }
 
         const response: AxiosResponse<ApiPost> = yield call(api.post, "/posts", body);

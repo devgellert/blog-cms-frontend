@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
@@ -15,11 +17,11 @@ import { postActions } from "../../../../redux/post/slice";
 import { categoryActions } from "../../../../redux/category/slice";
 import CategorySelectors from "../../../../redux/category/selector";
 import PostSelectors from "../../../../redux/post/selector";
+import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
+import { ApiImage } from "../../../../types/api";
+import OgImageFields from "../../../components/OgImageFields/OgImageFields";
 //
 import css from "./PostCreate.module.scss";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 
 const PostCreate: FC = () => {
     const dispatch = useDispatch();
@@ -36,6 +38,7 @@ const PostCreate: FC = () => {
         errorText: categoryError,
         setError: setCategoryError
     } = useInput({ initialValue: "0" });
+    const [ogImage, setOgImage] = useState<null | ApiImage>(null);
     const [enabled, setEnabled] = useState(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,6 +57,7 @@ const PostCreate: FC = () => {
                 category: category === "0" || category === 0 ? null : Number(category),
                 author: user?.id as number,
                 enabled,
+                ogImage,
                 cb: {
                     setCategoryError,
                     setSlugError,
@@ -107,7 +111,13 @@ const PostCreate: FC = () => {
                         <SimpleCard>
                             <Typography variant="h6">SEO</Typography>
 
-                            <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
+                            <TwoColumnGrid>
+                                <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
+
+                                <div />
+
+                                <OgImageFields ogImage={ogImage} setOgImage={setOgImage} />
+                            </TwoColumnGrid>
                         </SimpleCard>
                     </div>
 
