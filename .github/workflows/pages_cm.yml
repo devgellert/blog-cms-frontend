@@ -37,6 +37,7 @@ jobs:
           REACT_APP_MEDIA_URL: 'https://blog-cms-backend-2000.herokuapp.com/media'
           PUBLIC_URL: 'https://devgellert.github.io'
           REACT_APP_ROUTE_PREFIX: 'blog-cms-frontend'
+          CI: 'false'
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
