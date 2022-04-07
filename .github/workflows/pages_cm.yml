@@ -35,7 +35,7 @@ jobs:
         env:
           REACT_APP_API: 'https://blog-cms-backend-2000.herokuapp.com/api/admin'
           REACT_APP_MEDIA_URL: 'https://blog-cms-backend-2000.herokuapp.com/media'
-          PUBLIC_URL: 'https://devgellert.github.io'
+          PUBLIC_URL: 'https://devgellert.github.io/blog-cms-frontend'
           REACT_APP_ROUTE_PREFIX: 'blog-cms-frontend'
           CI: 'false'
 
