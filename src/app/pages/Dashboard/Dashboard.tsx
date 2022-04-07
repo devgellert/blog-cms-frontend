@@ -31,7 +31,7 @@ const Dashboard: FC<Props> = () => {
 
     useEffect(() => {
         dispatch(dashboardActions.initDashboardRequest());
-    });
+    }, []);
 
     return (
         <PageWrap title="Dashboard" buttons={[]} hasTopPadding isLoading={isLoading}>

@@ -33,7 +33,7 @@ const App: FC<Props> = () => {
 
     useEffect(() => {
         dispatch(authActions.refreshJwt());
-    });
+    }, []);
 
     return (
         <div className={css["App"]}>
