@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostState } from "./types";
-import { ApiPost, ApiPostTranslation } from "../../types/api";
+import { ApiImage, ApiPost, ApiPostTranslation } from "../../types/api";
 import { Setter } from "../../types/common";
 import { categoryActions } from "../category/slice";
 import { CategoryOption } from "../category/types";
@@ -74,6 +74,7 @@ const postSlice = createSlice({
                 author: number;
                 slug: string;
                 enabled: boolean;
+                ogImage: null | ApiImage;
                 cb: {
                     setCategoryError: Setter;
                     setSlugError: Setter;
@@ -162,6 +163,7 @@ const postSlice = createSlice({
                     setCategory: Setter<number>;
                     setAuthor: Setter<number>;
                     setEnabled: Setter<boolean>;
+                    setOgImage: Setter<ApiImage | null>;
                 };
             }>
         ) => {

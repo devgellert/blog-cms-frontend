@@ -28,6 +28,7 @@ export type ApiPost = {
     category?: { id: number; name: string };
     slug: string;
     enabled: boolean;
+    ogImage: ApiImage;
 } & ApiResource;
 
 export type ApiGetPostsResponse = {
@@ -75,3 +76,5 @@ export enum ApiStatisticsErrorEnum {
 }
 
 export type ApiStatisticsResponse = AxiosResponse<ApiStatistics>;
+
+export type ApiImage = { fileName: string; id: number };

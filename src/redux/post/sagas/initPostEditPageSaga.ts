@@ -10,7 +10,7 @@ import { CategoryOption } from "../../category/types";
 function* initPostEditPageSaga(action: ReturnType<typeof postActions.initPostEditPageRequest>) {
     const {
         postId,
-        cb: { setSlug, setCategory, setAuthor, setEnabled }
+        cb: { setSlug, setCategory, setAuthor, setEnabled, setOgImage }
     } = action.payload;
 
     try {
@@ -20,6 +20,10 @@ function* initPostEditPageSaga(action: ReturnType<typeof postActions.initPostEdi
         setCategory(post.category?.id ?? 0);
         setAuthor(post.author.id);
         setEnabled(post.enabled);
+
+        if (post.ogImage) {
+            setOgImage(post.ogImage);
+        }
 
         const {
             data: { items: categories }

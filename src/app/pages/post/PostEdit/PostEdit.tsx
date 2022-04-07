@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
+import { styled } from "@mui/material/styles";
 //
 import PageWrap from "../../../components/PageWrap/PageWrap";
 import SelectField from "../../../components/inputs/SelectField/SelectField";
@@ -18,6 +19,13 @@ import PostSelectors from "../../../../redux/post/selector";
 import css from "./PostEdit.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import api from "../../../../api";
+import { AxiosResponse } from "axios";
+import { ApiImage } from "../../../../types/api";
+
+const Input = styled("input")({
+    display: "none"
+});
 
 type Props = {};
 
@@ -37,6 +45,7 @@ const PostEdit: FC<Props> = () => {
         errorText: categoryError,
         setError: setCategoryError
     } = useInput({ initialValue: "0" });
+    const [ogImage, setOgImage] = useState<null | ApiImage>(null);
     const [enabled, setEnabled] = useState(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +53,7 @@ const PostEdit: FC<Props> = () => {
         dispatch(
             postActions.initPostEditPageRequest({
                 postId: Number(postId),
-                cb: { setCategory, setSlug, setAuthor, setEnabled }
+                cb: { setCategory, setSlug, setAuthor, setEnabled, setOgImage }
             })
         );
 
@@ -61,6 +70,7 @@ const PostEdit: FC<Props> = () => {
                 author,
                 category,
                 enabled,
+                ogImage,
                 cb: {
                     navigate,
                     setCategoryError,
@@ -114,7 +124,50 @@ const PostEdit: FC<Props> = () => {
                         <SimpleCard>
                             <Typography variant="h6">SEO</Typography>
 
-                            <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
+                            <TwoColumnGrid>
+                                <SlugField name="post-slug" slug={slug} setSlug={setSlug} slugError={slugError} />
+                                <div />
+
+                                <div>
+                                    {ogImage !== null && (
+                                        <img
+                                            width={100}
+                                            src={`${process.env.REACT_APP_MEDIA_URL}/${ogImage.fileName}`}
+                                        />
+                                    )}
+
+                                    <label htmlFor="contained-button-file">
+                                        <Input
+                                            accept="image/*"
+                                            id="contained-button-file"
+                                            type="file"
+                                            onChange={e => {
+                                                const file = e.target.files?.[0];
+
+                                                if (!file) return;
+
+                                                const formData = new FormData();
+                                                formData.append("image", file);
+
+                                                const promise = api.post("/upload-image", formData, {
+                                                    headers: {
+                                                        "Content-Type": "multipart/form-data"
+                                                    }
+                                                });
+
+                                                return promise.then((response: AxiosResponse<ApiImage>) => {
+                                                    setOgImage({
+                                                        ...response.data
+                                                    });
+                                                });
+                                            }}
+                                        />
+                                        <Button variant="contained" component="span">
+                                            {ogImage !== null ? "Change" : "Upload"} OG Image
+                                        </Button>
+                                    </label>
+                                </div>
+                            </TwoColumnGrid>
                         </SimpleCard>
                     </TwoColumnGrid>
 

@@ -19,6 +19,7 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
         author,
         category,
         enabled,
+        ogImage,
         cb: { setCategoryError, setSlugError, navigate }
     } = action.payload;
 
@@ -30,11 +31,16 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
             slug: slugify(slug),
             category: !category ? null : category,
             author,
-            enabled
+            enabled,
+            ogImage: ogImage?.id
         };
 
         if (body.category === null) {
             unset(body, "category");
+        }
+
+        if (!body.ogImage) {
+            unset(body, "ogImage");
         }
 
         const response: AxiosResponse<ApiPost> = yield call(api.put, `/posts/${postId}`, body);
