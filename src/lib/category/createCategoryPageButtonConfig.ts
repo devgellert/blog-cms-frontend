@@ -4,7 +4,7 @@ import prefixRoute from "../prefixRoute";
 const createCategoryPageButtonConfig = (navigate: (url: string) => void, categoryId: number): PageButton[] => {
     return [
         {
-            text: "Create Translation",
+            text: "New Translation",
             color: "success",
             variant: "contained",
             onClick: () => {

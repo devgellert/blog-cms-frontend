@@ -16,6 +16,7 @@ import formatDateString from "../../../../lib/formatDateString";
 //
 import css from "./Category.module.scss";
 import prefixRoute from "../../../../lib/prefixRoute";
+import formatId from "../../../../lib/formatId";
 
 const Category: FC = () => {
     const { categoryId } = useParams();
@@ -49,7 +50,7 @@ const Category: FC = () => {
 
     return (
         <PageWrap
-            title={`Category #${categoryId}`}
+            title={`Category ${category ? formatId(Number(category.id), "C") : ""}`}
             buttons={createCategoryPageButtonConfig(navigate, Number(categoryId))}
             isLoading={isPageLoading}
             hasTopPadding

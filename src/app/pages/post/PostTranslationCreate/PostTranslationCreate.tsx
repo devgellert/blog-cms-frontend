@@ -18,6 +18,7 @@ import editorToolsConfig from "../../../../lib/config/editorToolsConfig";
 import css from "./PostTranslationCreate.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import formatId from "../../../../lib/formatId";
 
 type Props = {};
 
@@ -85,7 +86,12 @@ const PostTranslationCreate: FC<Props> = () => {
     };
 
     return (
-        <PageWrap title={`#${postId} Post Locale Create`} buttons={[]} isLoading={isPageLoading} hasTopPadding>
+        <PageWrap
+            title={`New Translation: Post ${formatId(Number(postId), "P")}`}
+            buttons={[]}
+            isLoading={isPageLoading}
+            hasTopPadding
+        >
             <Container maxWidth="lg" className={css["PostTranslationCreate"]}>
                 <form
                     onSubmit={e => {

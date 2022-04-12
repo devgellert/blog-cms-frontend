@@ -21,6 +21,7 @@ import SimpleImage from "../../../components/SimpleImage/SimpleImage";
 import createMediaUrl from "../../../../lib/createMediaUrl";
 //
 import css from "./Post.module.scss";
+import formatId from "../../../../lib/formatId";
 
 const editorElement = <div id="editor" />;
 
@@ -66,7 +67,7 @@ const Post: FC = () => {
 
     return (
         <PageWrap
-            title="Post"
+            title={`Post ${post ? formatId(post.id, "P") : ""}`}
             isLoading={isPageLoading}
             hasTopPadding
             buttons={createPostPageButtonConfig(navigate, Number(postId))}

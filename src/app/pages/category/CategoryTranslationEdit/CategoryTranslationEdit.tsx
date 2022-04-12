@@ -15,6 +15,7 @@ import css from "./CategoryTranslationEdit.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
+import formatId from "../../../../lib/formatId";
 
 type Props = {};
 
@@ -63,7 +64,7 @@ const CategoryTranslationEdit: FC<Props> = () => {
 
     return (
         <PageWrap
-            title={`#${categoryId} Category Locale (${locale}) Edit`}
+            title={`Edit Translation: Category ${formatId(Number(categoryId), "C")}`}
             buttons={[]}
             isLoading={isPageLoading}
             hasTopPadding

@@ -26,6 +26,7 @@ import SimpleImage from "../../../components/SimpleImage/SimpleImage";
 import css from "./PostEdit.module.scss";
 import FileField from "../../../components/inputs/FileField/FileField";
 import OgImageFields from "../../../components/OgImageFields/OgImageFields";
+import formatId from "../../../../lib/formatId";
 
 const Input = styled("input")({
     display: "none"
@@ -85,7 +86,7 @@ const PostEdit: FC<Props> = () => {
     };
 
     return (
-        <PageWrap title="Edit Post" buttons={[]} isLoading={isPageLoading}>
+        <PageWrap title={`Edit Post ${formatId(Number(postId), "P")}`} buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["PostEdit"]}>
                 <form
                     onSubmit={e => {

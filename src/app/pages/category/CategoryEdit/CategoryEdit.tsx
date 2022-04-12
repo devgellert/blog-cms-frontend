@@ -18,6 +18,7 @@ import TwoColumnGrid from "../../../components/TwoColumnGrid/TwoColumnGrid";
 import css from "./CategoryEdit.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import formatId from "../../../../lib/formatId";
 
 type Props = {};
 
@@ -72,7 +73,7 @@ const CategoryEdit: FC<Props> = () => {
     };
 
     return (
-        <PageWrap title="New Category" buttons={[]} isLoading={isPageLoading}>
+        <PageWrap title={`Edit Category ${formatId(Number(categoryId), "C")}`} buttons={[]} isLoading={isPageLoading}>
             <Container maxWidth="lg" className={css["CategoryEdit"]}>
                 <form
                     onSubmit={e => {

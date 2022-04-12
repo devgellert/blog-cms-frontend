@@ -15,6 +15,7 @@ import CategorySelectors from "../../../../redux/category/selector";
 import css from "./CategoryTranslationCreate.module.scss";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import formatId from "../../../../lib/formatId";
 
 type Props = {};
 
@@ -55,7 +56,12 @@ const CategoryTranslationCreate: FC<Props> = () => {
     };
 
     return (
-        <PageWrap title={`#${categoryId} Category Locale Create`} buttons={[]} isLoading={isPageLoading} hasTopPadding>
+        <PageWrap
+            title={`New Translation: Category ${formatId(Number(categoryId), "C")}`}
+            buttons={[]}
+            isLoading={isPageLoading}
+            hasTopPadding
+        >
             <Container maxWidth="lg" className={css["CategoryTranslationCreate"]}>
                 <form
                     onSubmit={e => {
