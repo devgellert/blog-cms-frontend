@@ -103,7 +103,7 @@ const Category: FC = () => {
                             variant="outlined"
                             color="success"
                         >
-                            Create Translation
+                            New Translation
                         </Button>
                     </header>
 
