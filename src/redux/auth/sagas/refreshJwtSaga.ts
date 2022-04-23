@@ -11,7 +11,7 @@ import fetchAndSetUserSaga from "./helpers/fetchAndSetUserSaga";
 
 function* refreshJwtSaga() {
     try {
-        const oldToken = localStorage.getItem(LocalStorageKeys.AUTH_TOKEN);
+        const oldToken: string | null = yield call(localStorage.getItem, LocalStorageKeys.AUTH_TOKEN);
 
         if (!oldToken) {
             yield put(authActions.logout());
@@ -30,7 +30,6 @@ function* refreshJwtSaga() {
 
         yield put(authActions.setLoginState(LoginState.LOGGED_IN));
     } catch (e) {
-        console.log(e);
         yield put(authActions.logout());
     }
 }
