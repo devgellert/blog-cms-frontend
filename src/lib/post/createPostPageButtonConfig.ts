@@ -1,7 +1,7 @@
 import { PageButton } from "../../app/components/PageWrap/PageWrap";
 import prefixRoute from "../prefixRoute";
 
-const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId: number): PageButton[] => {
+const createPostPageButtonConfig = (navigate: (url: string) => void, postId: number): PageButton[] => {
     return [
         {
             text: "New Translation",
@@ -22,4 +22,4 @@ const createCategoryPageButtonConfig = (navigate: (url: string) => void, postId:
     ];
 };
 
-export default createCategoryPageButtonConfig;
+export default createPostPageButtonConfig;
