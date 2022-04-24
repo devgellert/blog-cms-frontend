@@ -7,24 +7,11 @@ import { categoryActions } from "../../slice";
 import api from "../../../../api";
 import { ApiCategory } from "../../../../types/api";
 import { uiActions } from "../../../ui/slice";
+import mockCreateCategoryRequestAction from "../../../../mock/mockCreateCategoryRequestAction";
+import mockCreateCategoryBody from "../../../../mock/mockCreateCategoryBody";
 
 describe("Scenario 1: create category successfully", () => {
-    const it = sagaHelper(
-        createCategorySaga(
-            categoryActions.createCategoryRequest({
-                slug: "slug",
-                parent: null,
-                name: "string",
-                enabled: false,
-                cb: {
-                    setNameError: url => {},
-                    setParentError: url => {},
-                    setSlugError: url => {},
-                    navigate: url => {}
-                }
-            })
-        ) as any
-    );
+    const it = sagaHelper(createCategorySaga(mockCreateCategoryRequestAction) as any);
 
     it("should create category successfully", result => {
         expect(result).toEqual(
@@ -36,14 +23,7 @@ describe("Scenario 1: create category successfully", () => {
         );
 
         return {
-            data: {
-                id: 1,
-                name: "string",
-                slug: "slug",
-                enabled: false,
-                createdAt: "",
-                updatedAt: ""
-            }
+            data: mockCreateCategoryBody
         } as AxiosResponse<ApiCategory>;
     });
 
