@@ -7,6 +7,8 @@ import api from "../../../../api";
 import { ApiCategory } from "../../../../types/api";
 import initCategoryEditPageSaga from "../initCategoryEditPageSaga";
 import { uiActions } from "../../../ui/slice";
+import mockCategoryOption from "../../../../mock/mockCategoryOption";
+import mockCategory from "../../../../mock/mockCategory";
 
 describe("Scenario 1: init category edit page successfully", () => {
     const it = sagaHelper(
@@ -27,14 +29,7 @@ describe("Scenario 1: init category edit page successfully", () => {
         expect(result).toEqual(call(api.get, `/categories/${1}`));
 
         return {
-            data: {
-                id: 1,
-                name: "string",
-                slug: "slug",
-                enabled: false,
-                createdAt: "",
-                updatedAt: ""
-            }
+            data: mockCategory
         } as AxiosResponse<ApiCategory>;
     });
 
@@ -43,16 +38,7 @@ describe("Scenario 1: init category edit page successfully", () => {
 
         return {
             data: {
-                items: [
-                    {
-                        id: 1,
-                        name: "name",
-                        createdAt: "",
-                        updatedAt: "",
-                        slug: "slug",
-                        enabled: false
-                    }
-                ]
+                items: [mockCategoryOption]
             }
         } as AxiosResponse<{ items: ApiCategory[] }>;
     });
@@ -65,14 +51,7 @@ describe("Scenario 1: init category edit page successfully", () => {
                         { value: 0, text: "-" },
                         { value: 1, text: "name" }
                     ],
-                    category: {
-                        id: 1,
-                        name: "string",
-                        slug: "slug",
-                        enabled: false,
-                        createdAt: "",
-                        updatedAt: ""
-                    }
+                    category: mockCategory
                 })
             )
         );

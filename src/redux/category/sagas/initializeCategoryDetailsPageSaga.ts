@@ -1,9 +1,10 @@
-import api from "../../../api";
 import { call, put } from "redux-saga/effects";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
+//
+import api from "../../../api";
 import { ApiCategory, ApiCategoryTranslation } from "../../../types/api";
 import { categoryActions } from "../slice";
-import { PayloadAction } from "@reduxjs/toolkit";
 
 function* initializeCategoryDetailsPageSaga(action: PayloadAction<{ id: number }>) {
     try {

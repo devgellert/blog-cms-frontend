@@ -7,6 +7,7 @@ import { categoryActions } from "../../slice";
 import api from "../../../../api";
 import { ApiCategoryTranslation } from "../../../../types/api";
 import { uiActions } from "../../../ui/slice";
+import mockCategoryTranslation from "../../../../mock/mockCategoryTranslation";
 
 describe("Scenario 1: create category translation successfully", () => {
     const it = sagaHelper(
@@ -35,13 +36,7 @@ describe("Scenario 1: create category translation successfully", () => {
         );
 
         return {
-            data: {
-                id: 1,
-                locale: "en",
-                name: "string",
-                enabled: false,
-                category: 1
-            }
+            data: mockCategoryTranslation
         } as AxiosResponse<ApiCategoryTranslation>;
     });
 

@@ -14,13 +14,13 @@ function* removePostTranslationSaga(action: ReturnType<typeof postActions.remove
             yield put(postActions.fetchAndSetPostAndTranslations({ postId }));
         }
 
-        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
-
         yield put(postActions.removePostTranslationSuccess({ flow }));
-    } catch (e) {
-        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
 
+        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully removed translation." }));
+    } catch (e) {
         yield put(postActions.removePostTranslationError({ flow }));
+
+        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to remove translation." }));
     }
 }
 
