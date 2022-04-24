@@ -2,7 +2,6 @@ import sagaHelper from "redux-saga-testing";
 import { call, put } from "redux-saga/effects";
 //
 import refreshJwtSaga from "../refreshJwtSaga";
-import { uiActions } from "../../../ui/slice";
 import { LocalStorageKeys } from "../../../../types/localStorage";
 import { authActions } from "../../slice";
 import api from "../../../../api";
@@ -13,7 +12,7 @@ import { LoginState } from "../../types";
 describe("Scenario 1: logout", () => {
     const it = sagaHelper(refreshJwtSaga() as any);
 
-    it("should have called for AUTH_TOKEN in local storage", result => {
+    it("should get null as auth token from local storage", result => {
         expect(result).toEqual(call(localStorage.getItem, LocalStorageKeys.AUTH_TOKEN));
 
         return null;
@@ -23,7 +22,7 @@ describe("Scenario 1: logout", () => {
         expect(result).toEqual(put(authActions.logout()));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
@@ -31,7 +30,7 @@ describe("Scenario 1: logout", () => {
 describe("Scenario 2: successful refresh", () => {
     const it = sagaHelper(refreshJwtSaga() as any);
 
-    it("should have called for AUTH_TOKEN in local storage", result => {
+    it("should get AUTH_TOKEN in local storage", result => {
         expect(result).toEqual(call(localStorage.getItem, LocalStorageKeys.AUTH_TOKEN));
 
         return "test-token";
@@ -55,7 +54,7 @@ describe("Scenario 2: successful refresh", () => {
         expect(result).toEqual(put(authActions.setLoginState(LoginState.LOGGED_IN)));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
@@ -63,7 +62,7 @@ describe("Scenario 2: successful refresh", () => {
 describe("Scenario 3: failed to refresh", () => {
     const it = sagaHelper(refreshJwtSaga() as any);
 
-    it("should have called for AUTH_TOKEN in local storage", result => {
+    it("should get AUTH_TOKEN from local storage", result => {
         expect(result).toEqual(call(localStorage.getItem, LocalStorageKeys.AUTH_TOKEN));
 
         return "test-token";
@@ -79,7 +78,7 @@ describe("Scenario 3: failed to refresh", () => {
         expect(result).toEqual(put(authActions.logout()));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });

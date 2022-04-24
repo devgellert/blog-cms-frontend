@@ -11,7 +11,7 @@ import { ApiGetCategoriesResponse } from "../../../../types/api";
 
 const API_ENDPOINT = "test-api/endpoint";
 
-describe("fetchRowsSaga", () => {
+describe("Scenario 1: fetch rows successfully", () => {
     const TRANSFORMER = (object: any) => {
         return object;
     };
@@ -82,5 +82,51 @@ describe("Scenario 2: failed to fetch rows", () => {
 
     it("should have terminated", result => {
         expect(result).toBeUndefined();
+    });
+});
+
+describe("Scenario 3: more complicated transformer", () => {
+    const TRANSFORMER = (object: any) => {
+        return {
+            name: `${object.firstName} ${object.lastName}`,
+            age: object.age
+        };
+    };
+
+    const it = sagaHelper(
+        fetchRowsSaga(
+            gridActions.fetchRows({
+                apiEndpoint: API_ENDPOINT,
+                transformer: TRANSFORMER,
+                setPaginationToInitial: false
+            })
+        ) as any
+    );
+
+    it("should select pagination state", () => {
+        return { page: 0, limit: 10 };
+    });
+
+    let response: any | null = null;
+
+    it("should call api", () => {
+        response = {
+            data: {
+                items: [
+                    { firstName: "John", lastName: "Doe", age: 18 },
+                    { firstName: "Jade", lastName: "Smith", age: 21 }
+                ],
+                pagination: { max: 0 }
+            }
+        };
+
+        return response;
+    });
+
+    it("should correctly transform rows", result => {
+        const transformedRows = response?.data?.items?.map(TRANSFORMER) as any[];
+
+        expect(transformedRows[0]).toEqual({ name: "John Doe", age: 18 });
+        expect(transformedRows[1]).toEqual({ name: "Jade Smith", age: 21 });
     });
 });

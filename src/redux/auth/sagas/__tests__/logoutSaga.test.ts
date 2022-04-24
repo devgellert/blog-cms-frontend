@@ -7,11 +7,11 @@ import { uiActions } from "../../../ui/slice";
 describe("logout successful", () => {
     const it = sagaHelper(logoutSaga());
 
-    it("should have dispatched a success action", result => {
+    it("should display a success snackbar", result => {
         expect(result).toEqual(put(uiActions.displaySnackbar({ type: "success", text: "Successfully logged out." })));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });

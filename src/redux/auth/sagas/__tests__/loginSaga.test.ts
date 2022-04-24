@@ -20,7 +20,7 @@ describe("Scenario 1: login successful", () => {
         }) as any
     );
 
-    it("should have called the api", result => {
+    it("should call the api to log in", result => {
         expect(result).toEqual(
             call(api.post, "/login_check", {
                 username: "username",
@@ -33,23 +33,23 @@ describe("Scenario 1: login successful", () => {
         };
     });
 
-    it("should have called for setting the bearer token in storage and in header", result => {
+    it("should set the bearer token in storage and in header", result => {
         expect(result).toEqual(call(setTokenInStorageAndSetBearerHeader, "test-token"));
     });
 
-    it("should have called for fetching and hydrating user", result => {
+    it("should fetch and hydrate user", result => {
         expect(result).toEqual(call(fetchAndSetUserSaga));
     });
 
-    it("should have dispatched action for setting login state", result => {
+    it("should set the login state to logged in", result => {
         expect(result).toEqual(put(authActions.setLoginState(LoginState.LOGGED_IN)));
     });
 
-    it("should have dispatched action for displaying success snackbar", result => {
+    it("should display success snackbar", result => {
         expect(result).toEqual(put(uiActions.displaySnackbar({ type: "success", text: "Successfully logged in." })));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
@@ -65,7 +65,7 @@ describe("Scenario 2: login fail", () => {
         }) as any
     );
 
-    it("should have called the api. And the api should have failed.", result => {
+    it("should call the api to log in. And the api should fail", result => {
         expect(result).toEqual(
             call(api.post, "/login_check", {
                 username: "username",
@@ -73,20 +73,20 @@ describe("Scenario 2: login fail", () => {
             })
         );
 
-        return new Error("Failed to fetch Data");
+        return new Error();
     });
 
-    it("should have dispatched an action for setting the login state to failed login", result => {
+    it("should set the login state to failed to login", result => {
         expect(result).toEqual(put(authActions.setLoginState(LoginState.FAILED_TO_LOGIN)));
     });
 
-    it("should have dispatched an action for displaying error snackbar", result => {
+    it("should display an error snackbar", result => {
         expect(result).toEqual(
             put(uiActions.displaySnackbar({ type: "error", text: "Username or password is incorrect. Try again." }))
         );
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
