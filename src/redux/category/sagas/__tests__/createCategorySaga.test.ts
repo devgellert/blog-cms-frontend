@@ -27,6 +27,7 @@ describe("Scenario 1: create category successfully", () => {
     );
 
     it("should create category successfully", result => {
+        expect(false).toEqual(true); // TODO remove.
         expect(result).toEqual(
             call(api.post, "/categories", {
                 name: "string",
