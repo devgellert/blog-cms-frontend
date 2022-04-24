@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "https://devgellert.github.io/blog-cms-frontend/static/css/main.3f6cadae.css",
+    "main.js": "https://devgellert.github.io/blog-cms-frontend/static/js/main.cca3bf4b.js",
+    "index.html": "https://devgellert.github.io/blog-cms-frontend/index.html",
+    "main.3f6cadae.css.map": "https://devgellert.github.io/blog-cms-frontend/static/css/main.3f6cadae.css.map",
+    "main.cca3bf4b.js.map": "https://devgellert.github.io/blog-cms-frontend/static/js/main.cca3bf4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3f6cadae.css",
+    "static/js/main.cca3bf4b.js"
+  ]
+}
