@@ -2,16 +2,17 @@ import sagaHelper from "redux-saga-testing";
 import { AxiosResponse } from "axios";
 import { call, put } from "redux-saga/effects";
 //
-import createPostSaga from "../sagas/createPostSaga";
-import { postActions } from "../slice";
-import api from "../../../api";
-import { ApiPost } from "../../../types/api";
-import { uiActions } from "../../ui/slice";
+import editPostSaga from "../editPostSaga";
+import { postActions } from "../../slice";
+import api from "../../../../api";
+import { ApiPost } from "../../../../types/api";
+import { uiActions } from "../../../ui/slice";
 
-describe("Scenario 1: create post successfully", () => {
+describe("Scenario 1: edit post successfully", () => {
     const it = sagaHelper(
-        createPostSaga(
-            postActions.createPostRequest({
+        editPostSaga(
+            postActions.editPostRequest({
+                postId: 1,
                 slug: "slug",
                 enabled: false,
                 ogImage: {
@@ -29,9 +30,9 @@ describe("Scenario 1: create post successfully", () => {
         ) as any
     );
 
-    it("should create post successfully", result => {
+    it("should edit post successfully", result => {
         expect(result).toEqual(
-            call(api.post, "/posts", {
+            call(api.put, `/posts/${1}`, {
                 slug: "slug",
                 enabled: false,
                 ogImage: 1,
@@ -45,9 +46,11 @@ describe("Scenario 1: create post successfully", () => {
                 id: 1,
                 slug: "slug",
                 enabled: false,
+                createdAt: "",
+                updatedAt: "",
                 ogImage: {
                     id: 1,
-                    fileName: "file.jpeg"
+                    fileName: "file.png"
                 },
                 author: {
                     id: 1,
@@ -56,19 +59,17 @@ describe("Scenario 1: create post successfully", () => {
                 category: {
                     id: 1,
                     name: "Category"
-                },
-                updatedAt: "",
-                createdAt: ""
+                }
             }
         } as AxiosResponse<ApiPost>;
     });
 
-    it("should dispatch post create success action", result => {
-        expect(result).toEqual(put(postActions.createPostSuccess()));
+    it("should dispatch post edit success action", result => {
+        expect(result).toEqual(put(postActions.editPostSuccess()));
     });
 
     it("should display success snackbar", result => {
-        expect(result).toEqual(put(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." })));
+        expect(result).toEqual(put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited post." })));
     });
 
     it("should terminate", result => {
@@ -76,10 +77,11 @@ describe("Scenario 1: create post successfully", () => {
     });
 });
 
-describe("Scenario 2: create post fail", () => {
+describe("Scenario 2: edit post fail", () => {
     const it = sagaHelper(
-        createPostSaga(
-            postActions.createPostRequest({
+        editPostSaga(
+            postActions.editPostRequest({
+                postId: 1,
                 slug: "slug",
                 enabled: false,
                 ogImage: {
@@ -97,9 +99,9 @@ describe("Scenario 2: create post fail", () => {
         ) as any
     );
 
-    it("should fail to create post successfully", result => {
+    it("should fail to edit post ", result => {
         expect(result).toEqual(
-            call(api.post, "/posts", {
+            call(api.put, `/posts/${1}`, {
                 slug: "slug",
                 enabled: false,
                 ogImage: 1,
@@ -111,12 +113,12 @@ describe("Scenario 2: create post fail", () => {
         return new Error();
     });
 
-    it("should dispatch post create error", result => {
-        expect(result).toEqual(put(postActions.createPostError()));
+    it("should dispatch post edit error", result => {
+        expect(result).toEqual(put(postActions.editPostError()));
     });
 
     it("should display error snackbar", result => {
-        expect(result).toEqual(put(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." })));
+        expect(result).toEqual(put(uiActions.displaySnackbar({ type: "error", text: "Failed to edit post." })));
     });
 
     it("should terminate", result => {

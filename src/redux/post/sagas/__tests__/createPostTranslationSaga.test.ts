@@ -2,11 +2,11 @@ import sagaHelper from "redux-saga-testing";
 import { call, put } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 //
-import createPostTranslationSaga from "../sagas/createPostTranslationSaga";
-import { postActions } from "../slice";
-import api from "../../../api";
-import { ApiPostTranslation } from "../../../types/api";
-import { uiActions } from "../../ui/slice";
+import createPostTranslationSaga from "../createPostTranslationSaga";
+import { postActions } from "../../slice";
+import api from "../../../../api";
+import { ApiPostTranslation } from "../../../../types/api";
+import { uiActions } from "../../../ui/slice";
 
 describe("Scenario 1: create post translation successfully", () => {
     const it = sagaHelper(
