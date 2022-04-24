@@ -45,9 +45,9 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
 
         const response: AxiosResponse<ApiPost> = yield call(api.put, `/posts/${postId}`, body);
 
-        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited post." }));
-
         yield put(postActions.editPostSuccess());
+
+        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully edited post." }));
 
         navigate(prefixRoute(`/posts/${response.data.id}`));
     } catch (e) {
@@ -59,9 +59,9 @@ function* editPostSaga(action: ReturnType<typeof postActions.editPostRequest>) {
             setSlugError(axiosError);
         }
 
-        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to edit post." }));
-
         yield put(postActions.editPostError());
+
+        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to edit post." }));
     }
 }
 

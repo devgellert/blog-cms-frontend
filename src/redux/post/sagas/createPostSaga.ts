@@ -44,9 +44,9 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
 
         const response: AxiosResponse<ApiPost> = yield call(api.post, "/posts", body);
 
-        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." }));
-
         yield put(postActions.createPostSuccess());
+
+        yield put(uiActions.displaySnackbar({ type: "success", text: "Successfully created post." }));
 
         navigate(prefixRoute(`/posts/${response.data.id}`));
     } catch (e) {
@@ -58,9 +58,9 @@ function* createPostSaga(action: ReturnType<typeof postActions.createPostRequest
             setSlugError(axiosError);
         }
 
-        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
-
         yield put(postActions.createPostError());
+
+        yield put(uiActions.displaySnackbar({ type: "error", text: "Failed to create post." }));
     }
 }
 

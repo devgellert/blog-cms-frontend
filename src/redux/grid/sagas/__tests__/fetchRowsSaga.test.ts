@@ -48,7 +48,7 @@ describe("Scenario 1: fetch rows successfully", () => {
         expect(result).toEqual(put(gridActions.fetchRowsSuccess({ rows: transformedRows, pagination: { max: 0 } })));
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
@@ -80,7 +80,7 @@ describe("Scenario 2: failed to fetch rows", () => {
         return new Error();
     });
 
-    it("should have terminated", result => {
+    it("should terminate", result => {
         expect(result).toBeUndefined();
     });
 });
